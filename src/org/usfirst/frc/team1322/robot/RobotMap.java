@@ -44,7 +44,7 @@ public class RobotMap {
 	public static final int CLAW_CLOSE_O = 3;
 	public static final int CLAW_CLOSE_C = 4;
 	public static final int CLAW_LIFT_O  = 5;
-	public static final int CLAW_LIFT_C  = 7;
+	public static final int CLAW_LIFT_C  = 6;
 	
 	/**
 	 * SENSORS
