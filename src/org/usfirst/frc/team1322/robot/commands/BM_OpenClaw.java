@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BM_ShiftLiftDown extends Command {
+public class BM_OpenClaw extends Command {
 
+	private boolean open;
 	private boolean finished = false;
-
-    public BM_ShiftLiftDown() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.kLIFT);
+	
+    public BM_OpenClaw(boolean open) {
+        requires(Robot.kCLAW);
+        this.open = open;
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +23,11 @@ public class BM_ShiftLiftDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.kLIFT.ShiftLiftDown();
-    	finished = true;
+    	if(open) {
+    		Robot.kCLAW.openClaw();
+    	}else {
+    		Robot.kCLAW.closeClaw();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

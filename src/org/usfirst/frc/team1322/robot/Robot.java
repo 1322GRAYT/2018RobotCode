@@ -7,8 +7,11 @@
 
 package org.usfirst.frc.team1322.robot;
 
+import org.usfirst.frc.team1322.robot.subsystems.CLAW;
+import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,6 +27,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	public static final LIFT kLIFT = new LIFT();
+	public static final CLAW kCLAW = new CLAW();
+	public static final DRIVE kDRIVE = new DRIVE();
 	public static OI m_oi;
 
 	Command m_autonomousCommand;
@@ -39,6 +44,7 @@ public class Robot extends IterativeRobot {
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**

@@ -13,24 +13,24 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class LIFT extends Subsystem {
 
-    private TalonSRX lift_1 = new TalonSRX(RobotMap.LIFT_1);
-    private TalonSRX lift_2 = new TalonSRX(RobotMap.LIFT_2);
-    private Solenoid shift = new Solenoid(RobotMap.LIFT_SHIFT);
+    private TalonSRX lift1 = new TalonSRX(RobotMap.LIFT_1);
+    private TalonSRX lift2 = new TalonSRX(RobotMap.LIFT_2);
+    private Solenoid shiftO = new Solenoid(RobotMap.LIFT_SHIFT_O);
+    private Solenoid shiftC = new Solenoid(RobotMap.LIFT_SHIFT_C);
     
-    public void ShiftLiftUp()
-    {
-    	shift.set(true);
+    public void shiftLiftHigh(){
+    	shiftO.set(true);
+    	shiftC.set(false);
     }
     
-    public void ShiftLiftDown()
-    {
-    	shift.set(false);
+    public void shiftLiftLow(){
+    	shiftO.set(false);
+    	shiftC.set(true);
     }
     
-    public void setSpeed(double speed) 
-    {
-    	lift_1.set(ControlMode.PercentOutput, speed);
-    	lift_2.set(ControlMode.PercentOutput, speed);
+    public void setSpeed(double speed) {
+    	lift1.set(ControlMode.PercentOutput, speed);
+    	lift2.set(ControlMode.PercentOutput, speed);
     }
     
     

@@ -39,8 +39,12 @@ public class RobotMap {
 	/**
 	 * SOLENOIDS
 	 */
-	public static final int LIFT_SHIFT = 1;
-	public static final int CLAW_CLOSE = 2;
+	public static final int LIFT_SHIFT_O = 1;
+	public static final int LIFT_SHIFT_C = 2;
+	public static final int CLAW_CLOSE_O = 3;
+	public static final int CLAW_CLOSE_C = 4;
+	public static final int CLAW_LIFT_O  = 5;
+	public static final int CLAW_LIFT_C  = 7;
 	
 	/**
 	 * SENSORS
