@@ -25,9 +25,9 @@ public class BM_ShiftLift extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(low) {
-    		Robot.kLIFT.shiftLiftLow();
-    	}else{
     		Robot.kLIFT.shiftLiftHigh();
+    	}else{
+    		Robot.kLIFT.shiftLiftLow();
     	}	
     	finished = true;
     }

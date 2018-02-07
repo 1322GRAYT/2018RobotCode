@@ -1,10 +1,12 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.RobotMap;
+import org.usfirst.frc.team1322.robot.commands.BM_BlockSensorUpdate;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -21,9 +23,15 @@ public class CLAW extends Subsystem {
 	private Solenoid clawPneC = new Solenoid(RobotMap.CLAW_CLOSE_C);
 	private Solenoid clawLiftO = new Solenoid(RobotMap.CLAW_LIFT_O);
 	private Solenoid clawLiftC = new Solenoid(RobotMap.CLAW_LIFT_C);
+	private DigitalInput blockDetector = new DigitalInput(RobotMap.BLOCK_DETECTOR);
 	
-	public void clawSpeed(double speed) {
+	public void clawSpeedInOut(double speed) {
 		clawL.set(ControlMode.PercentOutput, speed);
+		clawR.set(ControlMode.PercentOutput, speed);
+	}
+	
+	public void clawSpeedRotate(double speed) {
+		clawL.set(ControlMode.PercentOutput, -speed);
 		clawR.set(ControlMode.PercentOutput, speed);
 	}
 	
@@ -46,10 +54,13 @@ public class CLAW extends Subsystem {
 		clawLiftO.set(false);
 		clawLiftC.set(true);
 	}
+	
+	public boolean getBlock() {
+		return blockDetector.get();
+	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new BM_BlockSensorUpdate());
     }
 }
 

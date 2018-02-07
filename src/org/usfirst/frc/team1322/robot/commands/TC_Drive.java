@@ -5,6 +5,7 @@ import org.usfirst.frc.team1322.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -22,6 +23,8 @@ public class TC_Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putNumberArray("Motors RR, RF,LR,LF: ", Robot.kDRIVE.getEncoders()); //TODO: See if this is suitable or if individual readout is desired
+    	SmartDashboard.updateValues();
     	Robot.kDRIVE.mechDrive(OI.DriverStick.getY(Hand.kLeft), OI.DriverStick.getX(Hand.kLeft), OI.DriverStick.getX(Hand.kRight));
     }
 

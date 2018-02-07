@@ -1,11 +1,11 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.RobotMap;
+import org.usfirst.frc.team1322.robot.commands.TC_Drive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -25,8 +25,8 @@ public class DRIVE extends Subsystem {
 	private TalonSRX rR_Drive_2= new TalonSRX(RobotMap.RR_MECH_2);
 
 	public void mechDrive(double forwardSpeed, double strafeSpeed, double turnSpeed) {
-		double r = Math.hypot(strafeSpeed, forwardSpeed);
-		double robotAngle = Math.atan2(forwardSpeed, strafeSpeed) - Math.PI / 4;
+		double r = Math.hypot(dzify(strafeSpeed), dzify(-forwardSpeed));
+		double robotAngle = Math.atan2(dzify(-forwardSpeed), dzify(strafeSpeed)) - Math.PI / 4;
 		final double v1 = r * Math.cos(robotAngle) + turnSpeed;
 		final double v2 = r * Math.sin(robotAngle) - turnSpeed;
 		final double v3 = r * Math.sin(robotAngle) + turnSpeed;
@@ -64,9 +64,29 @@ public class DRIVE extends Subsystem {
 		rR_Drive_2.set(ControlMode.PercentOutput, 0);
 	}
 	
+	private double dzify(double value) {
+		double deadzone = RobotMap.deadzone;
+		if(value > deadzone || value < -deadzone) {
+			return value;
+		}
+		return 0.0;
+	}
+	
+    /****
+     * @return RR, RF, LR, LF Encoder Values
+     */
+	public double[] getEncoders(){ 
+		double[] encoders = {
+				rR_Drive_1.getSensorCollection().getAnalogIn(), 
+				rF_Drive_2.getSensorCollection().getAnalogIn(), 
+				lF_Drive_1.getSensorCollection().getAnalogIn(),
+				lR_Drive_2.getSensorCollection().getAnalogIn()
+				};
+		return encoders;
+	}
+	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new TC_Drive());
     }
 }
 

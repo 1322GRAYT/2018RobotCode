@@ -1,29 +1,32 @@
 package org.usfirst.frc.team1322.robot.commands;
 
-import org.usfirst.frc.team1322.robot.OI;
 import org.usfirst.frc.team1322.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TC_LiftMotor extends Command {
+public class TC_RunWheelsRotate extends Command {
 
-    public TC_LiftMotor() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.kLIFT);
+	boolean side;
+	
+    public TC_RunWheelsRotate(boolean side) {
+        requires(Robot.kCLAW);
+        this.side = side;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kLIFT.disengageJammer();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.kLIFT.setSpeed(-OI.AuxStick.getY(Hand.kRight));
+    	if(side) {
+    		Robot.kCLAW.clawSpeedRotate(1);
+    	}else {
+    		Robot.kCLAW.clawSpeedRotate(-1);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,11 +36,12 @@ public class TC_LiftMotor extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
+    	Robot.kCLAW.clawSpeedInOut(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

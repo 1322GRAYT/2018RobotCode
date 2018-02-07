@@ -45,6 +45,7 @@ public class RobotMap {
 	public static final int CLAW_CLOSE_C = 4;
 	public static final int CLAW_LIFT_O  = 5;
 	public static final int CLAW_LIFT_C  = 6;
+	public static final int LIFT_JAM  = 7;
 	
 	/**
 	 * SENSORS
@@ -52,11 +53,21 @@ public class RobotMap {
 	//ANALOG
 	
 	//DIGITAL
-	
+	public static final int BLOCK_DETECTOR = 0;
+	public static final int LOW_LIFT = 2;
+	public static final int MID_LIFT = 3;
+	public static final int HIGH_LIFT = 4;
 	/***
 	 * USB Controller
 	 */
 	public static final int USB_Driver = 0;
 	public static final int USB_AUX = 1;
+	
+	/**
+	 * Others
+	 */
+	
+	public static final double deadzone = 0.3;
+	public static final double lowDeadzone = 0.1;
 	
 }
