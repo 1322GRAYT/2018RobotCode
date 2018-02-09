@@ -13,8 +13,9 @@ public class BM_ShiftLift extends Command {
 	private boolean low = false;
 
     public BM_ShiftLift(boolean low) {
-        // Use requires() here to declare subsystem dependencies
+        //pass along low to global
     	this.low = low;
+    	//Set the required subsystem
         requires(Robot.kLIFT);
     }
 
@@ -24,11 +25,13 @@ public class BM_ShiftLift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//if low, shift low, else, shift to high gear
     	if(low) {
     		Robot.kLIFT.shiftLiftHigh();
     	}else{
     		Robot.kLIFT.shiftLiftLow();
     	}	
+    	//set global finished to true
     	finished = true;
     }
 

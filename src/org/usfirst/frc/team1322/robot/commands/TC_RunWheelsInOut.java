@@ -22,6 +22,7 @@ public class TC_RunWheelsInOut extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//if in, set power to 1, else, set power to -1
     	if(in) {
     		Robot.kCLAW.clawSpeedInOut(1);
     	}else {
@@ -36,6 +37,7 @@ public class TC_RunWheelsInOut extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	//Set speed to 0
     	Robot.kCLAW.clawSpeedInOut(0);
     }
 

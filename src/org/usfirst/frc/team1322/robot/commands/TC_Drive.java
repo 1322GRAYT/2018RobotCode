@@ -23,8 +23,13 @@ public class TC_Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumberArray("Motors RR, RF,LR,LF: ", Robot.kDRIVE.getEncoders()); //TODO: See if this is suitable or if individual readout is desired
+    	//Push encoders to dashboard
+    	SmartDashboard.putNumber("RR Enc: ", Robot.kDRIVE.getEncoders()[0]);
+    	SmartDashboard.putNumber("RF Enc: ", Robot.kDRIVE.getEncoders()[1]);
+    	SmartDashboard.putNumber("LR Enc: ", Robot.kDRIVE.getEncoders()[2]);
+    	SmartDashboard.putNumber("LF Enc: ", Robot.kDRIVE.getEncoders()[3]);
     	SmartDashboard.updateValues();
+    	//Create a new mechanim drive instance
     	Robot.kDRIVE.mechDrive(OI.DriverStick.getY(Hand.kLeft), OI.DriverStick.getX(Hand.kLeft), OI.DriverStick.getX(Hand.kRight));
     }
 

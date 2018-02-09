@@ -18,11 +18,13 @@ public class TC_LiftMotor extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kLIFT.disengageJammer();
+    	//When Robot starts, disengage the jammer
+    	Robot.kLIFT.disengageJammer(); //TODO:  SEE IF THIS IS CAUSING ISSUES
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//Set speed of lift motors
     	Robot.kLIFT.setSpeed(-OI.AuxStick.getY(Hand.kRight));
     }
 

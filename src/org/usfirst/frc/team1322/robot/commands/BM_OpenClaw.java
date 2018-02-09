@@ -13,7 +13,9 @@ public class BM_OpenClaw extends Command {
 	private boolean finished = false;
 	
     public BM_OpenClaw(boolean open) {
+    	//Set the required subsystem
         requires(Robot.kCLAW);
+        //Pass along open to global
         this.open = open;
     }
 
@@ -23,11 +25,14 @@ public class BM_OpenClaw extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//if open, open claw, else, close it
     	if(open) {
     		Robot.kCLAW.openClaw();
     	}else {
     		Robot.kCLAW.closeClaw();
     	}
+    	//set global finished to true
+    	finished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
