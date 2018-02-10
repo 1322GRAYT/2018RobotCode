@@ -19,6 +19,7 @@ public class TC_Drive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.kDRIVE.enable();
+    	Robot.kDRIVE.resetEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,11 +27,11 @@ public class TC_Drive extends Command {
     	//Push encoders to dashboard
     	SmartDashboard.putNumber("RR Enc: ", Robot.kDRIVE.getEncoders()[0]);
     	SmartDashboard.putNumber("RF Enc: ", Robot.kDRIVE.getEncoders()[1]);
-    	SmartDashboard.putNumber("LR Enc: ", Robot.kDRIVE.getEncoders()[2]);
-    	SmartDashboard.putNumber("LF Enc: ", Robot.kDRIVE.getEncoders()[3]);
+    	SmartDashboard.putNumber("LF Enc: ", Robot.kDRIVE.getEncoders()[2]);
+    	SmartDashboard.putNumber("LR Enc: ", Robot.kDRIVE.getEncoders()[3]);
     	SmartDashboard.updateValues();
     	//Create a new mechanim drive instance
-    	Robot.kDRIVE.mechDrive(OI.DriverStick.getY(Hand.kLeft), OI.DriverStick.getX(Hand.kLeft), OI.DriverStick.getX(Hand.kRight));
+    	Robot.kDRIVE.mechDrive(OI.DriverStick.getX(Hand.kLeft), OI.DriverStick.getY(Hand.kLeft), OI.DriverStick.getX(Hand.kRight));
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -159,16 +159,23 @@ public class DRIVE extends Subsystem {
 
     /**
      * Gets the encoder values
-     * @return RR, RF, LR, LF Encoder Values
+     * @return RR, RF, LF, LR Encoder Values
      */
 	public double[] getEncoders(){ 
 		double[] encoders = {
-				rR_Drive_1.getSensorCollection().getAnalogIn(), 
-				rF_Drive_2.getSensorCollection().getAnalogIn(), 
-				lF_Drive_1.getSensorCollection().getAnalogIn(),
-				lR_Drive_2.getSensorCollection().getAnalogIn()
+				rR_Drive_1.getSensorCollection().getQuadraturePosition(), 
+				rF_Drive_2.getSensorCollection().getQuadraturePosition(), 
+				lF_Drive_2.getSensorCollection().getQuadraturePosition(),
+				lR_Drive_1.getSensorCollection().getQuadraturePosition()
 				};
 		return encoders;
+	}
+	
+	public void resetEncoders() {
+		rR_Drive_1.getSensorCollection().setQuadraturePosition(0, 0);
+		rF_Drive_2.getSensorCollection().setQuadraturePosition(0, 0); 
+		lF_Drive_2.getSensorCollection().setQuadraturePosition(0, 0);
+		lR_Drive_1.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
 	/**
