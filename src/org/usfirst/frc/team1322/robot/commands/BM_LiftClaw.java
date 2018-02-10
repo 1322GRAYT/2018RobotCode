@@ -13,7 +13,9 @@ public class BM_LiftClaw extends Command {
 	private boolean lift;
 
     public BM_LiftClaw(boolean lift) {
+    	//Set global this.lift
         this.lift = lift;
+        //Set the required subsystem
         requires(Robot.kCLAW);
     }
 
@@ -23,11 +25,13 @@ public class BM_LiftClaw extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//If lift, tilt claw up, else, tilt it down
     	if(lift) {
     		Robot.kCLAW.liftClaw();
     	}else {
     		Robot.kCLAW.lowerClaw();
     	}
+    	//tell everyone we finished
     	finished = true;
     }
 

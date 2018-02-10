@@ -16,17 +16,23 @@ public class BM_BlockSensorUpdate extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//Set Devailt Value
     	SmartDashboard.putBoolean("Block in Claw: ", false);
+    	//Update SmartDashboard
+    	SmartDashboard.updateValues();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//Set SmartDashboard values
     	SmartDashboard.putBoolean("Block in Claw: ", Robot.kCLAW.getBlock());
+    	//Update SmartDashboard
     	SmartDashboard.updateValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	//Never Stops
         return false;
     }
 

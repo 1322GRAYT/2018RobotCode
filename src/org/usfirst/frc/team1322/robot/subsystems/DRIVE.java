@@ -2,19 +2,16 @@ package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.TC_Drive;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Drive Subsystem
  */
 public class DRIVE extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	private TalonSRX lF_Drive_1= new TalonSRX(RobotMap.LF_MECH_1);
 	private TalonSRX lF_Drive_2= new TalonSRX(RobotMap.LF_MECH_2);
 	private TalonSRX rF_Drive_1= new TalonSRX(RobotMap.RF_MECH_1);
@@ -121,9 +118,10 @@ public class DRIVE extends Subsystem {
     /**
      * Disable all drive motors
      */
+
 	public void disable() {
 		lF_Drive_1.set(ControlMode.Disabled, 0);
-		lF_Drive_1.set(ControlMode.Disabled, 0);
+		lF_Drive_2.set(ControlMode.Disabled, 0);
 		rF_Drive_1.set(ControlMode.Disabled, 0);
 		rF_Drive_2.set(ControlMode.Disabled, 0);
 		lR_Drive_1.set(ControlMode.Disabled, 0);
@@ -137,7 +135,7 @@ public class DRIVE extends Subsystem {
 	 */
 	public void enable() {
 		lF_Drive_1.set(ControlMode.PercentOutput, 0);
-		lF_Drive_1.set(ControlMode.PercentOutput, 0);
+		lF_Drive_2.set(ControlMode.PercentOutput, 0);
 		rF_Drive_1.set(ControlMode.PercentOutput, 0);
 		rF_Drive_2.set(ControlMode.PercentOutput, 0);
 		lR_Drive_1.set(ControlMode.PercentOutput, 0);
@@ -146,6 +144,11 @@ public class DRIVE extends Subsystem {
 		rR_Drive_2.set(ControlMode.PercentOutput, 0);
 	}
 	
+	/**
+	 * 	Deadzonifies a double to the set deadzone in RobotMap
+	 * @param A double between -1 and 1
+	 * @return A double that is now been deadzoned
+	 */
 	private double dzify(double value) {
 		double deadzone = RobotMap.deadzone;
 		if(value > deadzone || value < -deadzone) {
@@ -153,8 +156,9 @@ public class DRIVE extends Subsystem {
 		}
 		return 0.0;
 	}
-	
-    /****
+
+    /**
+     * Gets the encoder values
      * @return RR, RF, LR, LF Encoder Values
      */
 	public double[] getEncoders(){ 
@@ -167,6 +171,9 @@ public class DRIVE extends Subsystem {
 		return encoders;
 	}
 	
+	/**
+	 * Sets the default command so that it is ALWAYS running throughout teleop
+	 */
     public void initDefaultCommand() {
         setDefaultCommand(new TC_Drive());
     }
