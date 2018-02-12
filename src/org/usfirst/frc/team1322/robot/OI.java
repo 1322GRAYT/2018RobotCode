@@ -29,7 +29,7 @@ public class OI {
 	public final static XboxController DriverStick = new XboxController(RobotMap.USB_Driver),
 			  						   AuxStick    = new XboxController(RobotMap.USB_AUX);
 	
-	private Button shiftLiftHigh,
+	private Button  shiftLiftHigh,
 					shiftLiftLow,
 					openClaw,
 					closeClaw,

@@ -128,7 +128,7 @@ public class LIFT extends Subsystem {
  
     /**
      * Method: initDefaultCommand - Sets the Default Command for the Subsystem.      
-	 * to TC_LiftMotor so that it is ALWAYS running throughout teleop.
+	 * to TC_LiftMotor so that it is ALWAYS running throughout Tele-Op.
 	 */
     public void initDefaultCommand() {
        setDefaultCommand(new TC_LiftMotor());
