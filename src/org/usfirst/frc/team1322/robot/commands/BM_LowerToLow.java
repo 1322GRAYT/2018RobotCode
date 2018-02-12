@@ -7,27 +7,25 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BM_JumpToMid extends Command {
+public class BM_LowerToLow extends Command {
 
-    public BM_JumpToMid() {
+    public BM_LowerToLow() {
         requires(Robot.kLIFT);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kLIFT.setSpeed(1);
+    	Robot.kLIFT.setSpeed(-1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!Robot.kLIFT.getHighSen()) {
-    		Robot.kLIFT.setSpeed(-1);
-    	}
+      // Continue at Speed -1
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.kLIFT.getMidSen();
+        return !Robot.kLIFT.getLowSen();
     }
 
     // Called once after isFinished returns true
