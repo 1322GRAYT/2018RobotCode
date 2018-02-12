@@ -5,7 +5,8 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Class: BM_LowerToLow Command - Lower the Lift System down to the low
+ * position sensor.
  */
 public class BM_LowerToLow extends Command {
 

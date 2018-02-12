@@ -5,7 +5,8 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Class: BM_RaiseToHigh Command - Raise the Lift System up to the high
+ * position sensor.
  */
 public class BM_RaiseToHigh extends Command {
 

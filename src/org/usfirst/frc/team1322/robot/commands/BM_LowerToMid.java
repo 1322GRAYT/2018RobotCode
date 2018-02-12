@@ -5,7 +5,10 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Class: BM_LowerToMid Command - Lower the Lift System down to the mid position
+ * sensor, if it is already past the mid sensor or misses the mid position
+ * sensor and the low position sensor is detected, the lift motor speed will
+ * be reversed to send the lift back up to the mid position sensor.
  */
 public class BM_LowerToMid extends Command {
 

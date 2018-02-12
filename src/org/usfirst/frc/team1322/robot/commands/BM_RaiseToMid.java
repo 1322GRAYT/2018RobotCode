@@ -5,7 +5,10 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Class: BM_RaiseToMid Command - Raise the Lift System up to the mid position
+ * sensor, if it is already past the mid sensor or misses the mid position
+ * sensor and the high position sensor is detected, the lift motor speed will
+ * be reversed to send the lift back down to the mid position sensor.
  */
 public class BM_RaiseToMid extends Command {
 
