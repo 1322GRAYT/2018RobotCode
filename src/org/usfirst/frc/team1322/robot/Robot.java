@@ -10,6 +10,7 @@ package org.usfirst.frc.team1322.robot;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
+import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static final LIFT kLIFT = new LIFT();
 	public static final CLAW kCLAW = new CLAW();
 	public static final DRIVE kDRIVE = new DRIVE();
+	public static final SENSORS kSENSORS = new SENSORS();
 	public static OI m_oi;
 
 	Command m_autonomousCommand;

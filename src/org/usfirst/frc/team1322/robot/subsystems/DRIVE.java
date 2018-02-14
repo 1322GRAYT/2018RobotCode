@@ -41,14 +41,14 @@ public class DRIVE extends Subsystem {
      *        that joysticks produce. [-1.0..1.0] 
      * @param rotation The rate of rotation for the robot that is completely independent of the translation. [-1.0..1.0] 
      */ 
-    public void mechDrive(double y, double x, double rotation) { 
+    public void mechDrive(double x, double y, double rotation) { 
         double xIn = dzify(x); 
         double yIn = dzify(y); 
         rotation = dzify(rotation);
         // Negate y for the joystick. 
         yIn = -yIn; 
         // Compensate for gyro angle. 
-        double rotated[] = rotateVector(xIn, yIn, gyro.getAngle()); 
+        double rotated[] = rotateVector(xIn, yIn, 0); 
         xIn = rotated[0]; 
         yIn = rotated[1]; 
  

@@ -6,13 +6,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AM_DropBlockClose extends CommandGroup {
+public class AM_DropBlock extends CommandGroup {
 
 	private final String fd = DriverStation.getInstance().getGameSpecificMessage(); //Store Game specific data to string
 	private final char[] fieldData = {fd.charAt(0), fd.charAt(1), fd.charAt(2)}; //Make Game Data more accessable
 	private final int dsNum = DriverStation.getInstance().getLocation(); //Store driver station number to string
 	
-    public AM_DropBlockClose() {
+    public AM_DropBlock() {
+    	
+    	
+    	
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

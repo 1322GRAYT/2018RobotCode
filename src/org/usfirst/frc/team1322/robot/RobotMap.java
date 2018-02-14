@@ -51,17 +51,40 @@ public class RobotMap {
 	 * SENSORS
 	 */
 	//ANALOG
+	public static final int REAR_US = 0;
+	public static final int LEFT_US = 1;
 	
 	//DIGITAL
 	public static final int BLOCK_DETECTOR = 0;
 	public static final int LOW_LIFT = 2;
 	public static final int MID_LIFT = 3;
 	public static final int HIGH_LIFT = 4;
+	
 	/***
 	 * USB Controller
 	 */
 	public static final int USB_Driver = 0;
 	public static final int USB_AUX = 1;
+	
+	/**
+	 * PDP Inputs
+	 */
+	public static final int pdpLift2 		= 0;
+	public static final int pdpLift1 		= 1;
+	public static final int pdpRRDrive2 	= 2;
+	public static final int pdpRRDrive1 	= 3;
+	public static final int pdpRFDrive2 	= 4;
+	public static final int pdpRFDrive1 	= 5;
+	public static final int pdpNA1 			= 6;
+	public static final int pdpNA2 			= 7;
+	public static final int pdpBlockSensor  = 8;
+	public static final int pdpNA3 			= 9;
+	public static final int pdpLRDrive1 	= 10;
+	public static final int pdpClawR 		= 11;
+	public static final int pdpClawL 		= 12;
+	public static final int pdpLFDrive2 	= 13;
+	public static final int pdpLRDrive2 	= 14;
+	public static final int pdpLFDrive1 	= 15;
 	
 	/**
 	 * Others

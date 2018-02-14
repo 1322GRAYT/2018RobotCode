@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.RobotMap;
-import org.usfirst.frc.team1322.robot.commands.BM_BlockSensorUpdate;
+import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -84,7 +84,7 @@ public class CLAW extends Subsystem {
 	 * Sets the default command so that it is ALWAYS running throughout teleop
 	 */
     public void initDefaultCommand() {
-        setDefaultCommand(new BM_BlockSensorUpdate());
+        setDefaultCommand(new BM_SensorUpdate());
     }
 }
 
