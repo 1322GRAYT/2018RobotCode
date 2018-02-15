@@ -20,7 +20,6 @@ public class DRIVE extends Subsystem {
 	private TalonSRX lR_Drive_2= new TalonSRX(RobotMap.LR_MECH_2);
 	private TalonSRX rR_Drive_1= new TalonSRX(RobotMap.RR_MECH_1);
 	private TalonSRX rR_Drive_2= new TalonSRX(RobotMap.RR_MECH_2);
-	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
     private static final int NUMBER_OF_MOTORS = 4; 
     private final int LEFT_FRONT = 0; 
     private final int RIGHT_FRONT = 1; 
