@@ -19,17 +19,11 @@ public class SENSORS extends Subsystem {
     //Ultra Sonic Sen
     private AnalogInput rearUS = new AnalogInput(RobotMap.REAR_US);
     private AnalogInput leftUS = new AnalogInput(RobotMap.LEFT_US);
-    //SPI Gyro
-	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+    private AnalogInput rightUS = new AnalogInput(RobotMap.RIGHT_US);
     
     
     public void init() {
     	AnalogInput.setGlobalSampleRate(9600);
-    	gyro.calibrate();
-    }
-
-    public void resetGyro() {
-    	gyro.reset();
     }
     
     public double getPdpCurrent(int id) {
@@ -37,11 +31,15 @@ public class SENSORS extends Subsystem {
 	}
     
     public double getRearUSDistance() {
-    	return rearUS.getAverageValue();
+    	return rearUS.getValue();
     }
     
     public double getLeftUSDistance() {
-    	return leftUS.getAverageValue();
+    	return leftUS.getValue();
+    }
+    
+    public double getRightUSDistance() {
+    	return rightUS.getValue();
     }
     
     public double getUSDistanceFromId(double id) {
@@ -49,12 +47,10 @@ public class SENSORS extends Subsystem {
     		return getRearUSDistance();
     	}else if(id == RobotMap.LEFT_US) {
     		return getLeftUSDistance();
-    	}//TODO: Add Last Sensor
+    	}else if(id == RobotMap.RIGHT_US) {
+    		return getRightUSDistance();
+    	}
     	return 0;
-    }
-    
-    public double getGyroAngle() {
-    	return gyro.getAngle();
     }
 
 	public void initDefaultCommand() {

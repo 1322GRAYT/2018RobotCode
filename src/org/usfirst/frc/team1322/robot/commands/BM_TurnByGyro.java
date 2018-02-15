@@ -26,18 +26,31 @@ public class BM_TurnByGyro extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kSENSORS.resetGyro();
+    	Robot.resetGyro();
     	Robot.kDRIVE.enable();
     	Robot.kDRIVE.mechDrive(0, 0, turnSpeed);
+    	if(turnSpeed < .3) {
+    		System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
+    		turnSpeed = .3;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double sevenTenthsOfTotal = .7 * turnAngle;
+    	if(Robot.getGyroAngle() >= sevenTenthsOfTotal) {
+    		Robot.kDRIVE.mechDrive(0, 0, (turnSpeed * .5));
+    	}
+    	
+    	double nineTenthsOfTotal = .9 * turnAngle;
+    	if(Robot.getGyroAngle() >= sevenTenthsOfTotal) {
+    		Robot.kDRIVE.mechDrive(0, 0, (turnSpeed * .25));
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.kSENSORS.getGyroAngle() >= turnAngle;
+        return Robot.getGyroAngle() >= turnAngle;
     }
 
     // Called once after isFinished returns true

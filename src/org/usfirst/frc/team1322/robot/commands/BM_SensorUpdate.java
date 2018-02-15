@@ -29,6 +29,7 @@ public class BM_SensorUpdate extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Set SmartDashboard values
+    	//PDP Current
     	SmartDashboard.putBoolean("Block in Claw: ", Robot.kCLAW.getBlock());
     	SmartDashboard.putNumber("Lift2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift2));
     	SmartDashboard.putNumber("Lift1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift1));
@@ -46,9 +47,12 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumber("lFDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLFDrive2));
     	SmartDashboard.putNumber("lRDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLRDrive2));
     	SmartDashboard.putNumber("lFDrive1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLFDrive1));
-    	
+    	//Ultra Sonic Sensor Vaules
     	SmartDashboard.putNumber("Rear US : ", Robot.kSENSORS.getRearUSDistance());
     	SmartDashboard.putNumber("Left US : ", Robot.kSENSORS.getLeftUSDistance());
+    	SmartDashboard.putNumber("Right US : ", Robot.kSENSORS.getRightUSDistance());
+    	//Gyro
+    	SmartDashboard.putNumber("Gyro Angle : ", Robot.getGyroAngle());
     	//Update SmartDashboard
     	SmartDashboard.updateValues();
     }

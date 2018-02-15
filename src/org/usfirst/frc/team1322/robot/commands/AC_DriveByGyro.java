@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Drive Forward/Sideways using the gyro
  */
-public class AM_DriveByGyro extends Command {
+public class AC_DriveByGyro extends Command {
 
 	private double strafeSpeed;
 	private double forwardSpeed;
@@ -19,7 +19,7 @@ public class AM_DriveByGyro extends Command {
 	private final double leeway = RobotMap.autonDriveLeeway;
 	
 	
-    public AM_DriveByGyro(double forwardSpeed, double strafeSpeed, double stopDistance, double usID) {
+    public AC_DriveByGyro(double forwardSpeed, double strafeSpeed, double stopDistance, double usID) {
     	requires(Robot.kSENSORS);
         requires(Robot.kDRIVE);
         this.forwardSpeed = forwardSpeed;
@@ -36,7 +36,7 @@ public class AM_DriveByGyro extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Keep Robot Facing Straight at all costs
-    	double gAngle = Robot.kSENSORS.getGyroAngle();
+    	double gAngle = Robot.getGyroAngle();
     	if((gAngle - leeway) > startGyroPos) {
     		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, correctionSpeed);
     	}else if((gAngle + leeway) < startGyroPos) {

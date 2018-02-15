@@ -53,6 +53,7 @@ public class RobotMap {
 	//ANALOG
 	public static final int REAR_US = 0;
 	public static final int LEFT_US = 1;
+	public static final int RIGHT_US = 2;
 	
 	//DIGITAL
 	public static final int BLOCK_DETECTOR = 0;

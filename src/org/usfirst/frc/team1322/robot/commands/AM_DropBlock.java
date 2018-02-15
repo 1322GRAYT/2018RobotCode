@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AM_DropBlock extends CommandGroup {
 
-	private final String fd = DriverStation.getInstance().getGameSpecificMessage(); //Store Game specific data to string
-	private final char[] fieldData = {fd.charAt(0), fd.charAt(1), fd.charAt(2)}; //Make Game Data more accessable
-	private final int dsNum = DriverStation.getInstance().getLocation(); //Store driver station number to string
+	//private final String fd = DriverStation.getInstance().getGameSpecificMessage(); //Store Game specific data to string
+	//private final char[] fieldData = {fd.charAt(0), fd.charAt(1), fd.charAt(2)}; //Make Game Data more accessable
+	//private final int dsNum = DriverStation.getInstance().getLocation(); //Store driver station number to string
 	
     public AM_DropBlock() {
-    	
+    	addSequential(new BM_TurnByGyro(.3, 90));
     	
     	
     	
