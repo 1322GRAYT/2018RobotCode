@@ -52,6 +52,14 @@ public class SENSORS extends Subsystem {
     	}
     	return 0;
     }
+    
+    public double getGyroAngle() {
+    	return Robot.gyro.getAngle();
+    }
+    
+    public void resetGyro() {
+    	Robot.gyro.reset();
+    }
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new BM_SensorUpdate());

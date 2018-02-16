@@ -26,7 +26,7 @@ public class BM_TurnByGyro extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.resetGyro();
+    	Robot.kSENSORS.resetGyro();
     	Robot.kDRIVE.enable();
     	Robot.kDRIVE.mechDrive(0, 0, turnSpeed);
     	if(turnSpeed < .3) {
@@ -38,19 +38,19 @@ public class BM_TurnByGyro extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double sevenTenthsOfTotal = .7 * turnAngle;
-    	if(Robot.getGyroAngle() >= sevenTenthsOfTotal) {
+    	if(Robot.kSENSORS.getGyroAngle() >= sevenTenthsOfTotal) {
     		Robot.kDRIVE.mechDrive(0, 0, (turnSpeed * .5));
     	}
     	
     	double nineTenthsOfTotal = .9 * turnAngle;
-    	if(Robot.getGyroAngle() >= sevenTenthsOfTotal) {
+    	if(Robot.kSENSORS.getGyroAngle() >= sevenTenthsOfTotal) {
     		Robot.kDRIVE.mechDrive(0, 0, (turnSpeed * .25));
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.getGyroAngle() >= turnAngle;
+        return Robot.kSENSORS.getGyroAngle() >= turnAngle;
     }
 
     // Called once after isFinished returns true

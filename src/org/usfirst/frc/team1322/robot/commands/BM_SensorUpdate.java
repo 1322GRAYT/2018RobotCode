@@ -52,7 +52,7 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumber("Left US : ", Robot.kSENSORS.getLeftUSDistance());
     	SmartDashboard.putNumber("Right US : ", Robot.kSENSORS.getRightUSDistance());
     	//Gyro
-    	SmartDashboard.putNumber("Gyro Angle : ", Robot.getGyroAngle());
+    	SmartDashboard.putNumber("Gyro Angle : ", Robot.kSENSORS.getGyroAngle());
     	//Update SmartDashboard
     	SmartDashboard.updateValues();
     }

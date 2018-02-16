@@ -36,7 +36,7 @@ public class AC_DriveByGyro extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Keep Robot Facing Straight at all costs
-    	double gAngle = Robot.getGyroAngle();
+    	double gAngle = Robot.kSENSORS.getGyroAngle();
     	if((gAngle - leeway) > startGyroPos) {
     		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, correctionSpeed);
     	}else if((gAngle + leeway) < startGyroPos) {

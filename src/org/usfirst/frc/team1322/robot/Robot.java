@@ -12,7 +12,7 @@ import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
 import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
-
+import org.usfirst.frc.team1322.robot.OI;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static final DRIVE kDRIVE = new DRIVE();
 	public static final SENSORS kSENSORS = new SENSORS();
 	
-	private static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static OI m_oi;
 
@@ -131,12 +131,4 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 	}
-	
-	public static void resetGyro() {
-    	gyro.reset();
-    }
-	
-    public static double getGyroAngle() {
-    	return gyro.getAngle();
-    }
 }
