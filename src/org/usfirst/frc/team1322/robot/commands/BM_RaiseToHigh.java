@@ -5,38 +5,32 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Class: BM_RaiseToHigh Command - Raise the Lift System up to the high
+ * position sensor.
  */
-public class BM_JumpToMid extends Command {
+public class BM_RaiseToHigh extends Command {
 
-    public BM_JumpToMid() {
-    	//Set the required subsystem
-        requires(Robot.kCLAW);
+    public BM_RaiseToHigh() {
+        requires(Robot.kLIFT);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Set Speed to 1
     	Robot.kLIFT.setSpeed(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//If the top sensor is triggered, stop, and go back down to mid
-    	if(!Robot.kLIFT.getHighSen()) {
-    		Robot.kLIFT.setSpeed(-1);
-    	}
+      // Continue at Speed 1
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//When the mid sensor is triggered, STOP
-        return !Robot.kLIFT.getMidSen();
+        return !Robot.kLIFT.getHighSen();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Set Motor Speed to 0
     	Robot.kLIFT.setSpeed(0);
     }
 
