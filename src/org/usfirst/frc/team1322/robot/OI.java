@@ -7,7 +7,8 @@
 
 package org.usfirst.frc.team1322.robot;
 
-import org.usfirst.frc.team1322.robot.commands.BM_JumpToMid;
+import org.usfirst.frc.team1322.robot.commands.BM_RaiseToMid;
+import org.usfirst.frc.team1322.robot.commands.BM_LowerToLow;
 import org.usfirst.frc.team1322.robot.commands.BM_LiftClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_OpenClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_ShiftLift;
@@ -28,9 +29,12 @@ public class OI {
 	public final static XboxController DriverStick = new XboxController(RobotMap.USB_Driver),
 			  						   AuxStick    = new XboxController(RobotMap.USB_AUX);
 	
-	private Button
+	private Button  shiftLiftHigh,
+					shiftLiftLow,
 					openClaw,
 					closeClaw,
+					tiltClawUp,
+					tiltClawDown,
 					runBlockOut,
 					runBlockIn,
 					runBlockLeft,
@@ -69,8 +73,8 @@ public class OI {
 		runBlockIn.whileActive(new TC_RunWheelsInOut(true));
 		runBlockRight.whileActive(new TC_RunWheelsRotate(true));
 		runBlockLeft.whileActive(new TC_RunWheelsRotate(false));
-		RTrigger.toggleWhenActive(new BM_JumpToMid());
-		//RTrigger.whileActive(new BM_JumpToLow());  TODO: CREATE
+		RTrigger.toggleWhenActive(new BM_RaiseToMid());
+		//RTrigger.whileActive(new BM_LowerToLow());  TODO: Assign to Controller Trigger
 		
 	}
 	
