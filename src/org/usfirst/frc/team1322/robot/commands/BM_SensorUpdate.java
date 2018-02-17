@@ -12,17 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class BM_SensorUpdate extends Command {
 
     public BM_SensorUpdate() {
-        requires(Robot.kCLAW);
         requires(Robot.kSENSORS);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Set Devailt Value
-    	SmartDashboard.putBoolean("Block in Claw: ", false);
-    	//Update SmartDashboard
-    	SmartDashboard.updateValues();
-    	
     	Robot.kSENSORS.init();
     }
 
@@ -30,7 +24,7 @@ public class BM_SensorUpdate extends Command {
     protected void execute() {
     	//Set SmartDashboard values
     	//PDP Current
-    	SmartDashboard.putBoolean("Block in Claw: ", Robot.kCLAW.getBlock());
+    	SmartDashboard.putBoolean("Block in Claw: ", Robot.kSENSORS.getBlock());
     	SmartDashboard.putNumber("Lift2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift2));
     	SmartDashboard.putNumber("Lift1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift1));
     	SmartDashboard.putNumber("rRDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpRRDrive2));
@@ -54,7 +48,7 @@ public class BM_SensorUpdate extends Command {
     	//Gyro
     	SmartDashboard.putNumber("Gyro Angle : ", Robot.kSENSORS.getGyroAngle());
     	//Update SmartDashboard
-    	SmartDashboard.updateValues();
+    	//SmartDashboard.updateValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()

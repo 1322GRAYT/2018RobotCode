@@ -28,12 +28,9 @@ public class OI {
 	public final static XboxController DriverStick = new XboxController(RobotMap.USB_Driver),
 			  						   AuxStick    = new XboxController(RobotMap.USB_AUX);
 	
-	private Button shiftLiftHigh,
-					shiftLiftLow,
+	private Button
 					openClaw,
 					closeClaw,
-					tiltClawUp,
-					tiltClawDown,
 					runBlockOut,
 					runBlockIn,
 					runBlockLeft,

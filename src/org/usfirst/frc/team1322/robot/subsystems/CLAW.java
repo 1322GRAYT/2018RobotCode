@@ -20,7 +20,6 @@ public class CLAW extends Subsystem {
 	private Solenoid clawPneC = new Solenoid(RobotMap.CLAW_CLOSE_C);				//Claw Close Solenoid Valve 2
 	private Solenoid clawLiftO = new Solenoid(RobotMap.CLAW_LIFT_O);				//Claw Lift Solenoid Valve 1
 	private Solenoid clawLiftC = new Solenoid(RobotMap.CLAW_LIFT_C);				//Claw Lift Solenoid Valve 2
-	private DigitalInput blockDetector = new DigitalInput(RobotMap.BLOCK_DETECTOR); //Block Detector Sensor
 	
 	/**
 	 * Set the in/out speed of the claw motors
@@ -70,14 +69,6 @@ public class CLAW extends Subsystem {
 	public void lowerClaw() {
 		clawLiftO.set(false);
 		clawLiftC.set(true);
-	}
-	
-	/**
-	 * Gets the value of the block sensor
-	 * @return Have Block
-	 */
-	public boolean getBlock() {
-		return blockDetector.get();
 	}
 	
 	/**

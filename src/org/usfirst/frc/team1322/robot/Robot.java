@@ -12,8 +12,6 @@ import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
 import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
-import org.usfirst.frc.team1322.robot.OI;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -34,8 +32,6 @@ public class Robot extends IterativeRobot {
 	public static final DRIVE kDRIVE = new DRIVE();
 	public static final SENSORS kSENSORS = new SENSORS();
 	
-	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-	
 	public static OI m_oi;
 
 	Command m_autonomousCommand;
@@ -48,11 +44,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Turn 90", new AM_DropBlock());
-		SmartDashboard.putData("Auto mode", m_chooser);
-		gyro.calibrate();
-		System.out.println("Gyro Calibrated");
-		CameraServer.getInstance().startAutomaticCapture();
+		//m_chooser.addDefault("Turn 90", new AM_DropBlock());
+		//SmartDashboard.putData("Auto mode", m_chooser);
+		//gyro.calibrate();
+		//System.out.println("Gyro Calibrated");
+		//CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**

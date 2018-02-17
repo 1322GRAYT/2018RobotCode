@@ -6,6 +6,7 @@ import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -20,6 +21,9 @@ public class SENSORS extends Subsystem {
     private AnalogInput rearUS = new AnalogInput(RobotMap.REAR_US);
     private AnalogInput leftUS = new AnalogInput(RobotMap.LEFT_US);
     private AnalogInput rightUS = new AnalogInput(RobotMap.RIGHT_US);
+    private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	private DigitalInput blockDetector = new DigitalInput(RobotMap.BLOCK_DETECTOR); //Block Detector Sensor
+
     
     
     public void init() {
@@ -54,12 +58,20 @@ public class SENSORS extends Subsystem {
     }
     
     public double getGyroAngle() {
-    	return Robot.gyro.getAngle();
+    	return gyro.getAngle();
     }
     
     public void resetGyro() {
-    	Robot.gyro.reset();
+    	gyro.reset();
     }
+    
+	/**
+	 * Gets the value of the block sensor
+	 * @return Have Block
+	 */
+	public boolean getBlock() {
+		return blockDetector.get();
+	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new BM_SensorUpdate());
