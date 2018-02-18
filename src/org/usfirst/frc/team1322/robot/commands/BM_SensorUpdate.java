@@ -41,7 +41,7 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumber("lFDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLFDrive2));
     	SmartDashboard.putNumber("lRDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLRDrive2));
     	SmartDashboard.putNumber("lFDrive1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLFDrive1));
-    	//Ultra Sonic Sensor Vaules
+    	//Ultra Sonic Sensor Values
     	SmartDashboard.putNumber("Rear US : ", Robot.kSENSORS.getRearUSDistance());
     	SmartDashboard.putNumber("Left US : ", Robot.kSENSORS.getLeftUSDistance());
     	SmartDashboard.putNumber("Right US : ", Robot.kSENSORS.getRightUSDistance());

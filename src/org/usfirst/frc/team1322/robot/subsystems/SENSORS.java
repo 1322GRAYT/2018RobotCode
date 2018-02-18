@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
+import org.usfirst.frc.team1322.robot.K_SensorCal;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
@@ -33,19 +34,41 @@ public class SENSORS extends Subsystem {
     public double getPdpCurrent(int id) {
 		return pdp.getCurrent(id);
 	}
-    
+
+	/** Method: getRearUSDistance - Calculates the Distance Sensed by the
+	 *  Rear Side UltraSonic Sensor.
+     *  @return: Sensed Distance by Left UltraSonic Sensor */
     public double getRearUSDistance() {
-    	return rearUS.getValue();
+    	float DistRear;  // inch
+/*    	DistRear = (float)rearUS.getAverageVoltage(); */
+    	DistRear = calcDistUSRear((float)rearUS.getAverageVoltage());
+    	return (double)DistRear;
     }
-    
+
+	/** Method: getLeftUSDistance - Calculates the Distance Sensed by the
+	 *  Left Side UltraSonic Sensor.    
+     *  @return: Sensed Distance by Left UltraSonic Sensor */
     public double getLeftUSDistance() {
-    	return leftUS.getValue();
+    	float DistLeft;  // inch
+/*    	DistLeft = (float)leftUS.getAverageVoltage()(); */
+    	DistLeft = calcDistUSLeft((float)leftUS.getAverageVoltage());
+    	return (double)DistLeft;
     }
-    
+
+	/** Method: getRightUSDistance - Calculates the Distance Sensed by the
+	 *  Right Side UltraSonic Sensor.
+     *  @return: Sensed Distance by Right UltraSonic Sensor */
     public double getRightUSDistance() {
-    	return rightUS.getValue();
+    	float DistRight;  // inch
+/*    	DistRight = (float)rightUS.getAverageVoltage(); */
+    	DistRight = calcDistUSRight((float)rightUS.getAverageVoltage());
+    	return (double)DistRight;
     }
     
+	/** Method: getUSDistanceFromId - Calculates the Distance Sensed by the
+	 *  UltraSonic Sensor specified by the Argument Supplied.
+	 *  @param: ID of UltraSonic Sensor that Distance Reading is Desired
+	 *  @return: Sensed Distance from Specified UltraSonic Sensor */
     public double getUSDistanceFromId(double id) {
     	if(id == RobotMap.REAR_US) {
     		return getRearUSDistance();
@@ -76,5 +99,92 @@ public class SENSORS extends Subsystem {
 	public void initDefaultCommand() {
 		setDefaultCommand(new BM_SensorUpdate());
     }
+
+
+	
+	
+	
+	/*****************************************************************/
+	/* UltraSonic Distance Measurement Conversion Calculations       */
+	/*****************************************************************/
+	
+	/** Method: calcDistUSRear - Calculates the Distance Sensed by the
+	 *  Rear Side UltraSonic Sensor.
+     *  @param: Sensor Sensed Voltage
+     *  @return: Sensor Sensed Distance */
+	private float calcDistUSRear(float VoltSnsd)
+	  {
+      float V2DConvFx; // Voltage to Distance Conversion Factor (inch/volt)
+      float DistOfst;  // Distance Offset from Edge of Robot, inboard is positive (inch)
+      float DistCalcd; // Calculated Distance (inches)
+      
+      V2DConvFx = K_SensorCal.KUSS_Fx_VoltToDistRear;   // inch/volt
+      DistOfst = K_SensorCal.KUSS_l_DistOfstRear;       // inch
+
+      DistCalcd = calcDistUSSensor(VoltSnsd, V2DConvFx, DistOfst);
+      
+      return (DistCalcd);
+      }
+
+	
+	/** Method: calcDistUSLeft - Calculates the Distance Sensed by the
+	 *  Left Side UltraSonic Sensor.
+     *  @param: Sensor Sensed Voltage
+     *  @return: Sensor Sensed Distance */
+	private float calcDistUSLeft(float VoltSnsd)
+	  {
+      float V2DConvFx; // Voltage to Distance Conversion Factor (inch/volt)
+      float DistOfst;  // Distance Offset from Edge of Robot, inboard is positive (inch)
+      float DistCalcd; // Calculated Distance (inches)
+      
+      V2DConvFx = K_SensorCal.KUSS_Fx_VoltToDistLeft;   // inch/volt
+      DistOfst = K_SensorCal.KUSS_l_DistOfstLeft;       // inch
+
+      DistCalcd = calcDistUSSensor(VoltSnsd, V2DConvFx, DistOfst);
+      
+      return (DistCalcd);
+      }
+
+	
+	/** Method: calcDistUSRight - Calculates the Distance Sensed by the
+	 *  Right Side UltraSonic Sensor.
+     *  @param: Sensor Sensed Voltage
+     *  @return: Sensor Sensed Distance */
+	private float calcDistUSRight(float VoltSnsd)
+	  {
+      float V2DConvFx; // Voltage to Distance Conversion Factor (inch/volt)
+      float DistOfst;  // Distance Offset from Edge of Robot, inboard is positive (inch)
+      float DistCalcd; // Calculated Distance (inches)
+      
+      V2DConvFx = K_SensorCal.KUSS_Fx_VoltToDistRight;  // inch/volt
+      DistOfst = K_SensorCal.KUSS_l_DistOfstRight;      // inch
+
+      DistCalcd = calcDistUSSensor(VoltSnsd, V2DConvFx, DistOfst);
+      
+      return (DistCalcd);
+      }
+
+	
+	/** Method: calcDistUSSensor - Calculates the Distance Sensed
+	 * by UltraSonic Sensors from the Voltage to Distance Conversion
+	 * Factor and the Distance Offset that the Sensor is in-board
+	 * from the edge of the robot.
+    *  @param1: Sensor Sensed Voltage
+    *  @param2: Sensor Voltage to Distance Conversion Factor
+    *  @param3: Sensor Distance Offset from Edge of Robot 
+    *  @return: Sensor Sensed Distance */	
+	private float calcDistUSSensor(float SnsdVolt,
+			                       float V2DConvFx,
+			                       float DistOfst) {
+
+      float SnsdDist; // Sensed Distance     
+      
+      SnsdDist = (float)((SnsdVolt * V2DConvFx) - DistOfst);
+      if (SnsdDist < (float)0.0) SnsdDist = (float)0.0; 
+      
+      return SnsdDist;
+	}
+	
+	
 }
 

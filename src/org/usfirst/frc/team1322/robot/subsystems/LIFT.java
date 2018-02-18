@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class LIFT extends Subsystem {
 
-	enum LiftActn
+	public enum LiftActn
 	  {
 	  Raise, Lower;
 	  }

@@ -126,5 +126,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		SmartDashboard.putNumber("REAR US: ", kSENSORS.getRearUSDistance());
+		SmartDashboard.putNumber("RIGHT US: ", kSENSORS.getRightUSDistance());
+		SmartDashboard.putNumber("LEFT US: ", kSENSORS.getLeftUSDistance());
 	}
 }
