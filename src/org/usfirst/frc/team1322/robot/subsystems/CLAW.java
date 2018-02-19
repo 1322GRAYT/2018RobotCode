@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
-import org.usfirst.frc.team1322.robot.RobotMap;
+import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;

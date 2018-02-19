@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1322.robot;
+package org.usfirst.frc.team1322.robot.calibrations;
 
 
 /**
@@ -7,13 +7,36 @@ package org.usfirst.frc.team1322.robot;
  * Engineering Units.
  */
 public class K_SensorCal {
+
+  /***********************************************/
+  /* Mecanum WheelSpeed Sensors / Motor Encoders */
+  /***********************************************/
+
+  /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Reward
+   * per one Wheel Revolution (inches). */
+  public static final float KWSS_l_DistPerRevWheel = (float) 12.56;    // inch
+
+  /* KWSS_Cnt_PulsePerRevEncoder: Number of Shaft Encoder Pulses per one
+   * rotation of the Shaft the Encoder is mounted on. */
+  public static final int KWSS_Cnt_PulsePerRevEncoder = (int) 1000;    // clicks
   
+  /* KWSS_r_EncoderToWheel: The ratio of the number of rotations of
+   * the encoder shaft to the number of rotations of the wheel axle shaft. */  
+  public static final float KWSS_r_EncoderToWheel = (float) 3.0;       // ratio
+  
+  /* KWSS_n_EncoderSpdMaxLim: The Unloaded Encoder Speed Recorded for the
+   * slowest Wheel/Motor during testing which will be used as the Maximum
+   * Encoder Speed Limit.  */  
+  public static final float KWSS_n_EncoderSpdMaxLim = (float) 211.98;  // rev/min
+	
+	
+	
   /********************************/	
   /* UltraSonic Distance Sensors  */
   /********************************/	
   /* UltraSonic Distance Sensor - Rear */
 
-	/* KUSS_Fx_VoltToDistRear: Voltage to Distance Conversion Factor (inch/volt)
+  /* KUSS_Fx_VoltToDistRear: Voltage to Distance Conversion Factor (inch/volt)
    * for the Rear UltraSonic Sensor. */
   public static final float KUSS_Fx_VoltToDistRear = (float) 520.2; // inch/volt
   

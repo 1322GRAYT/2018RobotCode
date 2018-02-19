@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
-import org.usfirst.frc.team1322.robot.K_SensorCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
 import org.usfirst.frc.team1322.robot.Robot;
-import org.usfirst.frc.team1322.robot.RobotMap;
+import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
