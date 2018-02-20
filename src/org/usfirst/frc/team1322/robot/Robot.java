@@ -49,6 +49,18 @@ public class Robot extends IterativeRobot {
 		//gyro.calibrate();
 		//System.out.println("Gyro Calibrated");
 		//CameraServer.getInstance().startAutomaticCapture();
+		
+		
+		
+		SmartDashboard.putNumberArray("DRIVE Velocity", kDRIVE.getEncodersVelocity());
+		SmartDashboard.putNumberArray("DRIVE Position", kDRIVE.getEncoders());
+		SmartDashboard.putNumberArray("DRIVE Voltage", kDRIVE.getMotorVoltage());
+		SmartDashboard.putNumberArray("DRIVE Current", kDRIVE.getMotorCurrent());
+		
+		SmartDashboard.putNumber("X", 0);
+		SmartDashboard.putNumber("Y", 0);
+		SmartDashboard.putNumber("R", 0);
+		
 	}
 
 	/**
@@ -126,5 +138,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		
+		
+		SmartDashboard.putNumberArray("DRIVE Velocity", kDRIVE.getEncodersVelocity());
+		SmartDashboard.putNumberArray("DRIVE Position", kDRIVE.getEncoders());
+		SmartDashboard.putNumberArray("DRIVE Voltage", kDRIVE.getMotorVoltage());
+		SmartDashboard.putNumberArray("DRIVE Current", kDRIVE.getMotorCurrent());
+		
+		kDRIVE.mechDrive(SmartDashboard.getNumber("X", 0), 
+				SmartDashboard.getNumber("Y", 0), 
+				SmartDashboard.getNumber("R", 0));	
 	}
 }
