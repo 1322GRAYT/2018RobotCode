@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DRIVE extends Subsystem {
 
-	private TalonSRX lF_Drive_1= new TalonSRX(RobotMap.LF_MECH_1);
-	private TalonSRX lF_Drive_2= new TalonSRX(RobotMap.LF_MECH_2);
-	private TalonSRX rF_Drive_1= new TalonSRX(RobotMap.RF_MECH_1);
-	private TalonSRX rF_Drive_2= new TalonSRX(RobotMap.RF_MECH_2);
-	private TalonSRX lR_Drive_1= new TalonSRX(RobotMap.LR_MECH_1);
-	private TalonSRX lR_Drive_2= new TalonSRX(RobotMap.LR_MECH_2);
-	private TalonSRX rR_Drive_1= new TalonSRX(RobotMap.RR_MECH_1);
-	private TalonSRX rR_Drive_2= new TalonSRX(RobotMap.RR_MECH_2);
+	private TalonSRX lF_Drive_1;
+	private TalonSRX lF_Drive_2;
+	private TalonSRX rF_Drive_1;
+	private TalonSRX rF_Drive_2;
+	private TalonSRX lR_Drive_1;
+	private TalonSRX lR_Drive_2;
+	private TalonSRX rR_Drive_1;
+	private TalonSRX rR_Drive_2;
     private static final int NUMBER_OF_MOTORS = 4; 
     private final int LEFT_FRONT = 0; 
     private final int RIGHT_FRONT = 1; 
@@ -28,6 +28,21 @@ public class DRIVE extends Subsystem {
     private final double OUTPUT_SCALE_FACTOR = 1.0; 
 
 
+    public DRIVE() {
+    	lF_Drive_1= new TalonSRX(RobotMap.LF_MECH_1);
+    	lF_Drive_2= new TalonSRX(RobotMap.LF_MECH_2);
+    	rF_Drive_1= new TalonSRX(RobotMap.RF_MECH_1);
+    	rF_Drive_2= new TalonSRX(RobotMap.RF_MECH_2);
+    	lR_Drive_1= new TalonSRX(RobotMap.LR_MECH_1);
+    	lR_Drive_2= new TalonSRX(RobotMap.LR_MECH_2);
+    	rR_Drive_1= new TalonSRX(RobotMap.RR_MECH_1);
+    	rR_Drive_2= new TalonSRX(RobotMap.RR_MECH_2);
+    	
+    	//rR_Drive_1.setSensorPhase(true);
+    	//rR_Drive_1.setInverted(true);
+    	
+    }
+    
     /**
      * Cartesian drive method that specifies speeds in terms of the field longitudinal and lateral directions, using the drive's 
      * angle sensor to automatically determine the robot's orientation relative to the field. 
@@ -160,6 +175,8 @@ public class DRIVE extends Subsystem {
      * Gets the encoder values
      * @return RR, RF, LF, LR Encoder Values
      */
+	
+	
 	public double[] getEncoders(){ 
 		double[] encoders = {
 				rR_Drive_1.getSensorCollection().getQuadraturePosition(), 
@@ -170,12 +187,50 @@ public class DRIVE extends Subsystem {
 		return encoders;
 	}
 	
+	public double[] getEncodersVelocity(){ 
+		double[] encoders = {
+				rR_Drive_1.getSensorCollection().getQuadratureVelocity(),
+				rF_Drive_2.getSensorCollection().getQuadratureVelocity(), 
+				lF_Drive_2.getSensorCollection().getQuadratureVelocity(),
+				lR_Drive_1.getSensorCollection().getQuadratureVelocity()
+				};
+		return encoders;
+	}
+	public double[] getMotorVoltage(){ 
+		double[] encoders = {
+				rR_Drive_1.getMotorOutputVoltage(),
+				rR_Drive_2.getMotorOutputVoltage(),
+				rF_Drive_1.getMotorOutputVoltage(),
+				rF_Drive_2.getMotorOutputVoltage(),
+				lF_Drive_1.getMotorOutputVoltage(),
+				lF_Drive_2.getMotorOutputVoltage(),
+				lR_Drive_1.getMotorOutputVoltage(),
+				lR_Drive_2.getMotorOutputVoltage()
+				};
+		return encoders;
+	}
+	public double[] getMotorCurrent(){ 
+		double[] encoders = {
+				rR_Drive_1.getOutputCurrent(),
+				rR_Drive_2.getOutputCurrent(),
+				rF_Drive_1.getOutputCurrent(),
+				rF_Drive_2.getOutputCurrent(),
+				lF_Drive_1.getOutputCurrent(),
+				lF_Drive_2.getOutputCurrent(),
+				lR_Drive_1.getOutputCurrent(),
+				lR_Drive_2.getOutputCurrent()
+				};
+		return encoders;
+	}
+	
 	public void resetEncoders() {
 		rR_Drive_1.getSensorCollection().setQuadraturePosition(0, 0);
 		rF_Drive_2.getSensorCollection().setQuadraturePosition(0, 0); 
 		lF_Drive_2.getSensorCollection().setQuadraturePosition(0, 0);
 		lR_Drive_1.getSensorCollection().setQuadraturePosition(0, 0);
 	}
+	
+	
 	
 	/**
 	 * Sets the default command so that it is ALWAYS running throughout teleop

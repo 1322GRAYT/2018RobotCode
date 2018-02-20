@@ -30,53 +30,50 @@ public class OI {
 	public final static XboxController DriverStick = new XboxController(RobotMap.USB_Driver),
 			  						   AuxStick    = new XboxController(RobotMap.USB_AUX);
 	
-	private Button  shiftLiftHigh,
-					shiftLiftLow,
-					openClaw,
+	private Button
+					jumpToMid,
 					closeClaw,
-					tiltClawUp,
-					tiltClawDown,
-					runBlockOut,
-					runBlockIn,
-					runBlockLeft,
-					runBlockRight;
+					lowerClaw,
+					liftClaw;
 	
 	private DpadDown DpadDown;
 	private DpadUp  DpadUp;
 	private LeftStickDown LeftStickDown;
 	private LeftStickUp LeftStickUp;
+	private LeftStickLeft LeftStickLeft;
+	private LeftStickRight LeftStickRight;
 	private RTrigger RTrigger;
 	private LTrigger LTrigger;
 	
 	public OI(){		
 		
-		openClaw = 			new JoystickButton(AuxStick,6);//RightBumper
+		jumpToMid = 			new JoystickButton(AuxStick,6);//RightBumper
 		closeClaw = 		new JoystickButton(AuxStick,5);//LeftBumper
-		runBlockOut = 		new JoystickButton(AuxStick, 1);// A
-		runBlockIn = 		new JoystickButton(AuxStick, 4);// Y
-		runBlockRight = 	new JoystickButton(AuxStick, 2);// B
-		runBlockLeft = 		new JoystickButton(AuxStick, 3);// X
+		lowerClaw = 		new JoystickButton(AuxStick, 1);// A
+		liftClaw = 		new JoystickButton(AuxStick, 4);// Y
+		//runBlockRight = 	new JoystickButton(AuxStick, 2);// B
+		//runBlockLeft = 		new JoystickButton(AuxStick, 3);// X
 		DpadUp = 			new DpadUp();					//Dpad Up
 		DpadDown = 			new DpadDown();					//Dpad Down
 		LeftStickDown = 	new LeftStickDown();			//Left Stick Down
 		LeftStickUp = 		new LeftStickUp();				//Left Stick Up
+		LeftStickLeft = 	new LeftStickLeft();			//Left Stick Right
+		LeftStickRight = 	new LeftStickRight();			//Left Stick Left
 		RTrigger = 			new RTrigger();					//Right Trigger
 		LTrigger = 			new LTrigger();					//Left Trigger
 		
 		//Actions
 		DpadUp.whenActive(new BM_ShiftLift(true));
 		DpadDown.whenActive(new BM_ShiftLift(false));
-		LeftStickDown.whenActive(new BM_LiftClaw(true));
-		LeftStickUp.whenActive(new BM_LiftClaw(false));
-		openClaw.whenPressed(new BM_OpenClaw(true));
-		closeClaw.whenPressed(new BM_OpenClaw(false));
-		runBlockOut.whileActive(new TC_RunWheelsInOut(false));
-		runBlockIn.whileActive(new TC_RunWheelsInOut(true));
-		runBlockRight.whileActive(new TC_RunWheelsRotate(true));
-		runBlockLeft.whileActive(new TC_RunWheelsRotate(false));
-		RTrigger.toggleWhenActive(new BM_RaiseToMid());
-		//RTrigger.whileActive(new BM_LowerToLow());  TODO: Assign to Controller Trigger
-		
+		LeftStickDown.whenActive(new TC_RunWheelsInOut(true));
+		LeftStickUp.whenActive(new TC_RunWheelsInOut(false));
+		LeftStickLeft.whenActive(new TC_RunWheelsRotate(true));
+		LeftStickRight.whenActive(new TC_RunWheelsRotate(false));
+		RTrigger.toggleWhenActive(new BM_OpenClaw(true));
+		LTrigger.toggleWhenActive(new BM_OpenClaw(false));
+		lowerClaw.whileActive(new BM_LiftClaw(true));
+		liftClaw.whileActive(new BM_LiftClaw(false));
+		jumpToMid.toggleWhenActive(new BM_JumpToMid());
 	}
 	
 	
