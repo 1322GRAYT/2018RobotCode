@@ -100,6 +100,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		Robot.kSENSORS.updateSensorData();
 		Scheduler.getInstance().run();
 	}
 
@@ -119,6 +120,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		Robot.kSENSORS.updateSensorData();
 		Scheduler.getInstance().run();
 	}
 

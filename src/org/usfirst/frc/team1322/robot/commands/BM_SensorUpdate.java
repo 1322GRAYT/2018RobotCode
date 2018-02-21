@@ -47,6 +47,13 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumber("Right US : ", Robot.kSENSORS.getRightUSDistance());
     	//Gyro
     	SmartDashboard.putNumber("Gyro Angle : ", Robot.kSENSORS.getGyroAngle());
+    	//Drive Speeds
+    	SmartDashboard.putNumberArray("Encoder Velocity : ", Robot.kSENSORS.getEncodersVelRaw());
+    	SmartDashboard.putNumberArray("Encoder Counts : ", Robot.kSENSORS.getEncodersCnt());
+    	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
+    	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
+    	SmartDashboard.putNumberArray("Wheel Velocity : ", Robot.kSENSORS.getWhlsVel());
+    	
     	//Update SmartDashboard
     	//SmartDashboard.updateValues();
     }
