@@ -1,10 +1,5 @@
 
-*.class
 build/
 bin/
 *.class
-dist/FRCUserProgram.jar
-*.class
-build/org/usfirst/frc/team1322/robot/commands/AM_DropBlock.class
-build/org/usfirst/frc/team1322/robot/commands/BM_TurnByGyro.class
-build/org/usfirst/frc/team1322/robot/Robot.class
+*.jar
