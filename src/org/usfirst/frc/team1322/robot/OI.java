@@ -73,7 +73,7 @@ public class OI {
 		LTrigger.toggleWhenActive(new BM_OpenClaw(false));
 		lowerClaw.whileActive(new BM_LiftClaw(true));
 		liftClaw.whileActive(new BM_LiftClaw(false));
-		jumpToMid.toggleWhenActive(new BM_JumpToMid());
+		jumpToMid.toggleWhenActive(new BM_RaiseToMid());
 	}
 	
 	

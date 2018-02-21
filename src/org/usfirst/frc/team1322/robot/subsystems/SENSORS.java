@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
+import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -25,44 +27,91 @@ public class SENSORS extends Subsystem {
     private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	private DigitalInput blockDetector = new DigitalInput(RobotMap.BLOCK_DETECTOR); //Block Detector Sensor
 
-    
-    
+	// Drive System Encoders/Wheels
+	// Idx [0] - RF: Right Front	
+	// Idx [1] - LF: Left Front	
+	// Idx [2] - RR: Right Rear	
+	// Idx [3] - LR: Left Rear
+	private double EncdrVelRaw[] = new double[4];
+	private double EncdrCnt[] = new double[4];
+	private double EncdrRPM[] = new double[4];
+	private double WhlRPM[] = new double[4];
+	private double WhlVel[] = new double[4];
+
+	private float  USDistRear;
+	private float  USDistLeft;
+	private float  USDistRight;
+
+	
     public void init() {
-    	AnalogInput.setGlobalSampleRate(9600);
+      AnalogInput.setGlobalSampleRate(9600);
     }
-    
+      
     public double getPdpCurrent(int id) {
-		return pdp.getCurrent(id);
+  	  return pdp.getCurrent(id);
+  	}
+	
+	
+	/** Method: getEncodersVelRaw - Interface to Get the array of
+	  * Raw Encoder Speeds in units of Counts/msec.
+     *  @return: Array of Drive System Raw Encoder Speeds (Counts/msec) */	
+	public double[] getEncodersVelRaw(){ 
+      double[] encoders = EncdrVelRaw;
+      return encoders;
 	}
 
+	/** Method: getEncodersCnt - Interface to Get the array of
+	  * Encoder Counts in units of RPM.
+     *  @return: Array of Drive System Encoder Counts (Counts) */	
+	public double[] getEncodersCnt(){ 
+      double[] encoders = EncdrCnt;
+      return encoders;
+    }
+	
+	/** Method: getEncodersRPM - Interface to Get the array of
+	  * Encoder Speeds in units of RPM.
+      *  @return: Array of Drive System Encoder Speeds (RPM) */	
+	public double[] getEncodersRPM(){ 
+      double[] encoders = EncdrRPM;
+      return encoders;
+	}
+
+	/** Method: getWhlsRPM - Interface to Get the array of
+	  * Wheel Speeds in units of RPM.
+      *  @return: Array of Drive System Wheel Speeds (RPM) */
+    public double[] getWhlsRPM(){ 
+      double[] encoders = WhlRPM;
+      return encoders;
+	}
+ 
+	/** Method: getWhlsVel - Interface to Get the array of
+	  * Wheel Linear Velocity in units of inches/sec.
+     *  @return: Array of Drive System Linear Wheel Speeds (inches/sec) */
+   public double[] getWhlsVel(){ 
+     double[] encoders = WhlVel;
+     return encoders;
+	}   
+    
+    
 	/** Method: getRearUSDistance - Calculates the Distance Sensed by the
 	 *  Rear Side UltraSonic Sensor.
      *  @return: Sensed Distance by Left UltraSonic Sensor */
     public double getRearUSDistance() {
-    	float DistRear;  // inch
-/*    	DistRear = (float)rearUS.getAverageVoltage(); */
-    	DistRear = calcDistUSRear((float)rearUS.getAverageVoltage());
-    	return (double)DistRear;
+      return (double)USDistRear;
     }
 
 	/** Method: getLeftUSDistance - Calculates the Distance Sensed by the
 	 *  Left Side UltraSonic Sensor.    
      *  @return: Sensed Distance by Left UltraSonic Sensor */
     public double getLeftUSDistance() {
-    	float DistLeft;  // inch
-/*    	DistLeft = (float)leftUS.getAverageVoltage()(); */
-    	DistLeft = calcDistUSLeft((float)leftUS.getAverageVoltage());
-    	return (double)DistLeft;
+      return (double)USDistLeft;
     }
 
 	/** Method: getRightUSDistance - Calculates the Distance Sensed by the
 	 *  Right Side UltraSonic Sensor.
      *  @return: Sensed Distance by Right UltraSonic Sensor */
     public double getRightUSDistance() {
-    	float DistRight;  // inch
-/*    	DistRight = (float)rightUS.getAverageVoltage(); */
-    	DistRight = calcDistUSRight((float)rightUS.getAverageVoltage());
-    	return (double)DistRight;
+      return (double)USDistRight;
     }
     
 	/** Method: getUSDistanceFromId - Calculates the Distance Sensed by the
@@ -101,67 +150,38 @@ public class SENSORS extends Subsystem {
     }
 
 
-  /*****************************************************************/
-  /* Wheel Speed / Motor Encoder Conversion Calculations           */
-  /*****************************************************************/
+  /** Method: updateSensorData - Updates the Derived Input Sensor Data.  */
+  public void updateSensorData() {
+    int idx;
+    
+    /* Drive Speed Inputs */    
+	EncdrVelRaw = Robot.kDRIVE.getEncodersVelocity();  // tics/msec
+	EncdrCnt = Robot.kDRIVE.getEncoders();             // tic count
+    for (idx=0; idx<4; idx++)
+      {
+      EncdrRPM[idx] = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(60000);  // rpm
+      WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                       // rpm
+      WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;                   // inches/sec
+      }
+    
+    /* UltraSonic Position Inputs */
+	USDistRear = calcDistUSRear((float)rearUS.getAverageVoltage());    // inches
+	USDistLeft = calcDistUSLeft((float)rearUS.getAverageVoltage());    // inches
+	USDistRight = calcDistUSRight((float)rearUS.getAverageVoltage());  // inches
+
+    }
 	
 
-	
-	  /** Method: calcRPMEncoder - Calculates the Rotational
-	    *  speed of an Encoder Shaft from the number of Encoder
-	    *  Counts in the sample and the Sample Time.  Result
-	    *  is in rpm.
-	    *  @param1: Sample Counts (counts)
-	    *  @param2: Sensor Period (seconds)
-	    *  @return: Encoder Shaft Speed (rpm) */	
-	  private float calcRPMEncoder(int SmplCnts,
-	  	                           float SmplPeriod)
-	    {
-	    float SmplCntsPerSec;
-	    float SpdEncoder;
-
-	    if (SmplPeriod > (float)0.0)
-	      {
-	      SmplCntsPerSec = (float)(((float)SmplCnts)/SmplPeriod);
-	      SpdEncoder =  (float)(SmplCntsPerSec/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*((float)60);
-	      }
-	    else if (SmplCnts > (int) 0)
-	      {
-	      SpdEncoder = (float)10000.0;	
-	      }
-	    else
-	      {
-	      SpdEncoder = (float)0.0;
-	      }
-	      
-	    return SpdEncoder;
-		}
-
 	  
-	  /** Method: calcRPMWheel - Calculates the Rotational
-	    *  speed of a Wheel Shaft from the Encoder Shaft
-	    *  Rotational Speed.  Result is in rpm.
-	    *  @param: Encoder Shaft Speed (rpm)
-	    *  @return: Wheel Shaft Speed  (rpm) */	
-	  private float calcRPMWheel(float SpdEncoder)
-	    {
-	    return ((float)(K_SensorCal.KWSS_r_EncoderToWheel * SpdEncoder));
-		}
-
-	  
-	  /** Method: calcLinealSpd - Calculates the Linear 
-	    *  Speed of the Robot from the Average Wheel Speed
-	    *  when moving directly forward or rearward.
-	    *  @param: Average Wheel Shaft Speed (rpm)
-	    *  @return: Robot Linear Speed (fps) */	
-	  private float calcLinealSpd(float SpdWhl)
-	    {
-	    return ((float)((K_SensorCal.KWSS_l_DistPerRevWheel * SpdWhl)/(float)60));
-		}
-	  
-	  
-	  
-	  
+  /** Method: calcLinealSpd - Calculates the Linear 
+    *  Speed of the Robot from the Average Wheel Speed
+    *  when moving directly forward or rearward.
+    *  @param: Average Wheel Shaft Speed (rpm)
+    *  @return: Robot Linear Speed (fps) */	
+  private float calcLinealSpd(float SpdWhl)
+    {
+    return ((float)((K_SensorCal.KWSS_l_DistPerRevWheel * SpdWhl)/(float)60));
+	}
 	  
 	  
 	

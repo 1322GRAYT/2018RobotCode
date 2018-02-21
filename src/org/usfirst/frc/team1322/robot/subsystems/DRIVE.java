@@ -196,6 +196,7 @@ public class DRIVE extends Subsystem {
 				};
 		return encoders;
 	}
+	
 	public double[] getMotorVoltage(){ 
 		double[] encoders = {
 				rR_Drive_1.getMotorOutputVoltage(),

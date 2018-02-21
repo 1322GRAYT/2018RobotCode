@@ -8,11 +8,12 @@ package org.usfirst.frc.team1322.robot.calibrations;
  */
 public class K_SensorCal {
 
-  /***********************************************/
-  /* Mecanum WheelSpeed Sensors / Motor Encoders */
-  /***********************************************/
 
-  /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Reward
+  /******************************************************/
+  /* Mecanum WheelSpeed Sensors / Motor Encoder Sensors */
+  /******************************************************/
+
+  /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Rearward
    * per one Wheel Revolution (inches). */
   public static final float KWSS_l_DistPerRevWheel = (float) 12.56;    // inch
 
@@ -52,7 +53,7 @@ public class K_SensorCal {
 
   /* KUSS_l_DistOfstLeft: Distance Offset (inch) that the Sensor is from the edge
    * of the robot (positive number is in-board) for the Left UltraSonic Sensor. */
-  public static final float KUSS_l_DistOfstLeft = (float) 5.375; // inch
+  public static final float KUSS_l_DistOfstLeft = (float) 2.0; // inch
 	
   /* UltraSonic Distance Sensor - Right */
 
@@ -62,7 +63,7 @@ public class K_SensorCal {
 
   /* KUSS_l_DistOfstRight: Distance Offset (inch) that the Sensor is from the edge
    * of the robot (positive number is in-board) for the Right UltraSonic Sensor. */
-  public static final float KUSS_l_DistOfstRight = (float) 5.375; // inch
+  public static final float KUSS_l_DistOfstRight = (float) 2.0; // inch
 
   
 }
