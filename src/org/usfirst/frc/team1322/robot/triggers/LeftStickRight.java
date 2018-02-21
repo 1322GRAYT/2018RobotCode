@@ -11,6 +11,6 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 public class LeftStickRight extends Trigger {
 
     public boolean get() {
-        return OI.AuxStick.getX(Hand.kLeft) <= .3;
+        return OI.AuxStick.getX(Hand.kLeft) >= .3;
     }
 }

@@ -27,8 +27,12 @@ public class SENSORS extends Subsystem {
 
     
     
-    public void init() {
+    public void setGlobalBaud() {
     	AnalogInput.setGlobalSampleRate(9600);
+    }
+    
+    public void calibrateGyro() {
+    	gyro.calibrate();
     }
     
     public double getPdpCurrent(int id) {

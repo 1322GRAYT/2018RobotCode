@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team1322.robot;
 
-import org.usfirst.frc.team1322.robot.commands.AM_DropBlock;
+import org.usfirst.frc.team1322.robot.commands.AM_DropBlockTimed;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
@@ -44,23 +44,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		//m_chooser.addDefault("Turn 90", new AM_DropBlock());
-		//SmartDashboard.putData("Auto mode", m_chooser);
-		//gyro.calibrate();
-		//System.out.println("Gyro Calibrated");
-		//CameraServer.getInstance().startAutomaticCapture();
-		
-		
-		
-		SmartDashboard.putNumberArray("DRIVE Velocity", kDRIVE.getEncodersVelocity());
-		SmartDashboard.putNumberArray("DRIVE Position", kDRIVE.getEncoders());
-		SmartDashboard.putNumberArray("DRIVE Voltage", kDRIVE.getMotorVoltage());
-		SmartDashboard.putNumberArray("DRIVE Current", kDRIVE.getMotorCurrent());
-		
-		SmartDashboard.putNumber("X", 0);
-		SmartDashboard.putNumber("Y", 0);
-		SmartDashboard.putNumber("R", 0);
-		
+		m_chooser.addDefault("Turn 90", new AM_DropBlockTimed());
+		SmartDashboard.putData("Auto mode", m_chooser);
+		kSENSORS.calibrateGyro();
+		kSENSORS.setGlobalBaud();
+		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
+		CameraServer.getInstance().startAutomaticCapture();		
 	}
 
 	/**

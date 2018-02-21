@@ -43,7 +43,7 @@ public class BM_TurnByGyro extends Command {
     	}
     	
     	double nineTenthsOfTotal = .9 * turnAngle;
-    	if(Robot.kSENSORS.getGyroAngle() >= sevenTenthsOfTotal) {
+    	if(Robot.kSENSORS.getGyroAngle() >= nineTenthsOfTotal) {
     		Robot.kDRIVE.mechDrive(0, 0, (turnSpeed * .25));
     	}
     }

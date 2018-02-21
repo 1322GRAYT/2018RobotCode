@@ -9,14 +9,12 @@ package org.usfirst.frc.team1322.robot;
 
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_RaiseToMid;
-import org.usfirst.frc.team1322.robot.commands.BM_LowerToLow;
 import org.usfirst.frc.team1322.robot.commands.BM_LiftClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_OpenClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_ShiftLift;
 import org.usfirst.frc.team1322.robot.commands.TC_RunWheelsInOut;
 import org.usfirst.frc.team1322.robot.commands.TC_RunWheelsRotate;
 import org.usfirst.frc.team1322.robot.triggers.*;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -47,12 +45,10 @@ public class OI {
 	
 	public OI(){		
 		
-		jumpToMid = 			new JoystickButton(AuxStick,6);//RightBumper
-		closeClaw = 		new JoystickButton(AuxStick,5);//LeftBumper
+		jumpToMid = 		new JoystickButton(AuxStick,6);	//RightBumper
+		closeClaw = 		new JoystickButton(AuxStick,5);	//LeftBumper
 		lowerClaw = 		new JoystickButton(AuxStick, 1);// A
-		liftClaw = 		new JoystickButton(AuxStick, 4);// Y
-		//runBlockRight = 	new JoystickButton(AuxStick, 2);// B
-		//runBlockLeft = 		new JoystickButton(AuxStick, 3);// X
+		liftClaw = 			new JoystickButton(AuxStick, 4);// Y
 		DpadUp = 			new DpadUp();					//Dpad Up
 		DpadDown = 			new DpadDown();					//Dpad Down
 		LeftStickDown = 	new LeftStickDown();			//Left Stick Down
@@ -65,15 +61,15 @@ public class OI {
 		//Actions
 		DpadUp.whenActive(new BM_ShiftLift(true));
 		DpadDown.whenActive(new BM_ShiftLift(false));
-		LeftStickDown.whenActive(new TC_RunWheelsInOut(true));
-		LeftStickUp.whenActive(new TC_RunWheelsInOut(false));
-		LeftStickLeft.whenActive(new TC_RunWheelsRotate(true));
-		LeftStickRight.whenActive(new TC_RunWheelsRotate(false));
+		LeftStickDown.whileActive(new TC_RunWheelsInOut(true));
+		LeftStickUp.whileActive(new TC_RunWheelsInOut(false));
+		LeftStickLeft.whileActive(new TC_RunWheelsRotate(true));
+		LeftStickRight.whileActive(new TC_RunWheelsRotate(false));
 		RTrigger.toggleWhenActive(new BM_OpenClaw(true));
 		LTrigger.toggleWhenActive(new BM_OpenClaw(false));
 		lowerClaw.whileActive(new BM_LiftClaw(true));
 		liftClaw.whileActive(new BM_LiftClaw(false));
-		jumpToMid.toggleWhenActive(new BM_JumpToMid());
+		jumpToMid.toggleWhenActive(new BM_RaiseToMid());
 	}
 	
 	
