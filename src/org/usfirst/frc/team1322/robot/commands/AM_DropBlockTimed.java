@@ -13,10 +13,13 @@ public class AM_DropBlockTimed extends CommandGroup {
 	//private final int dsNum = DriverStation.getInstance().getLocation(); //Store driver station number to string
 	
     public AM_DropBlockTimed() {
-    	addParallel(new AC_DriveByGyroTime(1,0, 3));
-        addSequential(new BM_RaiseToMid());
-    	addSequential(new BM_TurnByGyro(.5, 90));
-    	addParallel(new AC_DriveByGyroTime(1, 0, 2));
-    	addParallel(new BM_OpenClaw(true));
+    	addSequential(new AC_DriveByGyroTime(0,-.4, 1));
+    	addSequential(new BM_RaiseToMid());
+    	addSequential(new BM_TurnByGyro(.7, 90));
+    	addSequential(new AC_DriveByGyroTime(0, -.8, .2));
+    	addSequential(new BM_LiftClaw(true));
+    	addSequential(new BM_OpenClaw(true));
+    	addSequential(new BM_LiftClaw(false));
+    	addSequential(new AC_DriveByGyroTime(0, .8, .2));
     }
 }
