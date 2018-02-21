@@ -28,7 +28,7 @@ public class K_SensorCal {
   /* KWSS_n_EncoderSpdMaxLim: The Unloaded Encoder Speed Recorded for the
    * slowest Wheel/Motor during testing which will be used as the Maximum
    * Encoder Speed Limit.  */  
-  public static final float KWSS_n_EncoderSpdMaxLim = (float) 211.98;  // rev/min
+  public static final float KWSS_n_EncoderSpdMaxLim = (float) 4000.0;  // rev/min
 	
 	
 	

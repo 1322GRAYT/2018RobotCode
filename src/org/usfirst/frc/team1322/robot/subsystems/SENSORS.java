@@ -58,8 +58,8 @@ public class SENSORS extends Subsystem {
 	
 	
 	/** Method: getEncodersVelRaw - Interface to Get the array of
-	  * Raw Encoder Speeds in units of Counts/msec.
-     *  @return: Array of Drive System Raw Encoder Speeds (Counts/msec) */	
+	  * Raw Encoder Speeds in units of Counts/100ms.
+     *  @return: Array of Drive System Raw Encoder Speeds (Counts/100ms) */	
 	public double[] getEncodersVelRaw(){ 
       double[] encoders = EncdrVelRaw;
       return encoders;
@@ -158,13 +158,16 @@ public class SENSORS extends Subsystem {
   /** Method: updateSensorData - Updates the Derived Input Sensor Data.  */
   public void updateSensorData() {
     int idx;
+    double RPM_Raw;
     
     /* Drive Speed Inputs */    
-	EncdrVelRaw = Robot.kDRIVE.getEncodersVelocity();  // tics/msec
+	EncdrVelRaw = Robot.kDRIVE.getEncodersVelocity();  // tics/100msec
 	EncdrCnt = Robot.kDRIVE.getEncoders();             // tic count
     for (idx=0; idx<4; idx++)
       {
-      EncdrRPM[idx] = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(60000);  // rpm
+      RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);          // rpm
+      if(idx == 0) RPM_Raw = -(RPM_Raw);
+      EncdrRPM[idx] = RPM_Raw;
       WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                       // rpm
       WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;                   // inches/sec
       }
