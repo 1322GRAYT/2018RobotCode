@@ -17,6 +17,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class SENSORS extends Subsystem {
+
+	public enum TeWhlEncdrs
+	  {
+	  CeRtRear, CeRtFront, CeLtFront, CeLtRear, CiNumOfEncdrs;
+	  }	
+	
+	public enum TeDrvMtrs
+	  {
+	  CeMtrRtRear1, CeMtrRtRear2, CeMtrRtFront1, CeMtrRtFront2, CeMtrLtFront1, CeMtrLtFront2,
+	  CeMtrLtRear1, CeMtrLtRear2, CiNumOfDrvMtrs;
+	  }	
+	
 	
 	//Power Dist. Panel
     private PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -28,9 +40,9 @@ public class SENSORS extends Subsystem {
 	private DigitalInput blockDetector = new DigitalInput(RobotMap.BLOCK_DETECTOR); //Block Detector Sensor
 
 	// Drive System Encoders/Wheels
-	// Idx [0] - RF: Right Front	
-	// Idx [1] - LF: Left Front	
-	// Idx [2] - RR: Right Rear	
+	// Idx [0] - RR: Right Rear	
+	// Idx [1] - RF: Right Front	
+	// Idx [2] - LF: Left Front	
 	// Idx [3] - LR: Left Rear
 	private double EncdrVelRaw[] = new double[4];
 	private double EncdrCnt[] = new double[4];
@@ -157,7 +169,7 @@ public class SENSORS extends Subsystem {
 
   /** Method: updateSensorData - Updates the Derived Input Sensor Data.  */
   public void updateSensorData() {
-    int idx;
+	int idx;
     double RPM_Raw;
     
     /* Drive Speed Inputs */    
@@ -166,7 +178,7 @@ public class SENSORS extends Subsystem {
     for (idx=0; idx<4; idx++)
       {
       RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);          // rpm
-      if(idx == 0) RPM_Raw = -(RPM_Raw);
+      if(idx == 0) RPM_Raw = -(RPM_Raw);  // RtRear Encoder Wired Backwards
       EncdrRPM[idx] = RPM_Raw;
       WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                       // rpm
       WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;                   // inches/sec
