@@ -3,36 +3,38 @@ package org.usfirst.frc.team1322.robot.commands;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Drive Forward/Sideways using the gyro
  */
-public class AC_DriveByGyro extends Command {
+public class AC_DriveByGyroTime extends Command {
 
 	private double strafeSpeed;
 	private double forwardSpeed;
 	private double startGyroPos;
-	private double stopDistance;
-	private double usID;
+	private double time;
 	private final double correctionSpeed = RobotMap.autonDriveCorrectionSpeed;
 	private final double leeway = RobotMap.autonDriveLeeway;
+	private Timer timer = new Timer();
 	
 	
-    public AC_DriveByGyro(double forwardSpeed, double strafeSpeed, double stopDistance, double usID) {
-    	//requires(Robot.kSENSORS);
+    public AC_DriveByGyroTime(double forwardSpeed, double strafeSpeed, double time) {
         requires(Robot.kDRIVE);
         this.forwardSpeed = forwardSpeed;
         this.strafeSpeed = strafeSpeed;
-        this.stopDistance = stopDistance;
-        this.usID = usID;
+        this.time = time;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, 0);
+    	timer.reset();
+    	timer.start();
     }
 
+    //Test
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Keep Robot Facing Straight at all costs
@@ -48,12 +50,13 @@ public class AC_DriveByGyro extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return stopDistance <= Robot.kSENSORS.getUSDistanceFromId(usID);
+        return timer.get() >= time;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.kDRIVE.disable();
+    	timer.stop();
     }
 
     // Called when another command which requires one or more of the same

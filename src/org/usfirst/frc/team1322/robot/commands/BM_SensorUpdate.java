@@ -55,7 +55,7 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumberArray("Wheel Velocity : ", Robot.kSENSORS.getWhlsVel());
     	
     	//Update SmartDashboard
-    	//SmartDashboard.updateValues();
+    	SmartDashboard.updateValues();
     }
 
     // Make this return true when this Command no longer needs to run execute()
