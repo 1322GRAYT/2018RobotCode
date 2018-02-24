@@ -17,6 +17,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class SENSORS extends Subsystem {
+
+	public enum TeWhlEncdrs
+	  {
+	  CeRtRear, CeRtFront, CeLtFront, CeLtRear, CiNumOfEncdrs;
+	  }	
+	
+	public enum TeDrvMtrs
+	  {
+	  CeMtrRtRear1, CeMtrRtRear2, CeMtrRtFront1, CeMtrRtFront2, CeMtrLtFront1, CeMtrLtFront2,
+	  CeMtrLtRear1, CeMtrLtRear2, CiNumOfDrvMtrs;
+	  }	
+	
 	
 	//Power Dist. Panel
     private PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -28,9 +40,9 @@ public class SENSORS extends Subsystem {
 	private DigitalInput blockDetector = new DigitalInput(RobotMap.BLOCK_DETECTOR); //Block Detector Sensor
 
 	// Drive System Encoders/Wheels
-	// Idx [0] - RF: Right Front	
-	// Idx [1] - LF: Left Front	
-	// Idx [2] - RR: Right Rear	
+	// Idx [0] - RR: Right Rear	
+	// Idx [1] - RF: Right Front	
+	// Idx [2] - LF: Left Front	
 	// Idx [3] - LR: Left Rear
 	private double EncdrVelRaw[] = new double[4];
 	private double EncdrCnt[] = new double[4];
@@ -58,8 +70,8 @@ public class SENSORS extends Subsystem {
 	
 	
 	/** Method: getEncodersVelRaw - Interface to Get the array of
-	  * Raw Encoder Speeds in units of Counts/msec.
-     *  @return: Array of Drive System Raw Encoder Speeds (Counts/msec) */	
+	  * Raw Encoder Speeds in units of Counts/100ms.
+     *  @return: Array of Drive System Raw Encoder Speeds (Counts/100ms) */	
 	public double[] getEncodersVelRaw(){ 
       double[] encoders = EncdrVelRaw;
       return encoders;
@@ -157,14 +169,17 @@ public class SENSORS extends Subsystem {
 
   /** Method: updateSensorData - Updates the Derived Input Sensor Data.  */
   public void updateSensorData() {
-    int idx;
+	int idx;
+    double RPM_Raw;
     
     /* Drive Speed Inputs */    
-	EncdrVelRaw = Robot.kDRIVE.getEncodersVelocity();  // tics/msec
+	EncdrVelRaw = Robot.kDRIVE.getEncodersVelocity();  // tics/100msec
 	EncdrCnt = Robot.kDRIVE.getEncoders();             // tic count
     for (idx=0; idx<4; idx++)
       {
-      EncdrRPM[idx] = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(60000);  // rpm
+      RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);          // rpm
+      if(idx == 0) RPM_Raw = -(RPM_Raw);  // RtRear Encoder Wired Backwards
+      EncdrRPM[idx] = RPM_Raw;
       WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                       // rpm
       WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;                   // inches/sec
       }
@@ -178,17 +193,34 @@ public class SENSORS extends Subsystem {
 	
 
 	  
-  /** Method: calcLinealSpd - Calculates the Linear 
-    *  Speed of the Robot from the Average Wheel Speed
+  /** Method: cvrtAngToLinSpd - Calculates the Linear 
+    *  Speed of the Robot from the Angular Wheel Speed
     *  when moving directly forward or rearward.
-    *  @param: Average Wheel Shaft Speed (rpm)
+    *  @param: Wheel Angular Speed (rpm)
     *  @return: Robot Linear Speed (fps) */	
-  private float calcLinealSpd(float SpdWhl)
+  private float cvrtAngToLinSpd(float SpdWhl)
     {
-    return ((float)((K_SensorCal.KWSS_l_DistPerRevWheel * SpdWhl)/(float)60));
+    return ((float)((K_SensorCal.KWSS_l_DistPerRevWheel * SpdWhl)/(float)720));
 	}
 	  
-	  
+  /** Method: cvrtDistToCnts - Calculates the nominal number 
+   *  of Drive encoder counts that would be registered if
+   *  the the Drive Wheel traveled forward/backward the
+   *  desired distance given (cnts).
+   *  @param: Desired Distance (feet)
+   *  @return: Encoder Counts (cnts) */
+ private float cvrtDistToCnts(float DistFeet)
+   {
+   float Revs;
+   
+   Revs = (float)(DistFeet*12)/(float)K_SensorCal.KWSS_l_DistPerRevWheel;	 
+
+   return ((float)(Revs * K_SensorCal.KWSS_Cnt_PulsePerRevEncoder));
+   }
+
+  
+  
+  
 	
   /*****************************************************************/
   /* UltraSonic Distance Measurement Conversion Calculations       */

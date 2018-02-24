@@ -26,6 +26,7 @@ public class AC_DriveByGyroTime extends Command {
         this.strafeSpeed = strafeSpeed;
         this.time = time;
     }
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -47,7 +48,7 @@ public class AC_DriveByGyroTime extends Command {
     		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, 0);
     	}
     }
-
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return timer.get() >= time;

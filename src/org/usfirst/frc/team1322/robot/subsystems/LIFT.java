@@ -14,11 +14,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * robot mounts to as well.
  */
 public class LIFT extends Subsystem {
-
-	public enum LiftActn
-	  {
-	  Raise, Lower;
-	  }
 	
 	// Create New Instances of all required IO Objects	
     private TalonSRX lift1 = new TalonSRX(RobotMap.LIFT_1); 				//Lift Motor 1

@@ -15,7 +15,7 @@ public class K_SensorCal {
 
   /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Rearward
    * per one Wheel Revolution (inches). */
-  public static final float KWSS_l_DistPerRevWheel = (float) 12.56;    // inch
+  public static final float KWSS_l_DistPerRevWheel = (float) 12.5664;    // inch
 
   /* KWSS_Cnt_PulsePerRevEncoder: Number of Shaft Encoder Pulses per one
    * rotation of the Shaft the Encoder is mounted on. */
@@ -28,7 +28,7 @@ public class K_SensorCal {
   /* KWSS_n_EncoderSpdMaxLim: The Unloaded Encoder Speed Recorded for the
    * slowest Wheel/Motor during testing which will be used as the Maximum
    * Encoder Speed Limit.  */  
-  public static final float KWSS_n_EncoderSpdMaxLim = (float) 211.98;  // rev/min
+  public static final float KWSS_n_EncoderSpdMaxLim = (float) 4000.0;  // rev/min
 	
 	
 	
