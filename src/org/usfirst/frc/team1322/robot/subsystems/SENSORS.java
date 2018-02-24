@@ -193,17 +193,34 @@ public class SENSORS extends Subsystem {
 	
 
 	  
-  /** Method: calcLinealSpd - Calculates the Linear 
-    *  Speed of the Robot from the Average Wheel Speed
+  /** Method: cvrtAngToLinSpd - Calculates the Linear 
+    *  Speed of the Robot from the Angular Wheel Speed
     *  when moving directly forward or rearward.
-    *  @param: Average Wheel Shaft Speed (rpm)
+    *  @param: Wheel Angular Speed (rpm)
     *  @return: Robot Linear Speed (fps) */	
-  private float calcLinealSpd(float SpdWhl)
+  private float cvrtAngToLinSpd(float SpdWhl)
     {
-    return ((float)((K_SensorCal.KWSS_l_DistPerRevWheel * SpdWhl)/(float)60));
+    return ((float)((K_SensorCal.KWSS_l_DistPerRevWheel * SpdWhl)/(float)720));
 	}
 	  
-	  
+  /** Method: cvrtDistToCnts - Calculates the nominal number 
+   *  of Drive encoder counts that would be registered if
+   *  the the Drive Wheel traveled forward/backward the
+   *  desired distance given (cnts).
+   *  @param: Desired Distance (feet)
+   *  @return: Encoder Counts (cnts) */
+ private float cvrtDistToCnts(float DistFeet)
+   {
+   float Revs;
+   
+   Revs = (float)(DistFeet*12)/(float)K_SensorCal.KWSS_l_DistPerRevWheel;	 
+
+   return ((float)(Revs * K_SensorCal.KWSS_Cnt_PulsePerRevEncoder));
+   }
+
+  
+  
+  
 	
   /*****************************************************************/
   /* UltraSonic Distance Measurement Conversion Calculations       */

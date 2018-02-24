@@ -15,7 +15,7 @@ public class K_SensorCal {
 
   /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Rearward
    * per one Wheel Revolution (inches). */
-  public static final float KWSS_l_DistPerRevWheel = (float) 12.56;    // inch
+  public static final float KWSS_l_DistPerRevWheel = (float) 12.5664;    // inch
 
   /* KWSS_Cnt_PulsePerRevEncoder: Number of Shaft Encoder Pulses per one
    * rotation of the Shaft the Encoder is mounted on. */

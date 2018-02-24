@@ -9,8 +9,20 @@ package org.usfirst.frc.team1322.robot.calibrations;
 public class K_PIDCal {
 
 
-  /* KDRV_n_ErrDeadBand: Linear Distance Traveled Forward/Rearward
-   * per one Wheel Revolution (inches). */
+  /* KDRV_n_ErrLimMax: Maximum Speed Error allowed, used
+   * as a crude Rate Limiter on the Target Speed Rate to
+   * Prevent Excessive Jerk on Step Responses. (rpm). */
+  public static final float KDRV_n_ErrLimMax[] = new float[] 
+      {
+    	(float)500.0,  // RR: Right Rear
+        (float)500.0,  // RF: Right Front
+        (float)500.0,  // LF: Left Front
+        (float)500.0   // LR: Left Rear
+      };  
+	
+	
+  /* KDRV_n_ErrDeadBand: Speed Error Dead-Band for the PID
+   * Controller (rpm). */
   public static final float KDRV_n_ErrDeadBand[] = new float[] 
       {
     	(float)5.0,  // RR: Right Rear
@@ -47,17 +59,11 @@ public class K_PIDCal {
         (float)0.0   // LR: Left Rear
       };
     
-  /* KDRV_K_IntglGain: Drive System PID Controls Integral Gain . */
-  public static final float KDRV_K_PropGain[] = new float[] 
-      {
-    	(float)0.0001,  // RR: Right Rear
-        (float)0.0001,  // RF: Right Front
-        (float)0.0001,  // LF: Left Front
-        (float)0.0001   // LR: Left Rear
-      };
-  
-  
-  
+  /* KDRV_b_IntglGxRstSgnFlipEnbl: Enables the Reset of the Integral
+   * Term when the Error Sign Flips and the Speed Error Accum is the
+   * opposite sign.  To counteract Integral Wind-Up in a very delayed
+   * system.  */
+  public static final boolean KDRV_b_IntglGxRstSgnFlipEnbl = false; 
   
   /* KDRV_Pct_PropCorrLimMax: Linear Distance Traveled Forward/Rearward
    * per one Wheel Revolution (inches). */

@@ -117,10 +117,18 @@ public class PIDDRV extends Subsystem {
     private void calcSpdErrAccum(int idx) {
     	boolean SignFlipRst = false;
       
+      if (K_PIDCal.KDRV_b_IntglGxRstSgnFlipEnbl == true)
+          {
+	      if ((SpdErrAccum[idx] > 0) && (SpdErr[idx] < 0))
+	        {
+	        SignFlipRst = true;
+	        }
+	      else if ((SpdErrAccum[idx] < 0) && (SpdErr[idx] > 0))
+	        {
+	        SignFlipRst = true;
+	        }
+          }
       
-      if ((SpdErrAccum[idx] > 0) && (SpdErrRaw[idx] < 0)) SignFlipRst = true;
-      else if ((SpdErrAccum[idx] < 0) && (SpdErrRaw[idx] > 0)) SignFlipRst = true;
-    	
 	  if((PIDIntglRst == true) || (SignFlipRst == true))
 	    {
 	    SpdErrAccum[idx] = (double)0.0;  
@@ -143,7 +151,13 @@ public class PIDDRV extends Subsystem {
     private void calcFdFwdTerm(int idx) {
     
     	// todo 
-    	
+/*    	
+    	float AxisPieceWiseLinear_int(float  InpVal,
+                int [] AxisArray, 10)
+
+    	float XY_Lookup_flt(float [] TblArray,
+                float  AxisInpIdx, 10)
+*/    	
     	FdFwdCmnd[idx] = 0.0;
     }
 
@@ -156,7 +170,7 @@ public class PIDDRV extends Subsystem {
     	LimMaxPos = K_PIDCal.KDRV_Pct_PropCorrLimMax[idx];
     	LimMaxNeg = -(K_PIDCal.KDRV_Pct_PropCorrLimMax)[idx];
     	
-    	P_Corr = K_PIDCal.KDRV_K_PropGain[idx] * SpdErr[idx];
+    	P_Corr = K_PIDCal.KDRV_K_PropGx[idx] * SpdErr[idx];
     	
     	if (P_Corr > LimMaxPos) P_Corr = LimMaxPos;
     	else if (P_Corr < LimMaxNeg) P_Corr = LimMaxNeg;
@@ -203,8 +217,10 @@ public class PIDDRV extends Subsystem {
     	
 	    PIDCorr[idx] = PropCorr[idx] + IntglCorr[idx] + DerivCorr[idx];
 	    CmndPct = FdFwdCmnd[idx] + PIDCorr[idx];
+	    
 	    if (CmndPct > 100) CmndPct = 100;
 	    else if (CmndPct < 0) CmndPct = 0;
+	    
 	    if (DrvDrctnFwd[idx] == false) CmndPct = -CmndPct;
 	
 	    PIDCmndPct[idx] = CmndPct;
