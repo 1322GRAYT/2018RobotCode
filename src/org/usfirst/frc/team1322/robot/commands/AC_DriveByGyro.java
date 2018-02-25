@@ -30,7 +30,7 @@ public class AC_DriveByGyro extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, 0);
+    	Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,11 +38,11 @@ public class AC_DriveByGyro extends Command {
     	//Keep Robot Facing Straight at all costs
     	double gAngle = Robot.kSENSORS.getGyroAngle();
     	if((gAngle - leeway) > startGyroPos) {
-    		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, correctionSpeed);
+    		Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, correctionSpeed);
     	}else if((gAngle + leeway) < startGyroPos) {
-    		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, -correctionSpeed);
+    		Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, -correctionSpeed);
     	}else {
-    		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, 0);
+    		Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, 0);
     	}
     }
 

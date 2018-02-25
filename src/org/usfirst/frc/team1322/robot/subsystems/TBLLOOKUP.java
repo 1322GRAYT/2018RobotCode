@@ -1,8 +1,12 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
-public class TBLLOOKUP {
-    public static final int MIN_INT =  0x8000;
-    public static final int MAX_INT =  0x7FFF;	
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+
+public class TBLLOOKUP extends Subsystem {
+	
+    private static final int MIN_INT =  0x8000;
+    private static final int MAX_INT =  0x7FFF;	
 
     
 	/** Method: AxisPieceWiseLinear_int - This function will return an rescaled
@@ -11,9 +15,9 @@ public class TBLLOOKUP {
 	  * @param2: Axis Array Object Reference (reference to array of ints)
 	  * @param3: Table Size (int)
 	  * @return: Rescaled Axis Output value in a normalized index value (float) */
-	float AxisPieceWiseLinear_int(float  InpVal,
-	                              int [] AxisArray,
-	                              int    TblSize)
+	public float AxisPieceWiseLinear_int(float  InpVal,
+	                                     int [] AxisArray,
+	                                     int    TblSize)
 	  {
 	  int    InpValInt;
       int    TblSegs;
@@ -74,9 +78,9 @@ public class TBLLOOKUP {
 	  * @param2: Axis Array Object Reference (reference to array of floats)
 	  * @param3: Table Size (int)
 	  * @return: Rescaled Axis Output value in a normalized index value (float) */	
-	public static float AxisPieceWiseLinear_flt(float  InpVal,
-			                                    float [] AxisArray,
-			                                    int    TblSize)
+	public float AxisPieceWiseLinear_flt(float  InpVal,
+			                             float [] AxisArray,
+			                             int    TblSize)
 	  {
       int    TblSegs;
 	  int    ArrayIdx;
@@ -111,6 +115,7 @@ public class TBLLOOKUP {
 	    AxisOutVal = ((float)ArrayIdx + InterpFrac) / (float)TblSegs;
 	    }
 
+	  
 	  return AxisOutVal;
 	  }
 
@@ -121,9 +126,9 @@ public class TBLLOOKUP {
      * @param2: Axis Lower Bound Reference Value in engineering units (float)
      * @param3: Axis Upper Bound Reference Value in engineering units (float)
 	 * @return: Rescaled Axis Output value in a normalized index value (float) */	
-	public static float AxisLinear_flt(float InpVal,
-	                                   float LwrRef,
-	                                   float UprRef)
+	public float AxisLinear_flt(float InpVal,
+	                            float LwrRef,
+	                            float UprRef)
 	  {
 	  float AxisOutVal;      
 
@@ -151,9 +156,9 @@ public class TBLLOOKUP {
      * @param2: Lower Reference value to Interpolate Between (float)
      * @param3: Upper Reference value to Interpolate Between (float)
 	 * @return: Fractional Interpolated Output Value (float) */	
-	public static float InterpCoefFrac(float Inp,
-	                                   float LwrRef,
-	                                   float UprRef)
+	public float InterpCoefFrac(float Inp,
+	                            float LwrRef,
+	                            float UprRef)
 	  {
 	  return ((Inp - LwrRef)/(UprRef - LwrRef));
 	  }
@@ -165,10 +170,41 @@ public class TBLLOOKUP {
      * @param1: Interpolation Input Value (float)
      * @param2: Lower Reference value to Interpolate Between (float)
      * @param3: Upper Reference value to Interpolate Between (float)
-	 * @return: Fractional Interpolated Output Value (float) */	
+	 * @return: Fractional Interpolated Output Value (float) */
+//   todo: lambda expression - need to learn how to add a label to reference the expression	
 /* 	 (Inp, LwrRef, UprRev) -> ((Inp - LwrRef)/(UprRef - LwrRef)); */
 
 	
+	/** Method: LinearInterp_flt - This function will return the Linear Interpolation
+	 *  of two given points (Lower and Upper Reference) given a fractional coefficient
+	 *  factor scalar (0 - 1) 
+     * @param1: Lower Reference value to Interpolate Between (float)
+     * @param2: Upper Reference value to Interpolate Between (float)
+     * @param3: Fractional Factor Scalar Input Value (float)
+	 * @return: Interpolated Output Value (float) */	
+	public float LinearInterp_flt(float LwrRef,
+	                              float UprRef,
+	                              float FractCoef)
+	  {
+	  return ((FractCoef * (UprRef - LwrRef)) + LwrRef);
+	  }
+
+	
+	/******************************************************************************
+	 * Function:     fltLimitTableIndex_flt
+	 * Description:  This function limits table index values between 0 and 1.
+	 *****************************************************************************/
+	/** Method: LmtTblIdx_Flt - This function limits table index values between
+	  * 0 and 1 (0 - 1). 
+     * @param1: Axis Table Index Value (float)
+	 * @return: Interpolated Output Value (float) */	
+	public float LmtTblIdx_Flt(float TblIdx)
+	  {
+	  if (TblIdx < (float)0.0) TblIdx = (float)0.0;
+	  else if (TblIdx > (float)1.0) TblIdx = (float)1.0;
+	  return TblIdx;
+	  }	
+		
 	
 	/** Method: XY_Lookup_flt - This function will return an interpolated
 	 * table look-up value based on a rescaled normalized axis index value.
@@ -176,9 +212,9 @@ public class TBLLOOKUP {
      * @param2: Normalized Axis Index Input value (float)
      * @param3: Table Size (int)
 	 * @return: Table Look-Up Output value in engineering units (float) */	
-	float XY_Lookup_flt(float [] TblArray,
-	                    float  AxisInpIdx,
-	                    int    TblSize)
+	public float XY_Lookup_flt(float [] TblArray,
+	                           float  AxisInpIdx,
+	                           int    TblSize)
 	  {
 	  int    TblSegs;
 	  int    ArrayIdx;
@@ -187,6 +223,9 @@ public class TBLLOOKUP {
 
 	  if (TblSize > 2) TblSegs = TblSize - 1;
 	  else TblSegs = 1;	  
+	  
+	  /* Limit table index values between 0 and 1. */
+      AxisInpIdx = LmtTblIdx_Flt(AxisInpIdx);
 	  
 	  if (AxisInpIdx <= (float)0.0)
 	      {
@@ -206,14 +245,119 @@ public class TBLLOOKUP {
 	      InterpFrac  -= (float)ArrayIdx;
 
 	      /* LeY = LeLower + (LeInterpFrac * (LeUpper - LeLower)) */
-	      TblOutVal = InterpCoefFrac(TblArray[ArrayIdx],
-	    		                     TblArray[ArrayIdx + 1],
-	    		                     InterpFrac);
+	      TblOutVal = LinearInterp_flt(TblArray[ArrayIdx],
+	    		                       TblArray[ArrayIdx + 1],
+	    		                       InterpFrac);
 	      }
 
 	  return TblOutVal;
 	  }
 
+
+	/** Method: XYZ_Lookup_flt - This function will return an interpolated
+	 * table look-up value based on a rescaled normalized axis index value.
+     * @param1: Look-Up Table Array Object Reference (reference to 3-D array of floats)
+     * @param2: Normalized Y-Axis Index Input value (float)
+     * @param3: Normalized X-Axis Index Input value (float)
+     * @param4: Table Y-Axis Size (int)
+     * @param5: Table X-Axis Size (int)
+	 * @return: Table Look-Up Output value in engineering units (float) */	
+	float XYZ_Lookup_flt(float [][] TblArray,
+                         float AxisInpIdxY,
+                         float AxisInpIdxX,
+                         int   TblSizeY,
+                         int   TblSizeX)
+	{
+        int   TblSegsX;
+        int   TblSegsY;
+  	    int   ArrayIdxX;
+	    int   ArrayIdxY;
+        int   BaseArrayIdx;
+  	    float InterpFracX;
+	    float InterpFracY;
+	    float RefLwrY;
+	    float RefUprY;
+        float TblOutVal;
+
+        
+  	    if (TblSizeX > 2) TblSegsX = TblSizeX - 1;
+  	    else TblSegsX = 1;	  
+        
+  	    if (TblSizeY > 2) TblSegsY = TblSizeY - 1;
+  	    else TblSegsY = 1;	  
+		
+
+		/* Limit table index values between 0 and 1. */
+		AxisInpIdxX = LmtTblIdx_Flt(AxisInpIdxX);
+		AxisInpIdxY = LmtTblIdx_Flt(AxisInpIdxY);
+		
+		/* LeArrayIndexX     = floor(LeTableIndexX * (LeSizeX - 1)) */
+		InterpFracX   = AxisInpIdxX * TblSegsX;
+		ArrayIdxX = (int)InterpFracX;
+		
+		/* LeInterpFracX     = (LeTableIndexX * (LeSizeX - 1)) - LeArrayIndexX */
+		InterpFracX  -= (float)ArrayIdxX;
+		
+		/* LeArrayIndexY     = floor(LeTableIndexY * (LeSizeY - 1)) */
+		InterpFracY   = AxisInpIdxY * TblSegsY;
+		ArrayIdxY = (int)InterpFracY;
+		
+		/* LeInterpFracY     = (LeTableIndexY * (LeSizeY - 1)) - LeArrayIndexY */
+		InterpFracY  -= (float)ArrayIdxY;
+		
+		
+		if (AxisInpIdxY < (float)1.0)
+		{
+			if (AxisInpIdxX < (float)1.0)
+			{
+				/* IF: LeTableIndexY < 1, LeTableIndexX < 1 */
+				
+				/* LeLowerY = LeLowerX1 + (LeInterpFracX * (LeUpperX1 - LeLowerX1)) */
+					RefLwrY = LinearInterp_flt(TblArray[ArrayIdxX][ArrayIdxY],
+						                       TblArray[ArrayIdxX + 1][ArrayIdxY],
+						                       InterpFracX);
+				
+				/* LeUpperY = LeLowerX2 + (LeInterpFracX * (LeUpperX2 - LeLowerX2)) */
+					RefUprY = LinearInterp_flt(TblArray[ArrayIdxX][ArrayIdxY + 1],
+						                       TblArray[ArrayIdxX + 1][ArrayIdxY + 1],
+						                       InterpFracX);
+				
+				/* LeZ = LeLowerY + (LeInterpFracY * (LeUpperY - LeLowerY)) */
+				TblOutVal = LinearInterp_flt(RefLwrY, RefUprY, InterpFracY);
+			}
+			else
+			{
+				/* IF: LeTableIndexY < 1, LeTableIndexX = 1 */
+				/* LeLowerY = LeLowerY1 */
+				/* LeUpperY = LeLowerY2 */
+				/* LeZ      = LeLowerY + (LeInterpFracY * (LeUpperY - LeLowerY)) */
+				TblOutVal = LinearInterp_flt(TblArray[TblSegsX][ArrayIdxY],
+					                         TblArray[TblSegsX][ArrayIdxY + 1],
+					                         InterpFracY);
+			}		
+		}
+		else
+		{
+			if (AxisInpIdxX < (float)1.0)
+			{
+				/* IF: LeTableIndexY = 1, LeTableIndexX < 1 */
+				/* LeLowerY = LeLowerX1 */
+				/* LeUpperY = LeUpperX1 */
+				/* LeZ      = LeLowerY + (LeInterpFracY * (LeUpperY - LeLowerY)) */
+				TblOutVal = LinearInterp_flt(TblArray[ArrayIdxX][TblSegsY],
+						                     TblArray[ArrayIdxX + 1][TblSegsY],
+			                                 InterpFracX);
+			}
+			else
+			{
+				/* IF: LeTableIndexY = 1, LeTableIndexX = 1 */
+				/* LeZ = LeLower[XHi][YHi] */
+				TblOutVal = TblArray[TblSegsX][TblSegsY];
+			}
+		}		
+		return TblOutVal;
+	}
+	
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

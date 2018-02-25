@@ -13,6 +13,12 @@ public class K_SensorCal {
   /* Mecanum WheelSpeed Sensors / Motor Encoder Sensors */
   /******************************************************/
 
+	
+  /* KWSS_e_RefAutonDrvWhlSlct: Selects which Drive/Encoder/Wheel Assembly
+   * is the Reference Set to use for Autonomous Mode Drive By Distance.. */
+  public static final int KWSS_e_RefAutonDrvWhlSlct = (int) 0;    // 0 = RR: Right Rear, 1 = RF: Right Front
+                                                                  // 2 = LF: Left Front, 3 = LR: Left Rear
+  
   /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Rearward
    * per one Wheel Revolution (inches). */
   public static final float KWSS_l_DistPerRevWheel = (float) 12.5664;    // inch

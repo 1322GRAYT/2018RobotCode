@@ -11,7 +11,10 @@ import org.usfirst.frc.team1322.robot.commands.AM_DropBlockTimed;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
+import org.usfirst.frc.team1322.robot.subsystems.PIDDRV;
 import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
+import org.usfirst.frc.team1322.robot.subsystems.TBLLOOKUP;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,6 +34,9 @@ public class Robot extends IterativeRobot {
 	public static final CLAW kCLAW = new CLAW();
 	public static final DRIVE kDRIVE = new DRIVE();
 	public static final SENSORS kSENSORS = new SENSORS();
+	public static final PIDDRV kPIDDRV = new PIDDRV();
+	public static final TBLLOOKUP kTBLLOOKUP = new TBLLOOKUP();
+	
 	
 	public static OI m_oi;
 

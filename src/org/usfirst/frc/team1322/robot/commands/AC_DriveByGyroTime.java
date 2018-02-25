@@ -20,7 +20,7 @@ public class AC_DriveByGyroTime extends Command {
 	private Timer timer = new Timer();
 	
 	
-    public AC_DriveByGyroTime(double forwardSpeed, double strafeSpeed, double time) {
+    public AC_DriveByGyroTime( double strafeSpeed, double forwardSpeed, double time) {
         requires(Robot.kDRIVE);
         this.forwardSpeed = forwardSpeed;
         this.strafeSpeed = strafeSpeed;
@@ -29,7 +29,7 @@ public class AC_DriveByGyroTime extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, 0);
+    	Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, 0);
     	timer.reset();
     	timer.start();
     }
@@ -40,11 +40,11 @@ public class AC_DriveByGyroTime extends Command {
     	//Keep Robot Facing Straight at all costs
     	double gAngle = Robot.kSENSORS.getGyroAngle();
     	if((gAngle - leeway) > startGyroPos) {
-    		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, correctionSpeed);
+    		Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, correctionSpeed);
     	}else if((gAngle + leeway) < startGyroPos) {
-    		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, -correctionSpeed);
+    		Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, -correctionSpeed);
     	}else {
-    		Robot.kDRIVE.mechDrive(forwardSpeed, strafeSpeed, 0);
+    		Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, 0);
     	}
     }
 

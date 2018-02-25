@@ -14,7 +14,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Class: SENSORS - Provides Get access to Sensors Inputs, determines 
+ * sensor calculations from raw units to engineering units, and
+ * determines conversions from one type of unit of one to another
+ * (e.g. RPM to Linear Speed).
  */
 public class SENSORS extends Subsystem {
 
@@ -84,6 +87,13 @@ public class SENSORS extends Subsystem {
       double[] encoders = EncdrCnt;
       return encoders;
     }
+
+	/** Method: getEncoderRefCnt - Interface to Get the current
+	 * Encoder Count of the Reference Motor/Encoder/Wheel Assembly
+    *  @return: Count of the Reference Encoder (Counts) */	
+	public double getRefEncoderCnt(){ 
+     return (EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlSlct]);
+   }
 	
 	/** Method: getEncodersRPM - Interface to Get the array of
 	  * Encoder Speeds in units of RPM.
@@ -104,11 +114,19 @@ public class SENSORS extends Subsystem {
 	/** Method: getWhlsVel - Interface to Get the array of
 	  * Wheel Linear Velocity in units of inches/sec.
      *  @return: Array of Drive System Linear Wheel Speeds (inches/sec) */
-   public double[] getWhlsVel(){ 
-     double[] encoders = WhlVel;
-     return encoders;
+    public double[] getWhlsVel(){ 
+      double[] encoders = WhlVel;
+      return encoders;
 	}   
-    
+
+    /** Method: getCntsToDrv - Calculates the number of counts
+    *  to Drive given the desired feet to drive straight.
+    *  @param: Desired Distance (feet)
+    *  @return: Encoder Counts (cnts) */
+    public double getCntsToDrv(float Feet)
+      {
+      return (cvrtDistToCnts(Feet));
+      }
     
 	/** Method: getRearUSDistance - Calculates the Distance Sensed by the
 	 *  Rear Side UltraSonic Sensor.
@@ -209,13 +227,13 @@ public class SENSORS extends Subsystem {
    *  desired distance given (cnts).
    *  @param: Desired Distance (feet)
    *  @return: Encoder Counts (cnts) */
- private float cvrtDistToCnts(float DistFeet)
+ private double cvrtDistToCnts(float DistFeet)
    {
-   float Revs;
+   double Revs;
    
-   Revs = (float)(DistFeet*12)/(float)K_SensorCal.KWSS_l_DistPerRevWheel;	 
+   Revs = (double)((DistFeet*12)/K_SensorCal.KWSS_l_DistPerRevWheel);	 
 
-   return ((float)(Revs * K_SensorCal.KWSS_Cnt_PulsePerRevEncoder));
+   return ((double)(Revs * K_SensorCal.KWSS_Cnt_PulsePerRevEncoder));
    }
 
   
