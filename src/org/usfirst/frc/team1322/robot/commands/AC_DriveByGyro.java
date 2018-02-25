@@ -20,7 +20,7 @@ public class AC_DriveByGyro extends Command {
 	
 	
     public AC_DriveByGyro(double forwardSpeed, double strafeSpeed, double stopDistance, double usID) {
-    	requires(Robot.kSENSORS);
+    	//requires(Robot.kSENSORS);
         requires(Robot.kDRIVE);
         this.forwardSpeed = forwardSpeed;
         this.strafeSpeed = strafeSpeed;
