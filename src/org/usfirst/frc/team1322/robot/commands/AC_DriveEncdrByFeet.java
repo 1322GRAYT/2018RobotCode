@@ -15,16 +15,16 @@ public class AC_DriveEncdrByFeet extends Command {
 	private double EncdrTgtDclCnts;	
 	private double EncdrTgtRefCnt;
 	
-	
-	boolean DrctnIsFwd;
     float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
+	boolean DrctnIsFwd;
 	
-    public AC_DriveEncdrByFeet(boolean DrctnIsFwd,
-    		               float   DsrdDistFeet,
-    		               float   DsrdPriPwr,
-    		               float   DsrdDclFeet,
-    		               float   DsrdDclPwr) {
+    public AC_DriveEncdrByFeet(float   DsrdDistFeet,
+    		                   float   DsrdPriPwr,
+    		                   float   DsrdDclFeet,
+    		                   float   DsrdDclPwr,
+    		                   boolean DrctnIsFwd) {
         requires(Robot.kSENSORS);
+        requires(Robot.kPIDDRV);
         requires(Robot.kDRIVE);        
         this.DrctnIsFwd = DrctnIsFwd;
         this.DsrdDistFeet = DsrdDistFeet;
@@ -40,6 +40,8 @@ public class AC_DriveEncdrByFeet extends Command {
     	EncdrDsrdTrvlCnts = Robot.kSENSORS.getCntsToDrv(DsrdDistFeet);
     	EncdrTgtRefCnt = EncdrInitRefCnt + EncdrDsrdTrvlCnts;
     	EncdrTgtDclCnts = EncdrTgtRefCnt - DsrdDclFeet;
+    	Robot.kPIDDRV.resetPIDDrv();
+    	Robot.kPIDDRV.resetTgtProfTmr();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -49,6 +51,10 @@ public class AC_DriveEncdrByFeet extends Command {
     	double DclPwr;
 
     	CurrEncdrCnt = Robot.kSENSORS.getRefEncoderCnt();    	
+
+    	Robot.kPIDDRV.putPIDDrvSpdTgt(true, 0.0);  //Enbl PID and Command Target Spd
+    	Robot.kPIDDRV.managePIDDrive();            // Call the Drive PID Scheduler   	
+    	// Cmnds[] = Robot.kPIDDRV.getPIDDrvCmnd();  // Get PID Commands - todo: Not Hooked-Up 
     	
     	if (DrctnIsFwd == false) {
     		PriPwr = (double)-(DsrdPriPwr);
@@ -58,8 +64,7 @@ public class AC_DriveEncdrByFeet extends Command {
     		PriPwr = (double)DsrdPriPwr;
     	    DclPwr = (double)DsrdDclPwr;    		
     	}
-    	
-    	
+    	    	
     	if (CurrEncdrCnt < EncdrTgtDclCnts)
     	  {
           Robot.kDRIVE.mechDrive(0.0, PriPwr, 0.0);
@@ -81,7 +86,8 @@ public class AC_DriveEncdrByFeet extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-  	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);    	
+  	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
+  	  Robot.kPIDDRV.resetPIDDrv();
     }
 
     // Called when another command which requires one or more of the same

@@ -12,6 +12,8 @@ public class AM_TestEnc extends CommandGroup {
     public AM_TestEnc() {
     	if(DriverStation.getInstance().getAlliance().equals(Alliance.Red)) {
     		addSequential(new AM_RedEnc());
+/*    		if((DriverStation.getInstance().isFMSAttached() == true) &&
+    		   (DriverStation.getInstance().getGameSpecificMessage() == Code)) */
     	}else if(DriverStation.getInstance().getAlliance().equals(Alliance.Blue)) {
     		//addSequential(new AM_BlueEnc());
     	}

@@ -56,6 +56,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
+		kPIDDRV.resetPIDDrv();		
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
 		CameraServer.getInstance().startAutomaticCapture();		
 	}
@@ -108,7 +109,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Robot.kSENSORS.updateSensorData();
+		kSENSORS.updateSensorData();
 		Scheduler.getInstance().run();
 	}
 
@@ -121,6 +122,7 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		kPIDDRV.resetPIDDrv();
 	}
 
 	/**
@@ -128,7 +130,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Robot.kSENSORS.updateSensorData();
+		kSENSORS.updateSensorData();
 		Scheduler.getInstance().run();
 	}
 

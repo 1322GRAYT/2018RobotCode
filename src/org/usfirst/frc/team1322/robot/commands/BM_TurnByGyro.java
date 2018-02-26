@@ -15,7 +15,7 @@ public class BM_TurnByGyro extends Command {
 	
 	/**
 	 * Turn to A specific Angle at a specific speed
-	 * @param turnSpeed Speed in which to turn  + = Right, - + Left
+	 * @param turnSpeed Speed in which to turn  + = Right, - = Left
 	 * @param turnAngle Angle to turn
 	 */
     public BM_TurnByGyro(double turnSpeed, double turnAngle) {

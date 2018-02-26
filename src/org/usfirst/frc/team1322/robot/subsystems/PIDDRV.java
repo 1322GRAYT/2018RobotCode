@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class PIDDRV extends Subsystem {
     
+	private boolean PIDMstrEnbl;                         // boolean
 	private boolean PIDEnbl[] = new boolean[4];         // boolean 
 	private boolean PIDIntglRst[] = new boolean[4];     // boolean 
 	private boolean DrvDrctnFwd[] = new boolean[4];     // boolean
@@ -36,40 +37,9 @@ public class PIDDRV extends Subsystem {
 	private double PIDCmndPct[] = new double[4];        // Pct Pwr  [-100% to 100%] 
 	private double PIDDrvCmnd[] = new double[4];        // Norm Pwr [-1 to 1]
 	
-
-	
-    public void managePIDDrive() {
-        int EncdrIdx;
-
-		dtrmnTgtProf();
-        
-    	for (EncdrIdx=0; EncdrIdx<4; EncdrIdx++)
-        {
-            dtrmnPIDEnbl(EncdrIdx);       
-    		dtrmnDrtcnIsFwd(EncdrIdx);
-    		
-    	if (PIDEnbl[EncdrIdx] == true)
-    	    {
-            calcSpdErr(EncdrIdx);
-            calcSpdErrAccum(EncdrIdx);
-            calcSpdChgRt(EncdrIdx);
-            calcFdFwdTerm(EncdrIdx);
-            calcPropTerm(EncdrIdx);
-            calcIntglTerm(EncdrIdx);
-            calcDerivTerm(EncdrIdx);
-            calcPIDResult(EncdrIdx);  
-    	    }
-    	else  // (PIDEnbl[idx] == false)
-    	    {
-    	    resetPIDCntrlr(EncdrIdx);  
-    	    }
-        }    	
-    	
-    }
-
-    
+  
     /**********************************************/
-    /* gets - Public Interface Definitions        */
+    /* Public Interface Definitions        */
     /**********************************************/
 
     /** Method: resetTgtProfTmr - Resets the Drive Speed
@@ -80,14 +50,16 @@ public class PIDDRV extends Subsystem {
 
     /** Method: putPIDDrvSpdTgt - Interface to Set the Encoder Motor
       * Target Speed for the Drive System PID Controller.
-      *  @param: Drive System Desired Encoder Speed Target (rpm) */	
-    public void putPIDDrvSpdTgt(double PIDDrvSpdTgt) {
-    	SpdTgtRaw = PIDDrvSpdTgt;
+      *  @param1: Drive System Master Enable Select (boolean)	
+      *  @param2: Drive System Desired Encoder Speed Target (rpm: double) */	
+    public void putPIDDrvSpdTgt(boolean DrvSysEnbl, double DrvSpdTgt) {
+    	PIDMstrEnbl = DrvSysEnbl; // boolean
+    	SpdTgtRaw = DrvSpdTgt;    // rpm
     }  
     
     /** Method: getPIDDrvCmnd - Interface to Get the array of
 	  * Encoder Motor Normalized Power Commands (-1 to 1).
-      *  @return: Array of Drive System Motor Driver Normalized Power Commands (-1 to 1) */	
+      *  @return: Array of Drive System Motor Driver Normalized Power Commands (-1 to 1: double) */	
     public double[] getPIDDrvCmnd() {
     	double[] drvrcmnds = PIDDrvCmnd;
     	return drvrcmnds;
@@ -103,10 +75,50 @@ public class PIDDRV extends Subsystem {
     }
 
     
+    
+    /******************************************************/
+    /* Manage Drive PID Control Subsystem Scheduler Task  */
+    /******************************************************/
+	
+    /** Method: managePIDDrive - Scheduler Function for the Periodic
+      * Drive System Encoder Speed PIDF Control System.  */ 
+    public void managePIDDrive() {
+        int EncdrIdx;
+
+		dtrmnTgtProf();
+        
+    	for (EncdrIdx=0; EncdrIdx<4; EncdrIdx++)
+        {
+            dtrmnPIDEnbl(EncdrIdx);       
+    		dtrmnDrtcnIsFwd(EncdrIdx);
+    		
+    	if (PIDEnbl[EncdrIdx] == true)
+    	    {
+    		dtrmnIntglRst(EncdrIdx);
+            calcSpdErr(EncdrIdx);
+            calcSpdErrAccum(EncdrIdx);
+            calcSpdChgRt(EncdrIdx);
+            calcFdFwdTerm(EncdrIdx);
+            calcPropTerm(EncdrIdx);
+            calcIntglTerm(EncdrIdx);
+            calcDerivTerm(EncdrIdx);
+            calcPIDResult(EncdrIdx);  
+    	    }
+    	else  // (PIDEnbl[idx] == false)
+    	    {
+    	    resetPIDCntrlr(EncdrIdx);  
+    	    }
+        }    	
+    	
+    }    
+    
+    
     /**********************************************/
     /* Internal Class Methods                     */
     /**********************************************/
 
+    /** Method: dtrmnTgtProf - Determines the Desired Speed Target
+      * Profile that will be fed into the PIDF Controller.  */ 
     private void dtrmnTgtProf() {
         int idx;
         float SpdAxisIdx;
@@ -137,21 +149,24 @@ public class PIDDRV extends Subsystem {
     }
 
     
+    /** Method: dtrmnPIDEnbl - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void dtrmnPIDEnbl(int idx) {
-        
-    	if (SpdTgt[idx] == 0.0)
+    	if ((PIDMstrEnbl == false) || (SpdTgt[idx] == 0.0))
     	{
     		PIDEnbl[idx] = false;
     	}
     	else
     	{
     		PIDEnbl[idx] = true;    		    		
-    	}
-    	
-    	PIDIntglRst[idx] = false;
+    	}    	
     }
     
-    
+       
+    /** Method: dtrmnDrtcnIsFwd - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void dtrmnDrtcnIsFwd(int idx) {        
     	// Determine if Motors should Run in Forward or Reverse	
     	if (SpdTgtRaw >= 0)	
@@ -160,7 +175,19 @@ public class PIDDRV extends Subsystem {
         	DrvDrctnFwd[idx] = false;    		
     }
 
-      
+    
+    /** Method: dtrmnIntglRst - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
+    private void dtrmnIntglRst(int idx) {
+    	
+    	PIDIntglRst[idx] = false;
+    }
+
+    
+    /** Method: calcSpdErr - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void calcSpdErr(int idx) {
     	double SpdErrTemp;
     	double DeltSpdErr;
@@ -195,6 +222,9 @@ public class PIDDRV extends Subsystem {
       }
 
     
+    /** Method: calcSpdErrAccum - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void calcSpdErrAccum(int idx) {
     	boolean SignFlipRst = false;
       
@@ -221,6 +251,9 @@ public class PIDDRV extends Subsystem {
     }
 
     
+    /** Method: calcSpdChgRt - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void calcSpdChgRt(int idx) {
     	double DeltSpdErr;
     	double SpdErrRtFiltPrev;
@@ -233,9 +266,12 @@ public class PIDDRV extends Subsystem {
 	    DeltSpdErrRt = SpdErrChngRt[idx] - SpdErrRtFiltPrev;
 	    SpdErrChngRtFilt[idx] = SpdErrRtFiltPrev + (DeltSpdErrRt * K_PIDCal.KDRV_k_SpdErrRtFiltCoef[idx]);       	
     }
+
     
-    
-    private void calcFdFwdTerm(int idx) {
+    /** Method: calcFdFwdTerm - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
+   private void calcFdFwdTerm(int idx) {
         float  DsrdSpd;
     	float  AxisIdx;
         float  FdFwdCalc;
@@ -248,7 +284,10 @@ public class PIDDRV extends Subsystem {
     	FdFwdCmnd[idx] = (double)FdFwdCalc;
     }
 
-    
+   
+   /** Method: calcPropTerm - YadaYada
+    *  @param:  input info	(units)
+    *  @return: output info (units) */	
     private void calcPropTerm(int idx) {
     	double P_Corr;
     	double LimMaxPos;
@@ -264,8 +303,11 @@ public class PIDDRV extends Subsystem {
     	    	
     	PropCorr[idx] = P_Corr;
     }
+
     
-    
+    /** Method: calcIntglTerm - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void calcIntglTerm(int idx) {
     	double I_Corr;
     	double LimMaxPos;
@@ -281,8 +323,11 @@ public class PIDDRV extends Subsystem {
     	
     	IntglCorr[idx] = I_Corr;
     }
+
     
-    
+    /** Method: calcDerivTerm - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void calcDerivTerm(int idx) {
     	boolean DerivEnbl;
     	double D_Corr;
@@ -321,7 +366,11 @@ public class PIDDRV extends Subsystem {
         	DerivCorr[idx] = 0.0;    		
     	}
     }
+
     
+    /** Method: calcPIDResult - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void calcPIDResult(int idx) {
     	double CmndPct; // %
     	
@@ -337,7 +386,10 @@ public class PIDDRV extends Subsystem {
 	    PIDDrvCmnd[idx]= CmndPct/100;
     }
     
-
+    
+    /** Method: resetPIDCntrlr - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     private void resetPIDCntrlr(int idx) {
         SpdErrRaw[idx] = 0.0;
         SpdErr[idx] = 0.0;
@@ -357,6 +409,9 @@ public class PIDDRV extends Subsystem {
     }
     
     
+    /** Method: initDefaultCommand - YadaYada
+     *  @param:  input info	(units)
+     *  @return: output info (units) */	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(resetPIDDrv());
