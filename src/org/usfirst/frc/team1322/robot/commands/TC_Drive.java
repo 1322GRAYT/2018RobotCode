@@ -25,7 +25,7 @@ public class TC_Drive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Create a new mechanim drive instance
-    	Robot.kDRIVE.mechDrive(OI.DriverStick.getX(Hand.kLeft), OI.DriverStick.getY(Hand.kLeft), OI.DriverStick.getX(Hand.kRight));
+    	Robot.kDRIVE.mechDrive(OI.DriverStick.getX(Hand.kLeft), -OI.DriverStick.getY(Hand.kLeft), OI.DriverStick.getX(Hand.kRight));
     }
 
     // Make this return true when this Command no longer needs to run execute()

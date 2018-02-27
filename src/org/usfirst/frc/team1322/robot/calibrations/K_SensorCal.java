@@ -28,7 +28,7 @@ public class K_SensorCal {
   
   /* KWSS_r_EncoderToWheel: The ratio of the number of rotations of
    * the encoder shaft to the number of rotations of the wheel axle shaft. */  
-  public static final float KWSS_r_EncoderToWheel = (float) 4.21;      // ratio
+  public static final float KWSS_r_EncoderToWheel = (float) 4.583;      // ratio
   
   /* KWSS_n_EncoderSpdMaxLim: The Unloaded Encoder Speed Recorded for the
    * slowest Wheel/Motor during testing which will be used as the Maximum

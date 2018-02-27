@@ -60,7 +60,7 @@ public class DRIVE extends Subsystem {
         double yIn = dzify(y); 
         rotation = dzify(rotation);
         // Negate y for the joystick. 
-        yIn = -yIn; 
+        //yIn = -yIn; 
         // Compensate for gyro angle. 
         double rotated[] = rotateVector(xIn, yIn, 0); 
         xIn = rotated[0]; 

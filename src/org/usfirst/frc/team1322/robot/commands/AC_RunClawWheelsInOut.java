@@ -25,18 +25,18 @@ public class AC_RunClawWheelsInOut extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	timer.reset();
-    	timer.start();    	
-    }
-
-    
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    	timer.start();
     	//if in, set power to 1, else, set power to -1
     	if(in) { // PwrCube Take-In
     		Robot.kCLAW.clawSpeedInOut(1);
     	}else {  // PwrCube Eject
     		Robot.kCLAW.clawSpeedInOut(-1);
     	}
+    }
+
+    
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
     }
 
     

@@ -103,8 +103,10 @@ public class LIFT extends Subsystem {
     	  if(speed != 0.0)disengageJammer();
     	  lift1.set(ControlMode.PercentOutput, upPower);
     	  lift2.set(ControlMode.PercentOutput, upPower);
-    	  if(getLowGear() && speed == 0.0) engageJammer(); //Check If We are in low gear
+    	  //if(getLowGear() && speed == 0.0) engageJammer(); //Check If We are in low gear
     	  } 	
+    	//lift1.set(ControlMode.PercentOutput, speed);
+  	  	//lift2.set(ControlMode.PercentOutput, speed);
     }
    
     /**

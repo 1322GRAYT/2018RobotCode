@@ -9,6 +9,7 @@ package org.usfirst.frc.team1322.robot;
 
 import org.usfirst.frc.team1322.robot.commands.AM_DriveStraight;
 import org.usfirst.frc.team1322.robot.commands.AM_DropBlockTimed;
+import org.usfirst.frc.team1322.robot.commands.AM_RedEnc;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
@@ -52,7 +53,8 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		m_chooser.addObject("Turn 90", new AM_DropBlockTimed());
-		m_chooser.addDefault("Straight not Gay", new AM_DriveStraight());
+		m_chooser.addDefault("TestMe", new AM_RedEnc());
+		m_chooser.addDefault("Straight", new AM_DriveStraight());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();

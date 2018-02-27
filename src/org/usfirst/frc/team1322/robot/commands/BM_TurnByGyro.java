@@ -19,7 +19,7 @@ public class BM_TurnByGyro extends Command {
 	 * @param turnAngle Angle to turn
 	 */
     public BM_TurnByGyro(double turnSpeed, double turnAngle) {
-        requires(Robot.kSENSORS);
+        //requires(Robot.kSENSORS);
         requires(Robot.kDRIVE);
         this.turnSpeed = turnSpeed;
         this.turnAngle = turnAngle;

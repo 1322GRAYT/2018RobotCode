@@ -17,14 +17,13 @@ public class BM_SensorUpdate extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kSENSORS.setGlobalBaud();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Set SmartDashboard values
     	//PDP Current
-    	SmartDashboard.putBoolean("Block in Claw: ", Robot.kSENSORS.getBlock());
+    	/*SmartDashboard.putBoolean("Block in Claw: ", Robot.kSENSORS.getBlock());
     	SmartDashboard.putNumber("Lift2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift2));
     	SmartDashboard.putNumber("Lift1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift1));
     	SmartDashboard.putNumber("rRDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpRRDrive2));
@@ -40,7 +39,7 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumber("ClawL Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpClawL));
     	SmartDashboard.putNumber("lFDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLFDrive2));
     	SmartDashboard.putNumber("lRDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLRDrive2));
-    	SmartDashboard.putNumber("lFDrive1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLFDrive1));
+    	SmartDashboard.putNumber("lFDrive1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLFDrive1)); */
     	//Ultra Sonic Sensor Values
     	SmartDashboard.putNumber("Rear US : ", Robot.kSENSORS.getRearUSDistance());
     	SmartDashboard.putNumber("Left US : ", Robot.kSENSORS.getLeftUSDistance());
@@ -55,6 +54,7 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumberArray("Wheel Velocity : ", Robot.kSENSORS.getWhlsVel());
     	
     	//Update SmartDashboard
+    	System.out.println("Encoder Counts: " + Robot.kSENSORS.getEncodersCnt());  
     	SmartDashboard.updateValues();
     }
 
