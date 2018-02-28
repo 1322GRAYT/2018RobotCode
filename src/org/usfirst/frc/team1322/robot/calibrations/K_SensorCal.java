@@ -13,12 +13,19 @@ public class K_SensorCal {
   /* Mecanum WheelSpeed Sensors / Motor Encoder Sensors */
   /******************************************************/
 	
-  /* KWSS_e_RefAutonDrvWhlSlct: Selects which Drive/Encoder/Wheel Assembly
-   * is the Reference Set to use for Autonomous Mode Drive By Distance.. */
-  public static final int KWSS_e_RefAutonDrvWhlSlct = (int) 1;   // 0 = RR: Right Rear, 1 = RF: Right Front
+  /* KWSS_e_RefAutonDrvWhlA_Slct: Selects which Drive/Encoder/Wheel Assembly
+   * is the Reference A Set to use for Autonomous Mode Drive By Distance.
+   * Reference Set A and B are averaged together. */
+  public static final int KWSS_e_RefAutonDrvWhlA_Slct = (int) 1;   // 0 = RR: Right Rear, 1 = RF: Right Front
+                                                                 // 2 = LF: Left Front, 3 = LR: Left Rear
+
+  /* KWSS_e_RefAutonDrvWhlB_Slct: Selects which Drive/Encoder/Wheel Assembly
+   * is the Reference B_ Set to use for Autonomous Mode Drive By Distance.
+   * Reference Set A and B are averaged together. */
+  public static final int KWSS_e_RefAutonDrvWhlB_Slct = (int) 3;   // 0 = RR: Right Rear, 1 = RF: Right Front
                                                                  // 2 = LF: Left Front, 3 = LR: Left Rear
   
-  /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Rearward
+  /* KWSS_l_DistPerRevWheel: Linear Distance Traveled Forward/Rearward
    * per one Wheel Revolution (inches). */
   public static final float KWSS_l_DistPerRevWheel = (float) 12.5664;  // inch
 
@@ -32,10 +39,10 @@ public class K_SensorCal {
   
   /* KWSS_n_EncoderSpdMaxLim: The Unloaded Encoder Speed Recorded for the
    * slowest Wheel/Motor during testing which will be used as the Maximum
-   * Encoder Speed Limit.  */  
-  public static final float KWSS_n_EncoderSpdMaxLim = (float) 4000.0;  // rev/min
-	
-	
+   * Encoder Speed Limit (Error Protection).  */  
+  public static final float KWSS_n_EncoderSpdMaxLim = (float) 3000.0;  // rev/min
+
+
 	
   /********************************/	
   /* UltraSonic Distance Sensors  */

@@ -89,12 +89,18 @@ public class SENSORS extends Subsystem {
     }
 
 	/** Method: getEncoderRefCnt - Interface to Get the current
-	 * Encoder Count of the Reference Motor/Encoder/Wheel Assembly
+	 * Average Encoder Count of the Reference A Motor/Encoder/Wheel Assembly
+	 * and the Reference B Motor/Encoder/Wheel Assembly.
     *  @return: Count of the Reference Encoder (Counts) */	
-	public double getRefEncoderCnt(){ 
-     return (EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlSlct]);
+	public double getRefEncoderCnt(){
+	    double RefACnts, RefBCnts;
+	    
+	    RefACnts = EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct];
+	    RefBCnts = EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct];
+	    
+     return ((RefACnts + RefBCnts)/2);
    }
-	
+		
 	/** Method: getEncodersRPM - Interface to Get the array of
 	  * Encoder Speeds in units of RPM.
       *  @return: Array of Drive System Encoder Speeds (RPM) */	
@@ -228,15 +234,18 @@ public class SENSORS extends Subsystem {
    *  @return: Encoder Counts (cnts) */
  private double cvrtDistToCnts(float DistFeet)
    {
-   double Revs;
+   double WhlRPM;
+   double EncdrRPM;
+   double EncdrCnts;
    
-   Revs = (double)((DistFeet*12)/K_SensorCal.KWSS_l_DistPerRevWheel);	 
-
-   return ((double)(Revs * K_SensorCal.KWSS_Cnt_PulsePerRevEncoder));
+   WhlRPM = (double)((DistFeet * 12) / K_SensorCal.KWSS_l_DistPerRevWheel);	 
+   EncdrRPM = WhlRPM * (double)K_SensorCal.KWSS_r_EncoderToWheel;	 
+   EncdrCnts = EncdrRPM * (double)K_SensorCal.KWSS_Cnt_PulsePerRevEncoder;
+   
+   return EncdrCnts;
    }
 
-  
-  
+    
   
 	
   /*****************************************************************/

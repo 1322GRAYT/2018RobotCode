@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
+import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,8 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AC_DriveEncdrByFeet extends Command {
 		
 	// Autonomous Pattern Vars
+	private double EncdrActCnt;
 	private double EncdrInitRefCnt;
 	private double EncdrDsrdTrvlCnts;	
+	private double EncdrDsrdDclCnts;	
 	private double EncdrTgtDclCnts;	
 	private double EncdrTgtRefCnt;
 	
@@ -39,24 +42,28 @@ public class AC_DriveEncdrByFeet extends Command {
     	
     	Robot.kDRIVE.resetEncoders();
     	EncdrInitRefCnt = Robot.kSENSORS.getRefEncoderCnt();
+    	
     	EncdrDsrdTrvlCnts = Robot.kSENSORS.getCntsToDrv(DsrdDistFeet);
     	EncdrTgtRefCnt = EncdrInitRefCnt + EncdrDsrdTrvlCnts;
-    	EncdrTgtDclCnts = EncdrTgtRefCnt - DsrdDclFeet;
+    	
+    	EncdrDsrdDclCnts = Robot.kSENSORS.getCntsToDrv(DsrdDclFeet);
+    	EncdrTgtDclCnts = EncdrTgtRefCnt - EncdrDsrdDclCnts;
+    	
     	Robot.kPIDDRV.resetPIDDrv();
     	Robot.kPIDDRV.resetTgtProfTmr();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double CurrEncdrCnt;
+    	double EncdrCnt[] = new double[4]; 
     	double PriPwr;
     	double DclPwr;
 
-    	CurrEncdrCnt = Robot.kSENSORS.getRefEncoderCnt();    	
+    	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();    	
 
-    	Robot.kPIDDRV.putPIDDrvSpdTgt(true, 0.0);  //Enbl PID and Command Target Spd
+    	Robot.kPIDDRV.putPIDDrvSpdTgt(true, 0.0);  //Enbl PID and Command Target Spd - Todo  Speed Target Set to 0.0 Until SubSystem Debug is Complete.
     	Robot.kPIDDRV.managePIDDrive();            // Call the Drive PID Scheduler   	
-    	// Cmnds[] = Robot.kPIDDRV.getPIDDrvCmnd();  // Get PID Commands - todo: Not Hooked-Up 
+    	// Cmnds[] = Robot.kPIDDRV.getPIDDrvCmnd();  // Get PID Commands - todo: Not Hooked-Up - Until Subsystem Debug is Complete
     	
     	if (DrctnIsFwd == false) {
     		PriPwr = (double)-(DsrdPriPwr);
@@ -67,11 +74,11 @@ public class AC_DriveEncdrByFeet extends Command {
     	    DclPwr = (double)DsrdDclPwr;    		
     	}
     	    	
-    	if (CurrEncdrCnt < EncdrTgtDclCnts)
+    	if (EncdrActCnt < EncdrTgtDclCnts)
     	  {
           Robot.kDRIVE.mechDrive(0.0, PriPwr, 0.0);
     	  }
-    	else // (CurrEncdrCnt >= EncdrTgtDclCnts)
+    	else // (EncdrActCnt >= EncdrTgtDclCnts)
     	  {
     	  Robot.kDRIVE.mechDrive(0.0, DclPwr, 0.0);
     	  }
@@ -89,19 +96,24 @@ public class AC_DriveEncdrByFeet extends Command {
     	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
     	SmartDashboard.putNumber("Desired Distance : ", this.DsrdDistFeet);
         SmartDashboard.putNumber("Encoder Ref Init Count : ", EncdrInitRefCnt);
-    	SmartDashboard.putNumber("Encoder Desired Counts : ", EncdrDsrdTrvlCnts);
+    	SmartDashboard.putNumber("Encoder Desired Travel Counts : ", EncdrDsrdTrvlCnts);
+    	SmartDashboard.putNumber("Encoder Desired Decel Counts : ", EncdrDsrdDclCnts);
     	SmartDashboard.putNumber("Encoder Desired Decel Target : ", EncdrTgtDclCnts);
-    	SmartDashboard.putNumber("Encoder Desired End Target: ", EncdrTgtRefCnt);
-    	    	
+    	SmartDashboard.putNumber("Encoder Desired End Target : ", EncdrTgtRefCnt);
+    	SmartDashboard.putNumber("Encoder Actual Count Avg : ", EncdrActCnt);
+    	
+    	EncdrCnt = Robot.kSENSORS.getEncodersCnt(); 
     	//Update SmartDashboard
-    	System.out.println("Encoder Counts : " + Robot.kSENSORS.getEncodersCnt());
+    	System.out.print("Raw Encoder Counts Ref A : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct]);
+    	System.out.print("Raw Encoder Counts Ref B : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct]);
     	System.out.println("Desired Distance : " + this.DsrdDistFeet);
-    	System.out.println("Encoder Ref Init Count : " + EncdrInitRefCnt);
-    	System.out.println("Encoder Desired Counts : " + EncdrDsrdTrvlCnts);
+    	System.out.println("Encoder Ref Avg Init Count : " + EncdrInitRefCnt);
+    	System.out.println("Encoder Desired Travel Counts : " + EncdrDsrdTrvlCnts);
+    	System.out.println("Encoder Desired Decel Counts : " + EncdrDsrdDclCnts);
     	System.out.println("Encoder Desired Decel Target : " + EncdrTgtDclCnts);
-    	System.out.println("Encoder Desired End Target: " + EncdrTgtRefCnt);
-    	
-    	
+    	System.out.println("Encoder Desired End Target : " + EncdrTgtRefCnt);
+    	System.out.println("Encoder Actual Count Avg : " + EncdrActCnt);
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
