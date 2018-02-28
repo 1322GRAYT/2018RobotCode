@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class PIDDRV extends Subsystem {
     
-	private boolean PIDMstrEnbl;                         // boolean
+	private boolean PIDMstrEnbl;                        // boolean
 	private boolean PIDEnbl[] = new boolean[4];         // boolean 
 	private boolean PIDIntglRst[] = new boolean[4];     // boolean 
 	private boolean DrvDrctnFwd[] = new boolean[4];     // boolean
