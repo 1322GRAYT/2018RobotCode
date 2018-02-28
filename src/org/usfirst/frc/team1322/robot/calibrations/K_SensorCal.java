@@ -15,7 +15,7 @@ public class K_SensorCal {
 	
   /* KWSS_e_RefAutonDrvWhlSlct: Selects which Drive/Encoder/Wheel Assembly
    * is the Reference Set to use for Autonomous Mode Drive By Distance.. */
-  public static final int KWSS_e_RefAutonDrvWhlSlct = (int) 0;   // 0 = RR: Right Rear, 1 = RF: Right Front
+  public static final int KWSS_e_RefAutonDrvWhlSlct = (int) 1;   // 0 = RR: Right Rear, 1 = RF: Right Front
                                                                  // 2 = LF: Left Front, 3 = LR: Left Rear
   
   /* KWSS_l_DistPerRevWheel: Linear Distance Travelled Forward/Rearward

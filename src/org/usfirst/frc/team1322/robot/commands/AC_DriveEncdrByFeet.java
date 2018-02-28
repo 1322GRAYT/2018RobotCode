@@ -3,6 +3,7 @@ package org.usfirst.frc.team1322.robot.commands;
 import org.usfirst.frc.team1322.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *  cvrtDistToCnts
@@ -74,6 +75,33 @@ public class AC_DriveEncdrByFeet extends Command {
     	  {
     	  Robot.kDRIVE.mechDrive(0.0, DclPwr, 0.0);
     	  }
+    
+    	//Ultra Sonic Sensor Values
+    	SmartDashboard.putNumber("Rear US : ", Robot.kSENSORS.getRearUSDistance());
+    	SmartDashboard.putNumber("Left US : ", Robot.kSENSORS.getLeftUSDistance());
+    	SmartDashboard.putNumber("Right US : ", Robot.kSENSORS.getRightUSDistance());
+    	//Gyro
+    	SmartDashboard.putNumber("Gyro Angle : ", Robot.kSENSORS.getGyroAngle());
+    	//Drive Speeds
+    	SmartDashboard.putNumberArray("Encoder Velocity : ", Robot.kSENSORS.getEncodersVelRaw());
+    	SmartDashboard.putNumberArray("Encoder Counts : ", Robot.kSENSORS.getEncodersCnt());
+    	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
+    	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
+    	SmartDashboard.putNumber("Desired Distance : ", this.DsrdDistFeet);
+        SmartDashboard.putNumber("Encoder Ref Init Count : ", EncdrInitRefCnt);
+    	SmartDashboard.putNumber("Encoder Desired Counts : ", EncdrDsrdTrvlCnts);
+    	SmartDashboard.putNumber("Encoder Desired Decel Target : ", EncdrTgtDclCnts);
+    	SmartDashboard.putNumber("Encoder Desired End Target: ", EncdrTgtRefCnt);
+    	    	
+    	//Update SmartDashboard
+    	System.out.println("Encoder Counts : " + Robot.kSENSORS.getEncodersCnt());
+    	System.out.println("Desired Distance : " + this.DsrdDistFeet);
+    	System.out.println("Encoder Ref Init Count : " + EncdrInitRefCnt);
+    	System.out.println("Encoder Desired Counts : " + EncdrDsrdTrvlCnts);
+    	System.out.println("Encoder Desired Decel Target : " + EncdrTgtDclCnts);
+    	System.out.println("Encoder Desired End Target: " + EncdrTgtRefCnt);
+    	
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
