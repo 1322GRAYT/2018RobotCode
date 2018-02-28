@@ -5,6 +5,7 @@ import org.usfirst.frc.team1322.robot.commands.TC_Drive;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -56,8 +57,12 @@ public class DRIVE extends Subsystem {
      * @param rotation The rate of rotation for the robot that is completely independent of the translation. [-1.0..1.0] 
      */ 
     public void mechDrive(double x, double y, double rotation) { 
-        double xIn = dzify(x); 
-        double yIn = dzify(y); 
+    	double xIn = (x); 
+        double yIn = (y); 
+    	if(DriverStation.getInstance().isOperatorControl()) {
+    		xIn = dzify(x); 
+            yIn = dzify(y); 
+    	}
         rotation = dzify(rotation);
         // Negate y for the joystick. 
         yIn = -yIn; 
@@ -179,7 +184,7 @@ public class DRIVE extends Subsystem {
 	
 	public double[] getEncoders(){ 
 		double[] encoders = {
-				rR_Drive_1.getSensorCollection().getQuadraturePosition(), 
+				-(rR_Drive_1.getSensorCollection().getQuadraturePosition()), // RtRear Encoder Wiring Reversed 
 				rF_Drive_2.getSensorCollection().getQuadraturePosition(), 
 				lF_Drive_2.getSensorCollection().getQuadraturePosition(),
 				lR_Drive_1.getSensorCollection().getQuadraturePosition()
@@ -189,7 +194,7 @@ public class DRIVE extends Subsystem {
 	
 	public double[] getEncodersVelocity(){ 
 		double[] encoders = {
-				rR_Drive_1.getSensorCollection().getQuadratureVelocity(),
+				-(rR_Drive_1.getSensorCollection().getQuadratureVelocity()), // RtRear Encoder Wiring Reversed
 				rF_Drive_2.getSensorCollection().getQuadratureVelocity(), 
 				lF_Drive_2.getSensorCollection().getQuadratureVelocity(),
 				lR_Drive_1.getSensorCollection().getQuadratureVelocity()
