@@ -12,10 +12,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Gyro.
  */
 public class PIDROT extends Subsystem {
-	private Timer timer = new Timer();
+	private Timer TgtCmpltTmr = new Timer();
 	
 	// Variable Declarations
-	boolean EnblRqst;          // (boolean)
 	boolean PIDRotEnbl;        // (boolean)
 	boolean DirtcnIsClckWise;  // (boolean)
 	boolean PstnErrWithInDB;   // (boolean)
@@ -34,7 +33,47 @@ public class PIDROT extends Subsystem {
     /**********************************************/
     /* Public Interface Definitions        */
     /**********************************************/
+    
+    /** Method: resetTgtProfTmr - Resets the Drive Speed
+     * Target Profile Timer at the beginning of a Drive Segments.  */ 
+    public void resetTgtCmpltTmr() {
+    	TgtCmpltTmr.reset();
+    }
 
+    /** Method: putPIDRotPstnTgt - Interface to Set the Gyro Target
+      * Position Angle for the Robot Rotate PID Controller. (degrees)
+      * (+ degrees ClockWise, - degrees Counter-Clockwise)
+      *  @param1: Drive Rotate PID Enable Select (boolean)	
+      *  @param2: Drive Rotate Enable Select (boolean)	
+      *  @param3: Drive System Desired Encoder Speed Target (rpm: double) */	
+    public void putPIDRotPstnTgt(boolean RotSysEnbl,
+    		                     boolean RotClckWise,
+    		                     double RotPstnTgt) {
+    	PIDRotEnbl = RotSysEnbl;
+    	DirtcnIsClckWise = RotClckWise;
+    	PosDsrd = RotPstnTgt;
+    }  
+    
+    /** Method: getPIDRotCmnd - Interface to Get the Drive System Motor 
+	  * Normalized Power Command for the Robot Rotate Control (-1 to 1).
+      *  @return: Robot Rotate Motor Driver Normalized Power Command (-1 to 1: double) */	
+    public double getPIDRotCmnd() {
+    	return PIDRotCmnd;
+    }
+
+    /** Method: getPIDRotTgtCondMet - Interface to Get the Robot Rotate PI
+      * Control System Target Acquired Condition Complete Indication. (boolean)
+      *  @return: Robot Rotate Target Condition Complete (boolen) */	
+    public double getPIDRotTgtCondMet() {
+    	return PIDRotCmnd;
+    }
+
+    
+    /** Method: resetPIDRot - Interface to Reset the Drive System
+	  * Rotate PID Controller, i.e. initialize PID variables.  */ 
+    public void resetPIDRot() {
+        resetPIDCntrlr();
+    }
 	
 	
     /******************************************************/
@@ -45,8 +84,6 @@ public class PIDROT extends Subsystem {
      * Drive System Rotate Control PI Control System.  */ 
    public void managePIDRotate() {
 
-	dtrmnPIDRotEnbl();
-	dtrmnRotDirctn();
 	calcPosAct();
 	   
    	if (PIDRotEnbl == true)
@@ -70,36 +107,6 @@ public class PIDROT extends Subsystem {
     /**********************************************/
     /* Internal Class Methods                     */
     /**********************************************/
-	
-
-   /** Method: dtrmnPIDRotEnbl - YadaYada
-    *  @param:  input info	(units)
-    *  @return: output info (units) */	
-   private void dtrmnPIDRotEnbl() {
-	   boolean EnblTemp = false;
-	   
-	   if ((EnblRqst == true) && (PosDsrd != 0)) {
-		   EnblTemp = true;
-	   }
-	   
-       PIDRotEnbl = EnblTemp;
-   }
-
-   
-   /** Method: dtrmnRotDirctn - YadaYada
-    *  @param:  input info	(units)
-    *  @return: output info (units) */	
-   private void dtrmnRotDirctn() {
-	   if (PosDsrd < 0) {
-           // Turn Counter-ClockWise
-		   DirtcnIsClckWise = false;	   
-	   }
-	   else {  /* PosDsrd >= 0) */
-		   // Turn Clockwise
-	       DirtcnIsClckWise = true;
-	   }
-   }   
-
    
    /** Method: calcPosAct - YadaYada
     *  @param:  input info	(units)
@@ -118,7 +125,6 @@ public class PIDROT extends Subsystem {
    	}
    	
    	PosAct = PosActTemp;
-   	
      } 
    
    
@@ -236,13 +242,13 @@ public class PIDROT extends Subsystem {
      private void dtrmnPIDRotTgtMet() {
     	
     	 if (PstnErrWithInDB == false) {  // Error outside Target DB
-    		timer.reset(); 
+    		 TgtCmpltTmr.reset(); 
     	 } 
     	 else  {
     		 /* Do Nothing - Insided Target DB - Free-Running Timer */
     	 }
 
-    	 if (timer.get() >= K_PIDCal.KROT_t_PstnTgtSyncMetThrsh) {
+    	 if (TgtCmpltTmr.get() >= K_PIDCal.KROT_t_PstnTgtSyncMetThrsh) {
     		 PIDRotCondCmplt = true; 
     	 }
     	 else {
@@ -255,16 +261,16 @@ public class PIDROT extends Subsystem {
       *  @param:  input info	(units)
       *  @return: output info (units) */	
      private void resetPIDCntrlr() {
-    	timer.reset();
-    	PosDsrd = 0.0;	 
-        PosErr = 0.0;
-        PstnErrWithInDB = false;
-        PosErrAccum = 0.0;
-   	    PropCorr = 0.0;
-   	    IntglCorr = 0.0;
-   	    PIDCmndPct =  0.0;
-   	    PIDRotCmnd =  0.0;
-   	    PIDRotCondCmplt = false;
+    	 TgtCmpltTmr.reset();
+    	 PosDsrd = 0.0;	 
+         PosErr = 0.0;
+         PstnErrWithInDB = false;
+         PosErrAccum = 0.0;
+   	     PropCorr = 0.0;
+   	     IntglCorr = 0.0;
+   	     PIDCmndPct =  0.0;
+   	     PIDRotCmnd =  0.0;
+   	     PIDRotCondCmplt = false;
      }
      
 

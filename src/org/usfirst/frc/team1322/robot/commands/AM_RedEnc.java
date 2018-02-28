@@ -10,7 +10,7 @@ public class AM_RedEnc extends CommandGroup {
 
 	// Autonomous Pattern Cals
 	//Segment 1: Drive 16.14 ft, slow down at 2 ft
-	private static final float KADL_l_DrvFwdSeg1 =     (float) 32.14;    // feet was 16.14
+	private static final float KADL_l_DrvFwdSeg1 =     (float) 16.14;    // feet was 16.14
 	private static final float KADL_l_DrvTrigDclSeg1 = (float) 2.0;      // feet
 	private static final float KADL_r_DrvPwrSeg1 =     (float) 0.8;      // Normalized Power	
 	private static final float KADL_r_DrvPwrDcl1 =     (float) 0.2;      // Normalized Power	
