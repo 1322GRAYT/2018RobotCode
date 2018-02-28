@@ -196,7 +196,6 @@ public class SENSORS extends Subsystem {
     for (idx=0; idx<4; idx++)
       {
       RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);          // rpm
-      if(idx == 0) RPM_Raw = -(RPM_Raw);  // RtRear Encoder Wired Backwards
       EncdrRPM[idx] = RPM_Raw;
       WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                       // rpm
       WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;                   // inches/sec

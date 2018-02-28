@@ -14,6 +14,11 @@ public class K_PIDCal {
 	  public static final float KDRV_t_PID_LoopRt = (float)0.020; // sec 
   
 	  
+	  
+/*****************************************************************/
+/* Drive Forward/Reverse PID Control Calibrations                */
+/*****************************************************************/	  
+	  
   /** KDRV_t_TgtProfTmAxis: Time Since Start of Drive Segment Axis
     * for the Target Speed Profile Shaping Tables. (rpm). */
   public static final float KDRV_t_TgtProfTmAxis[] = new float[] 
@@ -309,5 +314,37 @@ public class K_PIDCal {
         (float)15.0,  // LF: Left Front
         (float)15.0   // LR: Left Rear
       };
-	
+
+  
+  
+  /*****************************************************************/
+  /* Drive Rotate PID Control Calibrations                         */
+  /*****************************************************************/	    
+  
+  /** KROT_Deg_PosErrDB: Drive System Rotate Position Error DeadBand (degree). */
+  public static final float KROT_Deg_PosErrDB = (float) 1.0;
+  
+  /** KROT_K_PropGx: Drive System Rotate PID Controls Proportional Gain. */
+  public static final float KROT_K_PropGx = (float) 0.5;
+  
+  /** KROT_K_IntglGx: Drive System Rotate PID Controls Integral Gain. */
+  public static final float KROT_K_IntglGx = (float) 0.0001;
+ 
+  /** KROT_Pct_PropCorrMin: Drive System Rotate PID Controls Proportional
+    * Correction Min Limit. */
+  public static final float KROT_Pct_PropCorrMin = (float) 10.0;
+  
+  /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Proportional
+   * Correction Max Limit. */
+  public static final float KROT_Pct_PropCorrMax = (float) 50.0;
+  
+  /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Intgral
+   * Correction Max Limit. */
+  public static final float KROT_Pct_IntglCorrMax = (float) 30.0;
+  
+  /** KROT_t_PstnTgtSyncMetThrsh: Amount of time that the Position Error must
+   * be held within the Error DeadBand in order for the Drive System Rotate
+   * PID Controls to consider the Position Target conditions met. (seconds) */
+  public static final float KROT_t_PstnTgtSyncMetThrsh = (float) 0.50;
+   
 }
