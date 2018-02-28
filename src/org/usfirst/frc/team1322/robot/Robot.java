@@ -14,6 +14,7 @@ import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
 import org.usfirst.frc.team1322.robot.subsystems.PIDDRV;
+import org.usfirst.frc.team1322.robot.subsystems.PIDROT;
 import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
 import org.usfirst.frc.team1322.robot.subsystems.TBLLOOKUP;
 
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public static final DRIVE kDRIVE = new DRIVE();
 	public static final SENSORS kSENSORS = new SENSORS();
 	public static final PIDDRV kPIDDRV = new PIDDRV();
+	public static final PIDROT kPIDROT = new PIDROT();
 	public static final TBLLOOKUP kTBLLOOKUP = new TBLLOOKUP();
 	
 	
@@ -58,7 +60,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
-		kPIDDRV.resetPIDDrv();		
+		kPIDDRV.resetPIDDrv();
+		kPIDROT.resetPIDRot();
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
 		CameraServer.getInstance().startAutomaticCapture();		
 	}
@@ -125,6 +128,7 @@ public class Robot extends IterativeRobot {
 			m_autonomousCommand.cancel();
 		}
 		kPIDDRV.resetPIDDrv();
+		kPIDROT.resetPIDRot();
 	}
 
 	/**

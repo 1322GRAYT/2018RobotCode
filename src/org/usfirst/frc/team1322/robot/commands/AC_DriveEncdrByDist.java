@@ -7,22 +7,36 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *  cvrtDistToCnts
+ * Class: AC_DriveEncdrByDist - Autonomous Command to Drive Forwards
+ * or Backwards by a Desired Distance (Feet) based on the Average of
+ * the Encoder Counts of two Drive Motors/Wheels.
  */
-public class AC_DriveEncdrByFeet extends Command {
-		
+public class AC_DriveEncdrByDist extends Command {
+	
 	// Autonomous Pattern Vars
+    private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
+	private boolean DrctnIsFwd;
+
+	
 	private double EncdrActCnt;
 	private double EncdrInitRefCnt;
 	private double EncdrDsrdTrvlCnts;	
 	private double EncdrDsrdDclCnts;	
 	private double EncdrTgtDclCnts;	
 	private double EncdrTgtRefCnt;
+
 	
-    float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
-	boolean DrctnIsFwd;
-	
-    public AC_DriveEncdrByFeet(float   DsrdDistFeet,
+	//  Autonomous Pattern Constructor
+    /** Method: AC_DriveEncdrByDist - Autonomous Command to Drive Forwards
+      * or Backwards by a Desired Distance (Feet) based on the Average of
+      * the Encoder Counts of two Drive Motors/Wheels.
+      *  @param1: Desired Drive Distance        (float: feet)	
+      *  @param2: Desired Drive Power           (float: normalized power)	
+      *  @param3: Desired Deceleration Distance (float: feet)
+      *  @param4: Desired Deceleration Power    (float: normalized power)
+      *  @param5: Is Desired Direction Forward? (boolean)
+      *   */
+    public AC_DriveEncdrByDist(float   DsrdDistFeet,
     		                   float   DsrdPriPwr,
     		                   float   DsrdDclFeet,
     		                   float   DsrdDclPwr,
@@ -41,6 +55,7 @@ public class AC_DriveEncdrByFeet extends Command {
     protected void initialize() {
     	
     	Robot.kDRIVE.resetEncoders();
+
     	EncdrInitRefCnt = Robot.kSENSORS.getRefEncoderCnt();
     	
     	EncdrDsrdTrvlCnts = Robot.kSENSORS.getCntsToDrv(DsrdDistFeet);
@@ -48,9 +63,10 @@ public class AC_DriveEncdrByFeet extends Command {
     	
     	EncdrDsrdDclCnts = Robot.kSENSORS.getCntsToDrv(DsrdDclFeet);
     	EncdrTgtDclCnts = EncdrTgtRefCnt - EncdrDsrdDclCnts;
-    	
+
     	Robot.kPIDDRV.resetPIDDrv();
     	Robot.kPIDDRV.resetTgtProfTmr();
+    	Robot.kPIDDRV.putPIDDrvSpdTgt(true, 0.0);  //Enbl PID and Command Target Spd - Todo  Speed Target Set to 0.0 Until SubSystem Debug is Complete.
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -61,7 +77,6 @@ public class AC_DriveEncdrByFeet extends Command {
 
     	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();    	
 
-    	Robot.kPIDDRV.putPIDDrvSpdTgt(true, 0.0);  //Enbl PID and Command Target Spd - Todo  Speed Target Set to 0.0 Until SubSystem Debug is Complete.
     	Robot.kPIDDRV.managePIDDrive();            // Call the Drive PID Scheduler   	
     	// Cmnds[] = Robot.kPIDDRV.getPIDDrvCmnd();  // Get PID Commands - todo: Not Hooked-Up - Until Subsystem Debug is Complete
     	

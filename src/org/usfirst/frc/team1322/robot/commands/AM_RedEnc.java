@@ -64,18 +64,18 @@ public class AM_RedEnc extends CommandGroup {
 
     	//addSequential(new BM_RaiseToMid());
     	//addParallel
-    	addSequential(new AC_DriveEncdrByFeet(KADL_l_DrvFwdSeg1, KADL_r_DrvPwrSeg1,
+    	addSequential(new AC_DriveEncdrByDist(KADL_l_DrvFwdSeg1, KADL_r_DrvPwrSeg1,
     			                            KADL_l_DrvTrigDclSeg1, KADL_r_DrvPwrDcl1,
     			                            true));
     	addSequential(new BM_LiftClaw(false));
     	addSequential(new BM_TurnByGyro(KADL_r_TurnPwrSeg2, KADL_deg_TurnSeg2));
-    	addSequential(new AC_DriveEncdrByFeet(KADL_l_DrvFwdSeg3, KADL_r_DrvPwrSeg3,
+    	addSequential(new AC_DriveEncdrByDist(KADL_l_DrvFwdSeg3, KADL_r_DrvPwrSeg3,
                                               KADL_l_DrvTrigDclSeg3, KADL_r_DrvPwrDcl3,
                                               true));
     	addSequential(new BM_TurnByGyro(KADL_r_TurnPwrSeg4, KADL_deg_TurnSeg4));
     	
     	//if(isClose) {
-    		addSequential(new AC_DriveEncdrByFeet(KADL_l_DrvFwdSeg5, KADL_r_DrvPwrSeg5,
+    		addSequential(new AC_DriveEncdrByDist(KADL_l_DrvFwdSeg5, KADL_r_DrvPwrSeg5,
                 							  KADL_l_DrvTrigDclSeg5, KADL_r_DrvPwrDcl5,
                                               true));
     		addSequential(new BM_TurnByGyro(KADL_r_TurnPwrSeg6, KADL_deg_TurnSeg6));
