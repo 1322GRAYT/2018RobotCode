@@ -19,11 +19,11 @@ public class PIDROT extends Subsystem {
 	boolean DirtcnIsClckWise;  // (boolean)
 	boolean PstnErrWithInDB;   // (boolean)
 	boolean PIDRotCondCmplt;   // (boolean)
-	double PosActRaw;          // (degrees)
-	double PosAct;             // (degrees)
-    double PosDsrd;	           // (degrees)
-    double PosErr;             // (degrees)
-    double PosErrAccum;        // (degrees)
+	double PstnActRaw;         // (degrees)
+	double PstnAct;            // (degrees)
+    double PstnDsrd;	       // (degrees)
+    double PstnErr;            // (degrees)
+    double PstnErrAccum;       // (degrees)
     double PropCorr;           // (percent)
     double IntglCorr;          // (percent)
     double PIDCmndPct;         // (percent power)
@@ -51,7 +51,7 @@ public class PIDROT extends Subsystem {
     		                     double RotPstnTgt) {
     	PIDRotEnbl = RotSysEnbl;
     	DirtcnIsClckWise = RotClckWise;
-    	PosDsrd = RotPstnTgt;
+    	PstnDsrd = RotPstnTgt;
     }  
     
     /** Method: getPIDRotCmnd - Interface to Get the Drive System Motor 
@@ -64,8 +64,8 @@ public class PIDROT extends Subsystem {
     /** Method: getPIDRotTgtCondMet - Interface to Get the Robot Rotate PI
       * Control System Target Acquired Condition Complete Indication. (boolean)
       *  @return: Robot Rotate Target Condition Complete (boolen) */	
-    public double getPIDRotTgtCondMet() {
-    	return PIDRotCmnd;
+    public boolean getPIDRotTgtCondMet() {
+    	return PIDRotCondCmplt;
     }
 
     
@@ -84,12 +84,12 @@ public class PIDROT extends Subsystem {
      * Drive System Rotate Control PI Control System.  */ 
    public void managePIDRotate() {
 
-	calcPosAct();
+	calcPstnAct();
 	   
    	if (PIDRotEnbl == true)
    	    {
-   		calcPosErr();
-   		calcPosErrAccum();
+   		calcPstnErr();
+   		calcPstnErrAccum();
    		calcPropTerm();
    		calcIntglTerm();
    		calcPIDTotCorr();
@@ -108,37 +108,37 @@ public class PIDROT extends Subsystem {
     /* Internal Class Methods                     */
     /**********************************************/
    
-   /** Method: calcPosAct - YadaYada
+   /** Method: calcPstnAct - YadaYada
     *  @param:  input info	(units)
     *  @return: output info (units) */	
-   private void calcPosAct() {
-   	double PosActTemp;
+   private void calcPstnAct() {
+   	double PstnActTemp;
    	
-   	PosActRaw = Robot.kSENSORS.getGyroAngle();    	
+   	PstnActRaw = Robot.kSENSORS.getGyroAngle();    	
    	if (DirtcnIsClckWise = false) {
    		// Turn Counter-ClockWise
-   		PosActTemp = ((float)360) - PosActRaw;
+   		PstnActTemp = ((float)360) - PstnActRaw;
    	}
    	else /* (DirtcnIsClckWise = true)  */ {
    		// Turn ClockWise
-   		PosActTemp = PosActRaw;    		
+   		PstnActTemp = PstnActRaw;    		
    	}
    	
-   	PosAct = PosActTemp;
+   	PstnAct = PstnActTemp;
      } 
    
    
-    /** Method: calcPosErr - YadaYada
+    /** Method: calcPstnErr - YadaYada
      *  @param:  input info	(units)
      *  @return: output info (units) */	
-    private void calcPosErr() {
+    private void calcPstnErr() {
     	float ErrTemp;
     	boolean ErrInDB = false;
     	
-    	ErrTemp = (float)(PosDsrd - PosAct);
+    	ErrTemp = (float)(PstnDsrd - PstnAct);
     	
     	if (ErrTemp >= 0.0) {
-    		// PosErr is Positive
+    		// PstnErr is Positive
     		if (ErrTemp >= K_PIDCal.KROT_Deg_PosErrDB)
     		    {
     		    ErrTemp = ErrTemp - K_PIDCal.KROT_Deg_PosErrDB;    			
@@ -150,7 +150,7 @@ public class PIDROT extends Subsystem {
     	        }
     	}
     	else /* (ErrTemp < 0.0) */ {
-    		// PosErr is Negative
+    		// PstnErr is Negative
     		if (ErrTemp <= -(K_PIDCal.KROT_Deg_PosErrDB))      // Less than the -DB
 			    {
 			    ErrTemp = ErrTemp + K_PIDCal.KROT_Deg_PosErrDB; // -Err - (-DB)   			
@@ -162,18 +162,18 @@ public class PIDROT extends Subsystem {
 		        }    		
     	}
     	
-    	PosErr = (double)ErrTemp;
+    	PstnErr = (double)ErrTemp;
     	PstnErrWithInDB = ErrInDB;
       }
 
     
-    /** Method: calcPosErrAccum - YadaYada
+    /** Method: calcPstnErrAccum - YadaYada
      *  @param:  input info	(units)
      *  @return: output info (units) */	
-    private void calcPosErrAccum() {
+    private void calcPstnErrAccum() {
     	double ErrAccumTemp;
     	
-    	ErrAccumTemp = PosErrAccum + PosErr;
+    	ErrAccumTemp = PstnErrAccum + PstnErr;
     	
     	if (ErrAccumTemp > K_PIDCal.KROT_Pct_IntglCorrMax) {
     		ErrAccumTemp = K_PIDCal.KROT_Pct_IntglCorrMax;
@@ -182,7 +182,7 @@ public class PIDROT extends Subsystem {
     		ErrAccumTemp = -(K_PIDCal.KROT_Pct_IntglCorrMax);
     	}
     		
-     	PosErrAccum = ErrAccumTemp;  
+     	PstnErrAccum = ErrAccumTemp;  
     }
 
 	
@@ -197,7 +197,7 @@ public class PIDROT extends Subsystem {
      	CorrLimMin = (double)K_PIDCal.KROT_Pct_PropCorrMin;
      	CorrLimMax = (double)K_PIDCal.KROT_Pct_PropCorrMax;
      	
-     	P_Corr = K_PIDCal.KROT_K_PropGx * PosErr;
+     	P_Corr = K_PIDCal.KROT_K_PropGx * PstnErr;
      	
      	if (P_Corr < CorrLimMin) P_Corr = CorrLimMin;
      	else if (P_Corr > CorrLimMax) P_Corr = CorrLimMax;
@@ -212,7 +212,7 @@ public class PIDROT extends Subsystem {
      private void calcIntglTerm() {
      	double I_Corr;     	
      	
-     	I_Corr = K_PIDCal.KROT_K_IntglGx * PosErrAccum;
+     	I_Corr = K_PIDCal.KROT_K_IntglGx * PstnErrAccum;
      	     	
      	IntglCorr = I_Corr;
      }
@@ -262,10 +262,10 @@ public class PIDROT extends Subsystem {
       *  @return: output info (units) */	
      private void resetPIDCntrlr() {
     	 TgtCmpltTmr.reset();
-    	 PosDsrd = 0.0;	 
-         PosErr = 0.0;
+    	 PstnDsrd = 0.0;	 
+         PstnErr = 0.0;
          PstnErrWithInDB = false;
-         PosErrAccum = 0.0;
+         PstnErrAccum = 0.0;
    	     PropCorr = 0.0;
    	     IntglCorr = 0.0;
    	     PIDCmndPct =  0.0;
