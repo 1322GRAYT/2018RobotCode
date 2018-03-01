@@ -16,14 +16,14 @@ public class K_SensorCal {
   /* KWSS_e_RefAutonDrvWhlA_Slct: Selects which Drive/Encoder/Wheel Assembly
    * is the Reference A Set to use for Autonomous Mode Drive By Distance.
    * Reference Set A and B are averaged together. */
-  public static final int KWSS_e_RefAutonDrvWhlA_Slct = (int) 1;   // 0 = RR: Right Rear, 1 = RF: Right Front
-                                                                 // 2 = LF: Left Front, 3 = LR: Left Rear
+  public static final int KWSS_e_RefAutonDrvWhlA_Slct = (int) 1;   // 0 = LF: Left Front, 1 = RF: Right Front
+                                                                   // 2 = LR: Left Rear,  3 = RR: Right Rear
 
   /* KWSS_e_RefAutonDrvWhlB_Slct: Selects which Drive/Encoder/Wheel Assembly
    * is the Reference B_ Set to use for Autonomous Mode Drive By Distance.
    * Reference Set A and B are averaged together. */
-  public static final int KWSS_e_RefAutonDrvWhlB_Slct = (int) 3;   // 0 = RR: Right Rear, 1 = RF: Right Front
-                                                                 // 2 = LF: Left Front, 3 = LR: Left Rear
+  public static final int KWSS_e_RefAutonDrvWhlB_Slct = (int) 3;   // 0 = LF: Left Front, 1 = RF: Right Front
+                                                                   // 2 = LR: Left Rear,  3 = RR: Right Rear
   
   /* KWSS_l_DistPerRevWheel: Linear Distance Traveled Forward/Rearward
    * per one Wheel Revolution (inches). */
