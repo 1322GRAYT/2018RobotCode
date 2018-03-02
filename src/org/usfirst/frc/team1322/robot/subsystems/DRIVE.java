@@ -208,10 +208,10 @@ public class DRIVE extends Subsystem {
      */
 	public double[] getEncoders(){ 
 		double[] encoders = {
-				-(rR_Drive_1.getSensorCollection().getQuadraturePosition()), // RtRear Encoder Wiring Reversed 
-				rF_Drive_2.getSensorCollection().getQuadraturePosition(), 
-				lF_Drive_2.getSensorCollection().getQuadraturePosition(),
-				lR_Drive_1.getSensorCollection().getQuadraturePosition()
+				rR_Drive_1.getSensorCollection().getQuadraturePosition(),     // RtRear Encoder Wiring Reversed but Motors Reversed So All Good
+				-(rF_Drive_2.getSensorCollection().getQuadraturePosition()),  // Motors Reversed 
+				-(lF_Drive_2.getSensorCollection().getQuadraturePosition()),  // Motors Reversed 
+			    -(lR_Drive_1.getSensorCollection().getQuadraturePosition())   // Motors Reversed 
 				};
 		return encoders;
 	}
@@ -219,10 +219,10 @@ public class DRIVE extends Subsystem {
 	
 	public double[] getEncodersVelocity(){ 
 		double[] encoders = {
-				-(rR_Drive_1.getSensorCollection().getQuadratureVelocity()), // RtRear Encoder Wiring Reversed
-				rF_Drive_2.getSensorCollection().getQuadratureVelocity(), 
-				lF_Drive_2.getSensorCollection().getQuadratureVelocity(),
-				lR_Drive_1.getSensorCollection().getQuadratureVelocity()
+				rR_Drive_1.getSensorCollection().getQuadratureVelocity(),     // RtRear Encoder Wiring Reversed but Motors Reversed So All Good
+				-(rF_Drive_2.getSensorCollection().getQuadratureVelocity()),  // Motors Reversed 
+				-(lF_Drive_2.getSensorCollection().getQuadratureVelocity()),  // Motors Reversed 
+				-(lR_Drive_1.getSensorCollection().getQuadratureVelocity())   // Motors Reversed 
 				};
 		return encoders;
 	}

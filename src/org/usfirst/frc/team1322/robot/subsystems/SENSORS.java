@@ -47,11 +47,11 @@ public class SENSORS extends Subsystem {
 	// Idx [1] - RF: Right Front	
 	// Idx [2] - RR: Left Rear	
 	// Idx [3] - RR: Right Rear
-	private double EncdrVelRaw[] = new double[4];
-	private double EncdrCnt[] = new double[4];
-	private double EncdrRPM[] = new double[4];
-	private double WhlRPM[] = new double[4];
-	private double WhlVel[] = new double[4];
+	private double EncdrVelRaw[] = new double[4];   // (counts/100msec)
+	private double EncdrCnt[] = new double[4];      // (counts/sec)
+	private double EncdrRPM[] = new double[4];      // (rpm)
+	private double WhlRPM[] = new double[4];        // (rpm)
+	private double WhlVel[] = new double[4];        // (feet/sec)
 
 	private float  USDistRear;
 	private float  USDistLeft;
@@ -118,8 +118,8 @@ public class SENSORS extends Subsystem {
 	}
  
 	/** Method: getWhlsVel - Interface to Get the array of
-	  * Wheel Linear Velocity in units of inches/sec.
-     *  @return: Array of Drive System Linear Wheel Speeds (inches/sec) */
+	  * Wheel Linear Velocity in units of feet/sec.
+     *  @return: Array of Drive System Linear Wheel Speeds (feet/sec) */
     public double[] getWhlsVel(){ 
       double[] encoders = WhlVel;
       return encoders;
@@ -204,7 +204,7 @@ public class SENSORS extends Subsystem {
       RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);      // rpm
       EncdrRPM[idx] = RPM_Raw;
       WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                   // rpm
-      WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;               // inches/sec
+      WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/720;               // feet/sec
       }
     
     /* UltraSonic Position Inputs */
@@ -234,13 +234,13 @@ public class SENSORS extends Subsystem {
    *  @return: Encoder Counts (cnts) */
  private double cvrtDistToCnts(float DistFeet)
    {
-   double WhlRPM;
-   double EncdrRPM;
+   double WhlRevs;
+   double EncdrRevs;
    double EncdrCnts;
    
-   WhlRPM = (double)((DistFeet * 12) / K_SensorCal.KWSS_l_DistPerRevWheel);	 
-   EncdrRPM = WhlRPM * (double)K_SensorCal.KWSS_r_EncoderToWheel;	 
-   EncdrCnts = EncdrRPM * (double)K_SensorCal.KWSS_Cnt_PulsePerRevEncoder;
+   WhlRevs = (double)((DistFeet * 12) / K_SensorCal.KWSS_l_DistPerRevWheel);	 
+   EncdrRevs = WhlRevs * (double)K_SensorCal.KWSS_r_EncoderToWheel;	 
+   EncdrCnts = EncdrRevs * (double)K_SensorCal.KWSS_Cnt_PulsePerRevEncoder;
    
    return EncdrCnts;
    }
