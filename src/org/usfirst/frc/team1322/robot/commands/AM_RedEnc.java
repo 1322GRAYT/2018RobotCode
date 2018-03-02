@@ -62,9 +62,8 @@ public class AM_RedEnc extends CommandGroup {
     	//alliance = DriverStation.getInstance().getAlliance();
     	//isClose = calculateClose();
 
-    	//addSequential(new BM_RaiseToMid());
-    	//addParallel
-    	addSequential(new AC_DriveEncdrByFeet(KADL_l_DrvFwdSeg1, KADL_r_DrvPwrSeg1,
+    	addSequential(new BM_RaiseToMid());
+    	addParallel(new AC_DriveEncdrByFeet(KADL_l_DrvFwdSeg1, KADL_r_DrvPwrSeg1,
     			                            KADL_l_DrvTrigDclSeg1, KADL_r_DrvPwrDcl1,
     			                            true));
     	addSequential(new BM_LiftClaw(false));
