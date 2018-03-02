@@ -102,8 +102,8 @@ public class LIFT extends Subsystem {
     	   (!highSen.get() && upPower < -0.31)) //If High Sensor is triggered but power is less than -3
     	  {
     	  if(speed != 0.0)disengageJammer();
-    	  lift1.set(ControlMode.PercentOutput, upPower);
-    	  lift2.set(ControlMode.PercentOutput, upPower);
+    	  lift1.set(ControlMode.PercentOutput, -upPower);
+    	  lift2.set(ControlMode.PercentOutput, -upPower);
     	  //if(getLowGear() && speed == 0.0) engageJammer(); //Check If We are in low gear
     	  } 	
     	//lift1.set(ControlMode.PercentOutput, speed);
