@@ -71,10 +71,14 @@ public class OI {
 		auxLeftStickUp.whileActive(new TC_RunWheelsInOut(false));  		//Run Block In
 		auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));		//Rotate Block 
 		auxLeftStickRight.whileActive(new TC_RunWheelsRotate(false));  	//Rotate Block
-		auxRTrigger.toggleWhenActive(new BM_OpenClaw(true));			//Open Claw
-		auxLTrigger.toggleWhenActive(new BM_OpenClaw(false));			//Close Claw
-		auxA.whileActive(new BM_LiftClaw(true));						//Tilt Claw Up
-		auxY.whileActive(new BM_LiftClaw(false));						//Tilt Claw Down
+		//auxRTrigger.toggleWhenActive(new BM_OpenClaw(false));			//Open Claw
+		//auxLTrigger.toggleWhenActive(new BM_OpenClaw(true));			//Close Claw
+		//auxA.whileActive(new BM_LiftClaw(false));						//Tilt Claw Up
+		//auxY.whileActive(new BM_LiftClaw(true));						//Tilt Claw Down
+		auxRTrigger.whileActive(new BM_LiftClaw(false));				//Open Claw
+		auxLTrigger.whileActive(new BM_LiftClaw(true));					//Close Claw
+		auxA.toggleWhenActive(new BM_OpenClaw(false));					//Tilt Claw Up
+		auxY.toggleWhenActive(new BM_OpenClaw(true));					//Tilt Claw Down
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
 		auxStart.toggleWhenActive(new BM_EngageJammer(true));			//Engage Lift Jammer
 		auxSelect.toggleWhenActive(new BM_EngageJammer(false));			//Disengage Lift Jammer

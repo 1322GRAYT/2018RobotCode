@@ -72,7 +72,7 @@ public class AM_Comp_SwchAlliancePartners extends CommandGroup {
 	
     public AM_Comp_SwchAlliancePartners() {
     	
-    	//fieldData = DriverStation.getInstance().getGameSpecificMessage();
+    	//fieldData = DriverStation.getInstance().getGameSpecificMessage(); //Return 3 Character String (RLR) (LRL) etc.
     	//alliance = DriverStation.getInstance().getAlliance();
     	//isClose = calculateClose();
 

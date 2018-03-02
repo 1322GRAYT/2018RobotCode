@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team1322.robot;
 
+import org.usfirst.frc.team1322.robot.commands.AM_Comp_DriveStraightCrossLine;
 import org.usfirst.frc.team1322.robot.commands.AM_Comp_Swch1322;
 import org.usfirst.frc.team1322.robot.commands.AM_Comp_SwchAlliancePartners;
 import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1323;
@@ -54,9 +55,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {;
 		m_oi = new OI();
-		m_chooser.addDefault("Auto: Partner Score Swch: No", new AM_Comp_Swch1322());
-		m_chooser.addObject("Auto: Partner Score Swch: Yes", new AM_Comp_SwchAlliancePartners());
-		m_chooser.addObject("Auto: Devlopement Test Rotate PI", new AM_Test_RotPI_Swch1323());
+		m_chooser.addDefault("If Partner Can't Do Switch", new AM_Comp_Swch1322());
+		m_chooser.addObject("If Partner Can Do Switch", new AM_Comp_SwchAlliancePartners());
+		m_chooser.addObject("Straight", new AM_Comp_DriveStraightCrossLine());
+		m_chooser.addObject("DO NOT RUN(Test Rotate PI)", new AM_Test_RotPI_Swch1323());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
