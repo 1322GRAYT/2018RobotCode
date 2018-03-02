@@ -54,9 +54,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addObject("Turn 90", new AM_DropBlockTimed());
-		m_chooser.addDefault("TestMe", new AM_RedEnc());
-		m_chooser.addDefault("Straight", new AM_DriveStraight());
+		m_chooser.addDefault("Auto: Partner Score Swch: No", new AM_RedEnc());
+		m_chooser.addObject("Auto: Partner Score Swch: Yes", new AM_RedEnc());
+		m_chooser.addObject("Auto: Devlopement Test Rotate PI", new AM_RedEnc());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
