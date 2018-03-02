@@ -43,10 +43,10 @@ public class SENSORS extends Subsystem {
 	private DigitalInput blockDetector = new DigitalInput(RobotMap.BLOCK_DETECTOR); //Block Detector Sensor
 
 	// Drive System Encoders/Wheels
-	// Idx [0] - RR: Right Rear	
+	// Idx [0] - LF: Left Front		
 	// Idx [1] - RF: Right Front	
-	// Idx [2] - LF: Left Front	
-	// Idx [3] - LR: Left Rear
+	// Idx [2] - RR: Left Rear	
+	// Idx [3] - RR: Right Rear
 	private double EncdrVelRaw[] = new double[4];
 	private double EncdrCnt[] = new double[4];
 	private double EncdrRPM[] = new double[4];
@@ -201,10 +201,10 @@ public class SENSORS extends Subsystem {
 	EncdrCnt = Robot.kDRIVE.getEncoders();             // tic count
     for (idx=0; idx<4; idx++)
       {
-      RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);          // rpm
+      RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);      // rpm
       EncdrRPM[idx] = RPM_Raw;
-      WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                       // rpm
-      WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;                   // inches/sec
+      WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                   // rpm
+      WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/60;               // inches/sec
       }
     
     /* UltraSonic Position Inputs */
