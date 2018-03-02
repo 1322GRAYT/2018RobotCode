@@ -16,7 +16,6 @@ public class AC_DriveEncdrByDist extends Command {
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
 	private boolean DrctnIsFwd;
-
 	
 	private double EncdrActCnt;
 	private double EncdrInitRefCnt;
