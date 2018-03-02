@@ -322,7 +322,7 @@ public class K_PIDCal {
   /*****************************************************************/	    
   
   /** KROT_Deg_PosErrDB: Drive System Rotate Position Error DeadBand (degree). */
-  public static final float KROT_Deg_PosErrDB = (float) 1.0;
+  public static final float KROT_Deg_PosErrDB = (float) 1.5;
   
   /** KROT_K_PropGx: Drive System Rotate PID Controls Proportional Gain. */
   public static final float KROT_K_PropGx = (float) 0.5;
@@ -345,6 +345,6 @@ public class K_PIDCal {
   /** KROT_t_PstnTgtSyncMetThrsh: Amount of time that the Position Error must
    * be held within the Error DeadBand in order for the Drive System Rotate
    * PID Controls to consider the Position Target conditions met. (seconds) */
-  public static final float KROT_t_PstnTgtSyncMetThrsh = (float) 0.50;
+  public static final float KROT_t_PstnTgtSyncMetThrsh = (float) 0.75;
    
 }

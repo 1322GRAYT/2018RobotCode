@@ -214,6 +214,12 @@ public class PIDROT extends Subsystem {
      	
      	I_Corr = K_PIDCal.KROT_K_IntglGx * PstnErrAccum;
      	     	
+    	if (I_Corr > K_PIDCal.KROT_Pct_IntglCorrMax) {
+    		    I_Corr = K_PIDCal.KROT_Pct_IntglCorrMax;
+    	    }
+    	    else if (I_Corr < -(K_PIDCal.KROT_Pct_IntglCorrMax)) {
+                I_Corr = -(K_PIDCal.KROT_Pct_IntglCorrMax);
+    	    }
      	IntglCorr = I_Corr;
      }
 
