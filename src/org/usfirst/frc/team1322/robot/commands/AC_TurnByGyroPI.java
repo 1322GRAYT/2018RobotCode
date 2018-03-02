@@ -2,6 +2,7 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
+import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,19 +11,19 @@ import edu.wpi.first.wpilibj.command.Command;
  * Turn A specific Angle at a specific speed
  */
 /**
- * Class: AC_TurnByGyro - Autonomous Command to Rotate
+ * Class: AC_TurnByGyroPI - Autonomous Command to Rotate
  * ClockWise or Counter-ClockWise to a Desired Angular
  * Postion Based on Gyro Angular Position Feedback using
  * a PI Control System. */
-public class AC_TurnByGyro extends Command {
-	
+public class AC_TurnByGyroPI extends Command {
+
 	// Autonomous Pattern Vars
 	private boolean RotPIDEnbl, RotClckWise;
 	private double  RotPstnDsrd;
 	
 
 	//  Autonomous Pattern Constructor
-    /** Method: AC_TurnByGyro - Autonomous Command to Rotate
+    /** Method: AC_TurnByGyroPI - Autonomous Command to Rotate
      * ClockWise or Counter-ClockWise to a Desired Angular
      * Position Based on Gyro Angular Position Feedback using
      * a PI Control System.
@@ -32,9 +33,9 @@ public class AC_TurnByGyro extends Command {
     *           (+ = ClockWise, - = Counter-ClockWise)
     *  @Return: Commanded Motor Driver Power   (double: normalized power)
     *   */
-    public AC_TurnByGyro(boolean RotPIDEnbl,
-    		             boolean RotClckWise,
-    		             double  RotPstnDsrd) {
+    public AC_TurnByGyroPI(boolean RotPIDEnbl,
+    		               boolean RotClckWise,
+    		               double  RotPstnDsrd) {
         requires(Robot.kDRIVE);
     	this.RotPIDEnbl = RotPIDEnbl;
     	this.RotClckWise = RotClckWise;
@@ -49,7 +50,7 @@ public class AC_TurnByGyro extends Command {
     	Robot.kPIDROT.resetPIDRot();
         Robot.kPIDROT.putPIDRotPstnTgt(this.RotPIDEnbl,
         		                       this.RotClckWise,
-        		                       this.RotPstnDsrd);  
+        		                       this.RotPstnDsrd);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,7 +59,7 @@ public class AC_TurnByGyro extends Command {
     	
         Robot.kPIDROT.managePIDRotate();
         NormPwrCmnd = Robot.kPIDROT.getPIDRotCmnd();
-    	Robot.kDRIVE.mechDrive(0, 0, NormPwrCmnd);    	
+    	Robot.kDRIVE.mechDrive(0, 0, NormPwrCmnd);
     }
 
     // Make this return true when this Command no longer needs to run execute()

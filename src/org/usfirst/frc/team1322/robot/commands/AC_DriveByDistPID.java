@@ -39,8 +39,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
                              float   DsrdDclFeet,
                              float   DsrdDclSpd,
                              boolean DrctnIsFwd) {
-    	requires(Robot.kSENSORS);
-    	requires(Robot.kPIDDRV);
     	requires(Robot.kDRIVE);        
     	this.DsrdDistFeet = DsrdDistFeet;
     	this.DsrdPriSpd = DsrdPriSpd;

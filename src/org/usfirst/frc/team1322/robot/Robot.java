@@ -7,9 +7,9 @@
 
 package org.usfirst.frc.team1322.robot;
 
-import org.usfirst.frc.team1322.robot.commands.AM_DriveStraight;
-import org.usfirst.frc.team1322.robot.commands.AM_DropBlockTimed;
-import org.usfirst.frc.team1322.robot.commands.AM_RedEnc;
+import org.usfirst.frc.team1322.robot.commands.AM_Comp_Swch1322;
+import org.usfirst.frc.team1322.robot.commands.AM_Comp_SwchAlliancePartners;
+import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1323;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
@@ -52,11 +52,11 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
+	public void robotInit() {;
 		m_oi = new OI();
-		m_chooser.addDefault("Auto: Partner Score Swch: No", new AM_RedEnc());
-		m_chooser.addObject("Auto: Partner Score Swch: Yes", new AM_RedEnc());
-		m_chooser.addObject("Auto: Devlopement Test Rotate PI", new AM_RedEnc());
+		m_chooser.addDefault("Auto: Partner Score Swch: No", new AM_Comp_Swch1322());
+		m_chooser.addObject("Auto: Partner Score Swch: Yes", new AM_Comp_SwchAlliancePartners());
+		m_chooser.addObject("Auto: Devlopement Test Rotate PI", new AM_Test_RotPI_Swch1323());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();

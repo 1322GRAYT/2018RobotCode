@@ -40,8 +40,6 @@ public class AC_DriveEncdrByDist extends Command {
     		                   float   DsrdDclFeet,
     		                   float   DsrdDclPwr,
     		                   boolean DrctnIsFwd) {
-        requires(Robot.kSENSORS);
-        requires(Robot.kPIDDRV);
         requires(Robot.kDRIVE);        
         this.DrctnIsFwd = DrctnIsFwd;
         this.DsrdDistFeet = DsrdDistFeet;
@@ -65,7 +63,6 @@ public class AC_DriveEncdrByDist extends Command {
 
     	Robot.kPIDDRV.resetPIDDrv();
     	Robot.kPIDDRV.resetTgtProfTmr();
-    	Robot.kPIDDRV.putPIDDrvSpdTgt(true, 0.0);  //Enbl PID and Command Target Spd - Todo  Speed Target Set to 0.0 Until SubSystem Debug is Complete.
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -76,9 +73,6 @@ public class AC_DriveEncdrByDist extends Command {
 
     	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();    	
 
-    	Robot.kPIDDRV.managePIDDrive();            // Call the Drive PID Scheduler   	
-    	// Cmnds[] = Robot.kPIDDRV.getPIDDrvCmnd();  // Get PID Commands - todo: Not Hooked-Up - Until Subsystem Debug is Complete
-    	
     	if (DrctnIsFwd == false) {
     		PriPwr = (double)-(DsrdPriPwr);
     	    DclPwr = (double)-(DsrdDclPwr);
@@ -141,7 +135,6 @@ public class AC_DriveEncdrByDist extends Command {
     // Called once after isFinished returns true
     protected void end() {
   	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
-  	  Robot.kPIDDRV.resetPIDDrv();
     }
 
     // Called when another command which requires one or more of the same
