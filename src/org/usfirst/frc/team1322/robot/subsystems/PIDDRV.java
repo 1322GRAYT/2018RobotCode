@@ -134,13 +134,12 @@ public class PIDDRV extends Subsystem {
     		SpdTgtTemp = (float)0.0;	
     	}
     	else
-    	{
-    		SpdTgtTemp = (float)(Math.abs(SpdTgtRaw));
-	    	SpdAxisIdx = Robot.kTBLLOOKUP.AxisPieceWiseLinear_int((float)SpdTgtTemp, K_PIDCal.KDRV_n_TgtProfSpdAxis, (int)10);	
+    	{	    		
+	    	SpdAxisIdx = Robot.kTBLLOOKUP.AxisPieceWiseLinear_int((float)SpdTgtRaw, K_PIDCal.KDRV_n_TgtProfSpdAxis, (int)10);	
 	    	TmAxisIdx = Robot.kTBLLOOKUP.AxisPieceWiseLinear_flt((float)SpdProfTmr, K_PIDCal.KDRV_t_TgtProfTmAxis, (int)10);
 	    	SpdProfSclr = Robot.kTBLLOOKUP.XYZ_Lookup_flt(K_PIDCal.KDRV_n_TgtProf, TmAxisIdx, SpdAxisIdx, (int)10, (int)10);
 	    	
-	    	SpdTgtTemp = (float)SpdProfSclr * SpdTgtTemp;
+	    	SpdTgtTemp = (float)SpdProfSclr * (float)(Math.abs(SpdTgtRaw));
     	}
     	
     	for (idx = 0; idx < 4; idx++)

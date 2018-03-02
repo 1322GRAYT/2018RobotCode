@@ -75,7 +75,7 @@ public class K_PIDCal {
     * Prevent Excessive Jerk on Step Responses. (rpm). */
   public static final int KDRV_n_FdFwdErrAxis[][] = new int[][] 
       {
-	    { // LF: Left Front
+	    { // RR: Right Rear
 	      (int)500,
           (int)800,
           (int)1000,
@@ -99,7 +99,7 @@ public class K_PIDCal {
           (int)3600,
           (int)4000
 		},
-	    { // LR: Left Rear
+	    { // LF: Left Front
 	      (int)500,
           (int)800,
           (int)1000,
@@ -111,7 +111,7 @@ public class K_PIDCal {
           (int)3600,
           (int)4000
 		},
-	    {// RR: Right Rear
+	    {// LR: Left Rear
 	      (int)500,
           (int)800,
           (int)1000,
@@ -129,7 +129,7 @@ public class K_PIDCal {
     * as a function of Desired Encoder Speed (% Pwr: 0-100%) */
   public static final float KDRV_Pct_FdFwdCmnd[][] = new float[][] 
       {
-	    { // LF: Left Front
+	    { // RR: Right Rear
 	      (float)15.00,
           (float)20.00,
           (float)30.00,
@@ -153,7 +153,7 @@ public class K_PIDCal {
           (float)90.00,
           (float)95.00
 		},
-	    { // LR: Left Rear
+	    { // LF: Left Front
 	      (float)15.00,
           (float)20.00,
           (float)30.00,
@@ -165,7 +165,7 @@ public class K_PIDCal {
           (float)90.00,
           (float)95.00
 		},
-	    {// RR: Right Rear
+	    {// LR: Left Rear
 	      (float)15.00,
           (float)20.00,
           (float)30.00,
@@ -184,30 +184,30 @@ public class K_PIDCal {
     * Prevent Excessive Jerk on Step Responses. (rpm). */
   public static final float KDRV_n_ErrLimMax[] = new float[] 
       {
-    	(float)500.0,  // LF: Left Front
+    	(float)500.0,  // RR: Right Rear
         (float)500.0,  // RF: Right Front
-        (float)500.0,  // LR: Left Rear
-        (float)500.0   // RR: Right Rear
+        (float)500.0,  // LF: Left Front
+        (float)500.0   // LR: Left Rear
       };  
 	
   /** KDRV_n_ErrDeadBand: Speed Error Dead-Band for the PID
     * Controller (rpm). */
   public static final float KDRV_n_ErrDB[] = new float[] 
       {
-    	(float)5.0,  // LF: Left Front
+    	(float)5.0,  // RR: Right Rear
         (float)5.0,  // RF: Right Front
-        (float)5.0,  // LR: Left Rear
-        (float)5.0   // RR: Right Rear
+        (float)5.0,  // LF: Left Front
+        (float)5.0   // LR: Left Rear
       };  
 
   /** KDRV_dn_ErrChgRtDB: Speed Error Change Rate Dead-Band for the
    * PID Controller (rpm). */
  public static final float KDRV_dn_ErrChgRtDB[] = new float[] 
      {
-       (float)200.0,  // LF: Left Front
+       (float)200.0,  // RR: Right Rear
        (float)200.0,  // RF: Right Front
-       (float)200.0,  // LR: Left Rear
-       (float)200.0   // RR: Right Rear
+       (float)200.0,  // LF: Left Front
+       (float)200.0   // LR: Left Rear
      };  
   
   /** KDRV_n_DerivCorrErrMinEnbl: Max Speed Error to Enable
@@ -215,10 +215,10 @@ public class K_PIDCal {
     * Derivative Correction will not be applied to the PID Correction. */
   public static final float KDRV_n_DerivCorrErrMinEnbl[] = new float[] 
       {
-    	(float)10.0,  // LF: Left Front
+    	(float)10.0,  // RR: Right Rear
         (float)10.0,  // RF: Right Front
-        (float)10.0,  // LR: Left Rear
-        (float)10.0   // RR: Right Rear
+        (float)10.0,  // LF: Left Front
+        (float)10.0   // LR: Left Rear
       };  
   
   /** KDRV_n_DerivCorrErrMaxEnbl: Max Speed Error to Enable
@@ -226,57 +226,57 @@ public class K_PIDCal {
     * Derivative Correction will not be applied to the PID Correction. */
   public static final float KDRV_n_DerivCorrErrMaxEnbl[] = new float[] 
       {
-    	(float)200.0,  // LF: Left Front
+    	(float)200.0,  // RR: Right Rear
         (float)200.0,  // RF: Right Front
-        (float)200.0,  // LR: Left Rear
-        (float)200.0   // RR: Right Rear
+        (float)200.0,  // LF: Left Front
+        (float)200.0   // LR: Left Rear
       };  
   
   /** KDRV_k_SpdErrFiltCoef: Lag Filter Coefficient for Filtering
     * The Encoder Speed Error Calculation (0 - 1). */
   public static final float KDRV_k_SpdErrFiltCoef[] = new float[] 
       {
-    	(float)0.75,  // LF: Left Front
+    	(float)0.75,  // RR: Right Rear
         (float)0.75,  // RF: Right Front
-        (float)0.75,  // LR: Left Rear
-        (float)0.75   // RR: Right Rear
+        (float)0.75,  // LF: Left Front
+        (float)0.75   // LR: Left Rear
       };
 
   /** KDRV_k_SpdErrRtFiltCoef: Lag Filter Coefficient for Filtering
     * The Encoder Speed Change Rate Error Calculation (0 - 1). */
   public static final float KDRV_k_SpdErrRtFiltCoef[] = new float[] 
       {
-    	(float)0.85,  // LF: Left Front
+    	(float)0.85,  // RR: Right Rear
         (float)0.85,  // RF: Right Front
-        (float)0.85,  // LR: Left Rear
-        (float)0.85   // RR: Rightt Rear
+        (float)0.85,  // LF: Left Front
+        (float)0.85   // LR: Left Rear
       };
   
   /** KDRV_K_PropGx: Drive System PID Controls Proportional Gain . */
   public static final float KDRV_K_PropGx[] = new float[] 
       {
-    	(float)0.01,  // LF: Left Front
+    	(float)0.01,  // RR: Right Rear
         (float)0.01,  // RF: Right Front
-        (float)0.01,  // LR: Left Rear
-        (float)0.01   // RR: Right Rear
+        (float)0.01,  // LF: Left Front
+        (float)0.01   // LR: Left Rear
       };
   
   /** KDRV_K_IntglGx: Drive System PID Controls Integral Gain . */
   public static final float KDRV_K_IntglGx[] = new float[] 
       {
-    	(float)0.0005,  // LF: Left Front
+    	(float)0.0005,  // RR: Right Rear
         (float)0.0005,  // RF: Right Front
-        (float)0.0005,  // LR: Left Rear
-        (float)0.0005   // LR: Right Rear
+        (float)0.0005,  // LF: Left Front
+        (float)0.0005   // LR: Left Rear
       };
   
   /** KDRV_K_DerivGx: Drive System PID Controls Derivative Gain . */
   public static final float KDRV_K_DerivGx[] = new float[] 
       {
-    	(float)0.0,  // LF: Left Front
+    	(float)0.0,  // RR: Right Rear
         (float)0.0,  // RF: Right Front
-        (float)0.0,  // LR: Left Rear
-        (float)0.0   // RR: Right Rear
+        (float)0.0,  // LF: Left Front
+        (float)0.0   // LR: Left Rear
       };
     
   /** KDRV_b_IntglGxRstSgnFlipEnbl: Enables the Reset of the Integral
@@ -289,30 +289,30 @@ public class K_PIDCal {
     * per one Wheel Revolution (inches). */
   public static final float KDRV_Pct_PropCorrLimMax[] = new float[] 
       {
-    	(float)20.0,  // LF: Left Front
+    	(float)20.0,  // RR: Right Rear
         (float)20.0,  // RF: Right Front
-        (float)20.0,  // LR: Left Rear
-        (float)20.0   // RR: Right Rear
+        (float)20.0,  // LF: Left Front
+        (float)20.0   // LR: Left Rear
       };
   
   /** KDRV_Pct_PropCorrLimMax: Linear Distance Traveled Forward/Rearward
     * per one Wheel Revolution (inches). */
   public static final float KDRV_Pct_IntglCorrLimMax[] = new float[] 
       {
-    	(float)15.0,  // LF: Left Front
+    	(float)15.0,  // RR: Right Rear
         (float)15.0,  // RF: Right Front
-        (float)15.0,  // LR: Left Rear
-        (float)15.0   // RR: Right Rear
+        (float)15.0,  // LF: Left Front
+        (float)15.0   // LR: Left Rear
       };
 
   /** KDRV_Pct_DerivCorrLimMax: Linear Distance Traveled Forward/Rearward
     * per one Wheel Revolution (inches). */
   public static final float KDRV_Pct_DerivCorrLimMax[] = new float[] 
       {
-    	(float)15.0,  // LF: Left Front
+    	(float)15.0,  // RR: Right Rear
         (float)15.0,  // RF: Right Front
-        (float)15.0,  // LR: Left Rear
-        (float)15.0   // RR: Right Rear
+        (float)15.0,  // LF: Left Front
+        (float)15.0   // LR: Left Rear
       };
 
   

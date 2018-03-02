@@ -136,6 +136,7 @@ public class AC_DriveEncdrByDist extends Command {
     	double CurrEncdrCnt;
     	
     	CurrEncdrCnt = Robot.kSENSORS.getRefEncoderCnt();
+
     	return (CurrEncdrCnt >= EncdrTgtRefCnt);
     }
 

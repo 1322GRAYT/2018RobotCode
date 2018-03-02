@@ -40,9 +40,9 @@ public class DRIVE extends Subsystem {
     	rR_Drive_2= new TalonSRX(RobotMap.RR_MECH_2);
     	
     	//rR_Drive_1.setSensorPhase(true);
-    	//rR_Drive_1.setInverted(true);	
+    	//rR_Drive_1.setInverted(true);
+    	
     }
-
     
     /**
      * Cartesian drive method that specifies speeds in terms of the field longitudinal and lateral directions, using the drive's 
@@ -81,15 +81,14 @@ public class DRIVE extends Subsystem {
         scale(wheelSpeeds, OUTPUT_SCALE_FACTOR); 
         lF_Drive_1.set(ControlMode.PercentOutput, wheelSpeeds[LEFT_FRONT]); 
         lF_Drive_2.set(ControlMode.PercentOutput, wheelSpeeds[LEFT_FRONT]); 
-        rF_Drive_1.set(ControlMode.PercentOutput, wheelSpeeds[RIGHT_FRONT]); 
-        rF_Drive_2.set(ControlMode.PercentOutput, wheelSpeeds[RIGHT_FRONT]); 
         lR_Drive_1.set(ControlMode.PercentOutput, wheelSpeeds[LEFT_REAR]); 
         lR_Drive_2.set(ControlMode.PercentOutput, wheelSpeeds[LEFT_REAR]); 
+        rF_Drive_1.set(ControlMode.PercentOutput, wheelSpeeds[RIGHT_FRONT]); 
+        rF_Drive_2.set(ControlMode.PercentOutput, wheelSpeeds[RIGHT_FRONT]); 
         rR_Drive_1.set(ControlMode.PercentOutput, wheelSpeeds[RIGHT_REAR]); 
         rR_Drive_2.set(ControlMode.PercentOutput, wheelSpeeds[RIGHT_REAR]); 
     } 
  
-    
     /**
      * Normalize all wheel speeds if the magnitude of any wheel is greater than 1.0. 
      * @param wheelSpeeds the speed of each motor 
@@ -107,7 +106,6 @@ public class DRIVE extends Subsystem {
         } 
     } 
  
-    
     /**
      * Scale all speeds. 
      * @param wheelSpeeds the speed of each motor 
@@ -118,7 +116,6 @@ public class DRIVE extends Subsystem {
             wheelSpeeds[i] = wheelSpeeds[i] * scaleFactor; 
         } 
     } 
-
     
     /**
      * Rotate a vector in Cartesian space. 
@@ -137,30 +134,10 @@ public class DRIVE extends Subsystem {
         return out; 
     } 
 	
-    
-    /** Method: straightDrive - Drive System Motor Driver Normalized Power 
-      * Command to Control the Drive System in a Simple Forward/Rearward
-      * Motion.  This is used in Combination with the PIDDRV Controller
-      * To Individually Control the Driver Power to produce equal
-      * wheelspeed on all 4 wheels to drive straight during autonomous
-      * mode. (array of Norm Power Cmnd)
-     *  @param: Desired Drive Distance (float[4]: normalized power command)	
-     *   */	     
-	public void straightDrive(double DrvNormPwrCmnd[]) {
-        lF_Drive_1.set(ControlMode.PercentOutput, DrvNormPwrCmnd[LEFT_FRONT]); 
-        lF_Drive_2.set(ControlMode.PercentOutput, DrvNormPwrCmnd[LEFT_FRONT]); 
-        rF_Drive_1.set(ControlMode.PercentOutput, DrvNormPwrCmnd[RIGHT_FRONT]); 
-        rF_Drive_2.set(ControlMode.PercentOutput, DrvNormPwrCmnd[RIGHT_FRONT]); 
-        lR_Drive_1.set(ControlMode.PercentOutput, DrvNormPwrCmnd[LEFT_REAR]);
-        lR_Drive_2.set(ControlMode.PercentOutput, DrvNormPwrCmnd[LEFT_REAR]); 
-        rR_Drive_1.set(ControlMode.PercentOutput, DrvNormPwrCmnd[RIGHT_REAR]); 
-        rR_Drive_2.set(ControlMode.PercentOutput, DrvNormPwrCmnd[RIGHT_REAR]); 
-	}
-    
-    
     /**
      * Disable all drive motors
      */
+
 	public void disable() {
 		lF_Drive_1.set(ControlMode.Disabled, 0);
 		lF_Drive_2.set(ControlMode.Disabled, 0);
@@ -171,7 +148,6 @@ public class DRIVE extends Subsystem {
 		rR_Drive_1.set(ControlMode.Disabled, 0);
 		rR_Drive_2.set(ControlMode.Disabled, 0);
 	}
-
 	
 	/**
 	 * Enables all drive motors
@@ -186,7 +162,6 @@ public class DRIVE extends Subsystem {
 		rR_Drive_1.set(ControlMode.PercentOutput, 0);
 		rR_Drive_2.set(ControlMode.PercentOutput, 0);
 	}
-
 	
 	/**
 	 * 	Deadzonifies a double to the set deadzone in RobotMap
@@ -201,11 +176,12 @@ public class DRIVE extends Subsystem {
 		return 0.0;
 	}
 
-	
     /**
      * Gets the encoder values
      * @return RR, RF, LF, LR Encoder Values
-     */	
+     */
+	
+	
 	public double[] getEncoders(){ 
 		double[] encoders = {
 				-(rR_Drive_1.getSensorCollection().getQuadraturePosition()), // RtRear Encoder Wiring Reversed 
@@ -216,7 +192,6 @@ public class DRIVE extends Subsystem {
 		return encoders;
 	}
 	
-
 	public double[] getEncodersVelocity(){ 
 		double[] encoders = {
 				-(rR_Drive_1.getSensorCollection().getQuadratureVelocity()), // RtRear Encoder Wiring Reversed
@@ -226,7 +201,6 @@ public class DRIVE extends Subsystem {
 				};
 		return encoders;
 	}
-
 	
 	public double[] getMotorVoltage(){ 
 		double[] encoders = {
@@ -241,8 +215,6 @@ public class DRIVE extends Subsystem {
 				};
 		return encoders;
 	}
-	
-	
 	public double[] getMotorCurrent(){ 
 		double[] encoders = {
 				rR_Drive_1.getOutputCurrent(),
@@ -263,6 +235,7 @@ public class DRIVE extends Subsystem {
 		lF_Drive_2.getSensorCollection().setQuadraturePosition(0, 0);
 		lR_Drive_1.getSensorCollection().setQuadraturePosition(0, 0);
 	}
+	
 	
 	
 	/**
