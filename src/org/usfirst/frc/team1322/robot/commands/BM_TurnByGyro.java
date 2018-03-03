@@ -97,7 +97,7 @@ public class BM_TurnByGyro extends Command {
 		    	exitCond = true;	    		
 	    	}
          
-        return Robot.kSENSORS.getGyroAngle() >= turnAngle;
+        return (exitCond == true);
     }
 
     // Called once after isFinished returns true

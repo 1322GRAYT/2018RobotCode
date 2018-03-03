@@ -48,7 +48,9 @@ public class AC_DriveEncdrByDist extends Command {
         this.DsrdDclPwr = DsrdDclPwr;
     }
 
-    // Called just before this Command runs the first time
+
+
+	// Called just before this Command runs the first time
     protected void initialize() {
     	
     	Robot.kDRIVE.resetEncoders();

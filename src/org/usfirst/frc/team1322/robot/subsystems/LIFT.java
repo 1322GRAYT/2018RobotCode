@@ -4,6 +4,8 @@ import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.TC_LiftMotor;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,6 +26,7 @@ public class LIFT extends Subsystem {
     private DigitalInput lowSen = new DigitalInput(RobotMap.LOW_LIFT); 		//Sensor at bottom of lift
     private DigitalInput midSen = new DigitalInput(RobotMap.MID_LIFT); 		//Sensor at middle of lift
     private DigitalInput highSen = new DigitalInput(RobotMap.HIGH_LIFT); 	//Sensor at top of lift
+    
 
 
     /** Method: shiftLiftLow - Engage Lift Motor Low Speed Gear */

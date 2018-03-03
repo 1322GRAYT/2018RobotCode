@@ -18,10 +18,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AC_TurnByGyroPI extends Command {
 
 	// Autonomous Pattern Vars
+	private Timer RotateTmOut = new Timer();
 	private boolean RotPIDEnbl, RotClckWise;
 	private double  RotPstnDsrd;
 	
 
+    /** KATM_t_RotSafetyTmOutPI: Amount of Time that must elapse before
+     * a P-I Controlled rotate command will cancel out due to taking too
+     * long to reach the target angle due to some system loss. */
+	public static final float KATM_t_RotSafetyTmOutPI = (float)2.5; // sec 
+	
+	
+	
 	//  Autonomous Pattern Constructor
     /** Method: AC_TurnByGyroPI - Autonomous Command to Rotate
      * ClockWise or Counter-ClockWise to a Desired Angular
@@ -45,6 +53,8 @@ public class AC_TurnByGyroPI extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	RotateTmOut.reset();
+    	RotateTmOut.start();
     	Robot.kSENSORS.resetGyro();
     	Robot.kDRIVE.enable();
     	Robot.kPIDROT.resetPIDRot();
@@ -57,6 +67,7 @@ public class AC_TurnByGyroPI extends Command {
     protected void execute() {
     	double NormPwrCmnd;
     	
+    	// RotateTmOut updates as free-running timer.
         Robot.kPIDROT.managePIDRotate();
         NormPwrCmnd = Robot.kPIDROT.getPIDRotCmnd();
     	Robot.kDRIVE.mechDrive(0, 0, NormPwrCmnd);
@@ -64,12 +75,20 @@ public class AC_TurnByGyroPI extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Robot.kPIDROT.getPIDRotTgtCondMet() == true);
+    	boolean exitCond = false;
+    	
+    	if ((Robot.kPIDROT.getPIDRotTgtCondMet() == true) ||
+    		(RotateTmOut.get() >= KATM_t_RotSafetyTmOutPI)) {
+    		exitCond = true;
+    	}
+    	
+        return (exitCond == true);
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.kDRIVE.disable();
+    	RotateTmOut.stop();    	
     }
 
     // Called when another command which requires one or more of the same
