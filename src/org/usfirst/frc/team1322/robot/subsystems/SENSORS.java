@@ -89,16 +89,20 @@ public class SENSORS extends Subsystem {
     }
 
 	/** Method: getEncoderRefCnt - Interface to Get the current
-	 * Average Encoder Count of the Reference A Motor/Encoder/Wheel Assembly
-	 * and the Reference B Motor/Encoder/Wheel Assembly.
-    *  @return: Count of the Reference Encoder (Counts) */	
+	 * Encoder Count of the Maximum Reference A Motor/Encoder/Wheel 
+	 * Assembly and the Reference B Motor/Encoder/Wheel Assembly.
+     *  @return: Count of the Reference Encoder (Counts) */	
 	public double getRefEncoderCnt(){
-	    double RefACnts, RefBCnts;
+	    double RefACnts, RefBCnts, CntsMax;
 	    
 	    RefACnts = EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct];
 	    RefBCnts = EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct];
-	    
-     return ((RefACnts + RefBCnts)/2);
+	    if (RefACnts > RefBCnts)
+	    	CntsMax = RefACnts;
+	    else
+	    	CntsMax = RefBCnts;
+	    	
+     return CntsMax;
    }
 		
 	/** Method: getEncodersRPM - Interface to Get the array of

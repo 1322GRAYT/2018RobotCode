@@ -8,50 +8,80 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AM_StrtLeftSide_SwchPartner extends CommandGroup {
 
-	private static String fieldData; //String of Field Data
-	private static boolean isClose; //Is Our Color Close
-	private static DriverStation.Alliance alliance; //Our Alliance Color
+	private static String fieldData;                 // String of Field Data
+	private static boolean ourSwitchNearSide;        // Is Our Side of Our Alliance Switch on Our Robots Side of the Field?
+	private static boolean ourScaleNearSide;         // Is Our Side of the Scale on Our Robots Side of the Field?
+	private static DriverStation.Alliance alliance;  //Our Alliance Color
 
+	
+	/** KAMG_t_PostMoveDly: Time Delay Movement prior to Starting another
+	 * Drive or Rotate Movement to allow the robot and sensors/encoders
+	 * to stabilize. (sec). */
+	public static final float KAMG_t_PostMoveDly = (float)0.5; // sec
+	
+	/** KAMG_t_EncdrRstDly: Time Delay after Encoder Counter Reset. (sec). */
+	public static final double KAMG_t_EncdrRstDly = 0.5; // sec
+	
 	
     public AM_StrtLeftSide_SwchPartner() {
     	
-    	//fieldData = DriverStation.getInstance().getGameSpecificMessage(); //Return 3 Character String (RLR) (LRL) etc.
-    	//alliance = DriverStation.getInstance().getAlliance();
-    	//isClose = calculateClose();
+    	fieldData = DriverStation.getInstance().getGameSpecificMessage();
+    	alliance = DriverStation.getInstance().getAlliance();
+    	ourSwitchNearSide = dtrmnOurSwitchPstn();
+    	ourScaleNearSide = dtrmnOurScalePstn();
 
+    	addSequential(new AC_ResetGyro());
     	addSequential(new BM_RaiseToMid());
-    	addSequential(new BM_LiftClaw(false));
-    	addSequential(new AC_DriveEncdrByDist((float)18.0, (float)0.8, (float)2.0, (float)0.2, true));        // Drive Forward 18 ft, slow down at 2 ft from end.
-    	addSequential(new BM_TurnByGyro(0.7, 90.0));                                                          // Turn CW 90deg
-    	addSequential(new AC_DriveEncdrByDist((float)2.5, (float)0.4, (float)1.0, (float)0.15, true));        // Drive Forward 2.5 ft, slow down 1.0 ft from end.
-    	addSequential(new BM_TurnByGyro(0.5, 90.0));                                                          // Turn CW 90deg
-    	//if(isClose) {
-    		addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.5, (float)0.4, (float)0.2, true));     // Drive Forward 2.0 ft, slow down 0.4 ft from end.
-    		addSequential(new AC_RunClawWheelsInOut(false));
-    		addSequential(new AC_DriveEncdrByDist((float)0.3, (float)0.25, (float)0.0, (float)0.1, false));   // Drive Reverse 0.4 ft.
-    		addSequential(new BM_OpenClaw(true));
-    		addSequential(new BM_LowerToLow());
-    		addSequential(new BM_OpenClaw(false));
-        	addSequential(new BM_RaiseToMid());    		
-    		addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.4, (float) 0.5, (float) 0.2, false));  // Drive Reverse 2.0 ft, slow down 0.5 ft from end.
-    		addSequential(new BM_TurnByGyro(0.7, 90.0));                                                      // Turn ClockWise 90 degrees
-    		addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.5, (float)0.75, (float)0.2, true));    // Drive Forward 4.0 ft, slow down at 0.75 ft from end.
-    		addSequential(new BM_TurnByGyro(0.5, 90.0));                                                      // Turn Clockwise 90 Degrees
-    	//}else {
-    		//Go Far
-    	//}	
+		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+    	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
+    	addSequential(new AC_DriveEncdrByDist((float)18.0, (float)0.8, (float)2.0, (float)0.2, true));
+		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+	   	addSequential(new BM_TurnByGyro(0.7, 90.0));
+		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+    	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
+    	if(ourScaleNearSide) {
+        	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.5, (float)0.5, (float)0.2, true));
+    	}
+    	else 
+    	{
+        	addSequential(new AC_DriveEncdrByDist((float)15.00, (float)0.8, (float)2.0, (float)0.20, true));
+    	}	
+		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+    	addSequential(new BM_TurnByGyro(-0.7, 0.0));   // Turn CCW to 0 deg
+		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+    	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
+    	addSequential(new BM_RaiseToHigh());   	
+	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.5));
+	    addSequential(new BM_LiftClaw(false));
+	    addSequential(new AC_ShootOutBlock(1.5));
     	
     }
     
-    //Calculate if the color is close
-    private boolean calculateClose() {
-    	if(fieldData.charAt(0) == getColorFromAlliance(alliance))  {
-    		return true;
+    /** Method: dtrmnOurSwitchPstn() -  Calculate if the our color of the Switch
+     * on our Alliance Half of the field is on the near-side wrt. our robot
+     * starting Position. */
+    private boolean dtrmnOurSwitchPstn() {
+    	if(fieldData.length() > 0) {
+    		return (fieldData.charAt(0) == getColorFromAlliance(alliance));
     	}else {
     		return false;
     	}
+   	
     }
-    
+   
+    /** Method: dtrmnOurScalePstn() -  Calculate if the our color of the Switch
+     * on our Alliance Half of the field is on the near-side wrt. our robot
+     * starting Position.  */
+    private boolean dtrmnOurScalePstn() {
+    	if(fieldData.length() > 0) {
+    		return fieldData.charAt(1) == getColorFromAlliance(alliance);
+    	}else {
+    		return false;
+    	}
+	    
+    }
+   
+   
     private char getColorFromAlliance(DriverStation.Alliance alliance) {
     	if(alliance.equals(DriverStation.Alliance.Red)) {
     		return "R".charAt(0);
@@ -59,4 +89,5 @@ public class AM_StrtLeftSide_SwchPartner extends CommandGroup {
     		return "B".charAt(0);
     	}
     }
+
 }

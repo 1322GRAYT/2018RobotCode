@@ -15,7 +15,11 @@ public class BM_TurnByGyro extends Command {
 	private double turnAngle;
 	
 	
-    /** KATM_t_RotSafetyTmOut: Amount of Time that must elapse before
+    /** KATM_b_RotRstGyroOnInit: Enable the the Reset the Gyro at
+      * the initialization at each Turn by Gryo Step. */
+	public static final boolean KATM_b_RotRstGyroOnInit = false; 
+	
+	/** KATM_t_RotSafetyTmOut: Amount of Time that must elapse before
      * a rotate command will cancel out due to taking too long to reach
      * the target angle due to some system loss. */
 	public static final float KATM_t_RotSafetyTmOut = (float)2.0; // sec 
@@ -36,7 +40,8 @@ public class BM_TurnByGyro extends Command {
     protected void initialize() {
         TurnTmOut.reset();
         TurnTmOut.start();
-    	Robot.kSENSORS.resetGyro();
+        if (KATM_b_RotRstGyroOnInit == true)
+        	Robot.kSENSORS.resetGyro();
     	Robot.kDRIVE.enable();
     	Robot.kDRIVE.mechDrive(0, 0, turnSpeed);
     	if(turnSpeed < .3) {

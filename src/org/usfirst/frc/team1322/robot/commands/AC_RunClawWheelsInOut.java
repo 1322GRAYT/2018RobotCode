@@ -19,12 +19,13 @@ public class AC_RunClawWheelsInOut extends Command {
     public AC_RunClawWheelsInOut(boolean in) {
             requires(Robot.kCLAW);
             this.in = in;
+            timer.reset();
         }
     	
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	timer.reset();
+    	
     	timer.start();
     	//if in, set power to 1, else, set power to -1
     	if(in) { // PwrCube Take-In

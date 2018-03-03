@@ -53,8 +53,6 @@ public class AC_DriveEncdrByDist extends Command {
 	// Called just before this Command runs the first time
     protected void initialize() {
     	
-    	Robot.kDRIVE.resetEncoders();
-
     	EncdrInitRefCnt = Robot.kSENSORS.getRefEncoderCnt();
     	
     	EncdrDsrdTrvlCnts = Robot.kSENSORS.getCntsToDrv(DsrdDistFeet);

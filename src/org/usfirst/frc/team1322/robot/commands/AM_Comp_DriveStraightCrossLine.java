@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AM_Comp_DriveStraightCrossLine extends CommandGroup {
 
     public AM_Comp_DriveStraightCrossLine() {
+    	addSequential(new AC_ResetGyro());
     	addSequential(new AC_DriveByGyroTime(0,.8, 2.5));
+    	addSequential(new AC_ResetGyro());
     }
 }

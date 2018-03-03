@@ -41,11 +41,11 @@ public class RobotMap {
 	 */
 	public static final int LIFT_SHIFT_O = 1;
 	public static final int LIFT_SHIFT_C = 2;
-	public static final int CLAW_CLOSE_O = 3;
-	public static final int CLAW_CLOSE_C = 4;
-	public static final int CLAW_LIFT_O  = 5;
-	public static final int CLAW_LIFT_C  = 6;
-	public static final int LIFT_JAM  = 7;
+	public static final int CLAW_LIFT_O  = 3;
+	public static final int CLAW_LIFT_C  = 4;
+	public static final int CLAW_CLOSE_O = 5;
+	public static final int CLAW_CLOSE_C = 6;
+	public static final int LIFT_JAM     = 7;
 	
 	/**
 	 * SENSORS
@@ -93,8 +93,8 @@ public class RobotMap {
 	
 	public static final double deadzone = 0.2;
 	public static final double lowDeadzone = 0.1;
-	public static final double autonDriveCorrectionSpeed = 0.3;
-	//How Many degrees of give we want to give before corection is reqired
+	public static final double autonDriveCorrectionSpeed = 0.2;
+	//How Many degrees of give we want to give before correction is reqired
 	public static final double autonDriveLeeway = 3;
 	public static final double autonDriveAngleLeeway = 1;
 	

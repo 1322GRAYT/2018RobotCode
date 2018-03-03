@@ -75,10 +75,10 @@ public class OI {
 		//auxLTrigger.toggleWhenActive(new BM_OpenClaw(true));			//Close Claw
 		//auxA.whileActive(new BM_LiftClaw(false));						//Tilt Claw Up
 		//auxY.whileActive(new BM_LiftClaw(true));						//Tilt Claw Down
-		auxRTrigger.whileActive(new BM_LiftClaw(false));				//Open Claw
-		auxLTrigger.whileActive(new BM_LiftClaw(true));					//Close Claw
-		auxA.toggleWhenActive(new BM_OpenClaw(false));					//Tilt Claw Up
-		auxY.toggleWhenActive(new BM_OpenClaw(true));					//Tilt Claw Down
+		auxRTrigger.whileActive(new BM_OpenClaw(false));				//Open Claw
+		auxLTrigger.whileActive(new BM_OpenClaw(true));					//Close Claw
+		auxA.toggleWhenActive(new BM_LiftClaw(false));					//Tilt Claw Up
+		auxY.toggleWhenActive(new BM_LiftClaw(true));					//Tilt Claw Down
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
 		auxStart.toggleWhenActive(new BM_EngageJammer(true));			//Engage Lift Jammer
 		auxSelect.toggleWhenActive(new BM_EngageJammer(false));			//Disengage Lift Jammer
