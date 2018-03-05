@@ -55,7 +55,6 @@ public class AC_TurnByGyroPI extends Command {
     protected void initialize() {
     	RotateTmOut.reset();
     	RotateTmOut.start();
-    	Robot.kSENSORS.resetGyro();
     	Robot.kDRIVE.enable();
     	Robot.kPIDROT.resetPIDRot();
         Robot.kPIDROT.putPIDRotPstnTgt(this.RotPIDEnbl,

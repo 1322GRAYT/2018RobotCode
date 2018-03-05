@@ -328,15 +328,15 @@ public class K_PIDCal {
   public static final float KROT_K_PropGx = (float) 0.5;
   
   /** KROT_K_IntglGx: Drive System Rotate PID Controls Integral Gain. */
-  public static final float KROT_K_IntglGx = (float) 0.0001;
+  public static final float KROT_K_IntglGx = (float) 0.00001;
  
   /** KROT_Pct_PropCorrMin: Drive System Rotate PID Controls Proportional
     * Correction Min Limit. (percent) */
-  public static final float KROT_Pct_PropCorrMin = (float) 10.0;
+  public static final float KROT_Pct_PropCorrMin = (float) 0.0;
   
   /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Proportional
    * Correction Max Limit. (percent) */
-  public static final float KROT_Pct_PropCorrMax = (float) 50.0;
+  public static final float KROT_Pct_PropCorrMax = (float) 70.0;
   
   /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Intgral
    * Correction Max Limit. (percent) */
