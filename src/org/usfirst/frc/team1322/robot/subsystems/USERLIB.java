@@ -3,10 +3,11 @@ package org.usfirst.frc.team1322.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
-public class TBLLOOKUP extends Subsystem {
+public class USERLIB extends Subsystem {
 	
     private static final int MIN_INT =  0x8000;
     private static final int MAX_INT =  0x7FFF;	
+
 
     
 	/** Method: AxisPieceWiseLinear_int - This function will return an rescaled

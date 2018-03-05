@@ -17,7 +17,7 @@ import org.usfirst.frc.team1322.robot.subsystems.LIFT;
 import org.usfirst.frc.team1322.robot.subsystems.PIDDRV;
 import org.usfirst.frc.team1322.robot.subsystems.PIDROT;
 import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
-import org.usfirst.frc.team1322.robot.subsystems.TBLLOOKUP;
+import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
 	public static final SENSORS kSENSORS = new SENSORS();
 	public static final PIDDRV kPIDDRV = new PIDDRV();
 	public static final PIDROT kPIDROT = new PIDROT();
-	public static final TBLLOOKUP kTBLLOOKUP = new TBLLOOKUP();
+	public static final USERLIB kTBLLOOKUP = new USERLIB();
 	
 	
 	public static OI m_oi;

@@ -21,17 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class SENSORS extends Subsystem {
 
-	public enum TeWhlEncdrs
-	  {
-	  CeRtRear, CeRtFront, CeLtFront, CeLtRear, CiNumOfEncdrs;
-	  }	
-	
-	public enum TeDrvMtrs
-	  {
-	  CeMtrRtRear1, CeMtrRtRear2, CeMtrRtFront1, CeMtrRtFront2, CeMtrLtFront1, CeMtrLtFront2,
-	  CeMtrLtRear1, CeMtrLtRear2, CiNumOfDrvMtrs;
-	  }	
-	
 	
 	//Power Dist. Panel
     private PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -97,11 +86,7 @@ public class SENSORS extends Subsystem {
 	    
 	    RefACnts = EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct];
 	    RefBCnts = EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct];
-	    if (RefACnts > RefBCnts)
-	    	CntsMax = RefACnts;
-	    else
-	    	CntsMax = RefBCnts;
-	    	
+	    CntsMax = Math.max(RefACnts, RefBCnts);
      return CntsMax;
    }
 		
@@ -198,17 +183,20 @@ public class SENSORS extends Subsystem {
   /** Method: updateSensorData - Updates the Derived Input Sensor Data.  */
   public void updateSensorData() {
 	int idx;
-    double RPM_Raw;
+	double tempCnt[] = new double[4];      // (counts)
+	double tempRPM[] = new double[4];      // (counts/100msec)
     
     /* Drive Speed Inputs */    
-	EncdrVelRaw = Robot.kDRIVE.getEncodersVelocity();  // tics/100msec
-	EncdrCnt = Robot.kDRIVE.getEncoders();             // tic count
-    for (idx=0; idx<4; idx++)
+	tempCnt = Robot.kDRIVE.getEncoders();          // counts
+	tempRPM = Robot.kDRIVE.getEncodersVelocity();  // counts/100msec
+
+	for (idx=0; idx<4; idx++)
       {
-      RPM_Raw = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);      // rpm
-      EncdrRPM[idx] = RPM_Raw;
-      WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                   // rpm
-      WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/720;               // feet/sec
+      EncdrCnt[idx] = Math.abs(tempCnt[idx]);
+      EncdrVelRaw[idx] = Math.abs(tempRPM[idx]); 
+      EncdrRPM[idx] = (EncdrVelRaw[idx]/K_SensorCal.KWSS_Cnt_PulsePerRevEncoder)*(600);  // rpm
+      WhlRPM[idx] = EncdrRPM[idx]/K_SensorCal.KWSS_r_EncoderToWheel;                     // rpm
+      WhlVel[idx] = (WhlRPM[idx]*K_SensorCal.KWSS_l_DistPerRevWheel)/720;                // feet/sec
       }
     
     /* UltraSonic Position Inputs */

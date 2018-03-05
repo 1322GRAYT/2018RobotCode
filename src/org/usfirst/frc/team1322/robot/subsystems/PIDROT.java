@@ -128,9 +128,10 @@ public class PIDROT extends Subsystem {
      } 
    
    
-    /** Method: calcPstnErr - YadaYada
-     *  @param:  input info	(units)
-     *  @return: output info (units) */	
+    /** Method: calcPstnErr - Calculates Position Error taking
+     * into account a symmetrical error dead-band around the
+     * zero-error point.  Also gives an indication that
+     * the Error Value is within the Dead-Band region.  */
     private void calcPstnErr() {
     	float ErrTemp;
     	boolean ErrInDB = false;
@@ -139,7 +140,7 @@ public class PIDROT extends Subsystem {
     	
     	if (ErrTemp >= 0.0) {
     		// PstnErr is Positive
-    		if (ErrTemp >= K_PIDCal.KROT_Deg_PosErrDB)
+    		if (ErrTemp > K_PIDCal.KROT_Deg_PosErrDB)
     		    {
     		    ErrTemp = ErrTemp - K_PIDCal.KROT_Deg_PosErrDB;    			
     		    }
@@ -151,11 +152,11 @@ public class PIDROT extends Subsystem {
     	}
     	else /* (ErrTemp < 0.0) */ {
     		// PstnErr is Negative
-    		if (ErrTemp <= -(K_PIDCal.KROT_Deg_PosErrDB))      // Less than the -DB
+    		if (ErrTemp < -(K_PIDCal.KROT_Deg_PosErrDB))        // Less than the -DB
 			    {
 			    ErrTemp = ErrTemp + K_PIDCal.KROT_Deg_PosErrDB; // -Err - (-DB)   			
 			    }
-		else
+    		else
 		        {
 				ErrTemp = (float)0.0;
 				ErrInDB = true;
@@ -174,13 +175,6 @@ public class PIDROT extends Subsystem {
     	double ErrAccumTemp;
     	
     	ErrAccumTemp = PstnErrAccum + PstnErr;
-    	
-    	if (ErrAccumTemp > K_PIDCal.KROT_Pct_IntglCorrMax) {
-    		ErrAccumTemp = K_PIDCal.KROT_Pct_IntglCorrMax;
-    	}
-    	else if (ErrAccumTemp < -(K_PIDCal.KROT_Pct_IntglCorrMax)) {
-    		ErrAccumTemp = -(K_PIDCal.KROT_Pct_IntglCorrMax);
-    	}
     		
      	PstnErrAccum = ErrAccumTemp;  
     }
@@ -190,18 +184,16 @@ public class PIDROT extends Subsystem {
      *  @param:  input info	(units)
      *  @return: output info (units) */	
      private void calcPropTerm() {
-     	double P_Corr;   // P_Corr
-     	double CorrLimMin;  // percent power
-     	double CorrLimMax;  // percent power
-     	
-     	CorrLimMin = (double)K_PIDCal.KROT_Pct_PropCorrMin;
-     	CorrLimMax = (double)K_PIDCal.KROT_Pct_PropCorrMax;
+     	double P_Corr;   // percent power
      	
      	P_Corr = K_PIDCal.KROT_K_PropGx * PstnErr;
      	
-     	if (P_Corr < CorrLimMin) P_Corr = CorrLimMin;
-     	else if (P_Corr > CorrLimMax) P_Corr = CorrLimMax;
-     	    	
+     	if (P_Corr < K_PIDCal.KROT_Pct_PropCorrMin) {
+     		P_Corr = K_PIDCal.KROT_Pct_PropCorrMin;
+     	}
+     	else if (P_Corr > K_PIDCal.KROT_Pct_PropCorrMax) {
+     		P_Corr = K_PIDCal.KROT_Pct_PropCorrMax;
+     	}	
      	PropCorr = P_Corr;
      }
 
@@ -217,7 +209,7 @@ public class PIDROT extends Subsystem {
     	if (I_Corr > K_PIDCal.KROT_Pct_IntglCorrMax) {
     		    I_Corr = K_PIDCal.KROT_Pct_IntglCorrMax;
     	    }
-    	    else if (I_Corr < -(K_PIDCal.KROT_Pct_IntglCorrMax)) {
+    	else if (I_Corr < -(K_PIDCal.KROT_Pct_IntglCorrMax)) {
                 I_Corr = -(K_PIDCal.KROT_Pct_IntglCorrMax);
     	    }
      	IntglCorr = I_Corr;

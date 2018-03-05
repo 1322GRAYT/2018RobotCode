@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.Robot;
-import org.usfirst.frc.team1322.robot.subsystems.TBLLOOKUP;
+import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 import org.usfirst.frc.team1322.robot.calibrations.K_PIDCal;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
