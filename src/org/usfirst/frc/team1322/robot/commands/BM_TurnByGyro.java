@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
-import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,9 +21,10 @@ public class BM_TurnByGyro extends Command {
 	/** KATM_t_RotSafetyTmOut: Amount of Time that must elapse before
      * a rotate command will cancel out due to taking too long to reach
      * the target angle due to some system loss. */
-	public static final float KATM_t_RotSafetyTmOut = (float)2.0; // sec 
+	public static final float KATM_t_RotSafetyTmOut = (float)2.5; // sec 
 	
 	
+	// Command Constructor 
 	/**
 	 * Turn to A specific Angle at a specific speed
 	 * @param turnSpeed Speed in which to turn  + = Right, - = Left
@@ -36,6 +36,7 @@ public class BM_TurnByGyro extends Command {
         this.turnAngle = turnAngle;
     }
 
+    
     // Called just before this Command runs the first time
     protected void initialize() {
         TurnTmOut.reset();
@@ -50,6 +51,7 @@ public class BM_TurnByGyro extends Command {
     	}
     }
 
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double turnAngleAbs;
@@ -86,6 +88,7 @@ public class BM_TurnByGyro extends Command {
 		Robot.kDRIVE.mechDrive(0, 0, turnNormPwrCmnd);
     }
 
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean exitCond = false;
@@ -105,15 +108,18 @@ public class BM_TurnByGyro extends Command {
         return (exitCond == true);
     }
 
+    
     // Called once after isFinished returns true
     protected void end() {
     	Robot.kDRIVE.disable();
     	TurnTmOut.stop();	
     }
 
+    
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	end();
     }
+    
 }
