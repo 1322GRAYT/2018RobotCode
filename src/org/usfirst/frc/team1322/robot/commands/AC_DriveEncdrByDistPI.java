@@ -7,11 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Class: AC_DriveEncdrByDistPI - Autonomous Command to Drive Forwards
- * or Backwards by a Desired Distance (Feet) based on the Average of
- * the Encoder Counts of two Drive Motors/Wheels and Drive is corrected
- * by PI control based on the Gyro readings.
- */
+  * Command Class: AC_DriveEncdrByDistPI
+  * Autonomous Command to Drive Forwards or Backwards by a 
+  * Desired Distance (Feet) based on the Max of the
+  * Encoder Counts of two Drive Motors/Wheels and Drive
+  * is corrected by PI control based on the Gyro readings.
+  */
 public class AC_DriveEncdrByDistPI extends Command {
 	
 	// Autonomous Pattern Vars
@@ -28,16 +29,18 @@ public class AC_DriveEncdrByDistPI extends Command {
 	private double EncdrTgtRefCnt;
 
 	
-	//  Autonomous Pattern Constructor
-    /** Method: AC_DriveEncdrByDist - Autonomous Command to Drive Forwards
-      * or Backwards by a Desired Distance (Feet) based on the Average of
-      * the Encoder Counts of two Drive Motors/Wheels.
-      *  @param1: Desired Drive Distance             (float: feet)	
-      *  @param2: Desired Drive Power                (float: normalized power)	
-      *  @param3: Desired Deceleration Distance      (float: feet)
-      *  @param4: Desired Deceleration Power         (float: normalized power)
-      *  @param5: Desired Drive Course Heading Angle (float: degrees)
-      *  @param6: Is Desired Direction Forward?      (boolean)
+    /** 
+      * Command Method: AC_DriveEncdrByDist
+      * Autonomous Command to Drive Forwards or Backwards by
+      * a Desired Distance (Feet) based on the Max of the
+      * Encoder Counts of two Drive Motors/Wheels.
+      *  @param1: Drive Heading Control PID Enable   (boolean)	
+      *  @param2: Desired Drive Distance             (float: feet)	
+      *  @param3: Desired Drive Power                (float: normalized power)	
+      *  @param4: Desired Deceleration Distance      (float: feet)
+      *  @param5: Desired Deceleration Power         (float: normalized power)
+      *  @param6: Desired Drive Course Heading Angle (float: degrees)
+      *  @param7: Is Desired Direction Forward?      (boolean)
       *   */
     public AC_DriveEncdrByDistPI(boolean DrvPIDEnbl,
     		                     float   DsrdDistFeet,
@@ -77,7 +80,6 @@ public class AC_DriveEncdrByDistPI extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double EncdrCnt[] = new double[4]; 
     	double PriPwr;
     	double DclPwr;
         double HdngCorrCmnd;
@@ -87,28 +89,54 @@ public class AC_DriveEncdrByDistPI extends Command {
         Robot.kPID.managePIDDrive();
         HdngCorrCmnd = Robot.kPID.getPIDDrvCorrCmnd();
     	
-    	if (DrctnIsFwd == false) {
+    	if (DrctnIsFwd == false) {  // Driving In Reverse
     		PriPwr = (double)-(DsrdPriPwr);
     	    DclPwr = (double)-(DsrdDclPwr);
-    	}
-    	else {
+    	    if (HdngCorrCmnd != 0.0) {
+    	    	// When Driving Reverse, Head Correction Needs to be Reversed
+    	    	HdngCorrCmnd = -(HdngCorrCmnd);   
+    	    }
+    	} else {
     		PriPwr = (double)DsrdPriPwr;
     	    DclPwr = (double)DsrdDclPwr;    		
     	}
     	    	
-    	if (EncdrActCnt < EncdrTgtDclCnts)
-    	  {
-          DrvPwrCmnd = PriPwr;
-    	  }
-    	else // (EncdrActCnt >= EncdrTgtDclCnts)
-    	  {
-    	  DrvPwrCmnd = DclPwr;
-    	  }
+    	if (EncdrActCnt < EncdrTgtDclCnts) {
+            DrvPwrCmnd = PriPwr;
+    	} else { // (EncdrActCnt >= EncdrTgtDclCnts)
+    	    DrvPwrCmnd = DclPwr;
+    	}
     	
   	  Robot.kDRIVE.mechDrive(0.0, DrvPwrCmnd, HdngCorrCmnd);
     	
+	  updateSmartDashData();   
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+    	double CurrEncdrCnt;
     	
+    	CurrEncdrCnt = Robot.kSENSORS.getRefEncoderCnt();
+    	return (CurrEncdrCnt >= EncdrTgtRefCnt);
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+  	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    	end();
+    }
+
     
+    
+	// Called to Update SmartDash Data for Display
+    protected void updateSmartDashData() {
+    	double EncdrCnt[] = new double[4]; 
+
     	//Ultra Sonic Sensor Values
     	SmartDashboard.putNumber("Rear US : ", Robot.kSENSORS.getRearUSDistance());
     	SmartDashboard.putNumber("Left US : ", Robot.kSENSORS.getLeftUSDistance());
@@ -139,25 +167,7 @@ public class AC_DriveEncdrByDistPI extends Command {
     	System.out.println("Encoder Desired Decel Target : " + EncdrTgtDclCnts);
     	System.out.println("Encoder Desired End Target : " + EncdrTgtRefCnt);
     	System.out.println("Encoder Actual Count Avg : " + EncdrActCnt);
-
+    
     }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	double CurrEncdrCnt;
-    	
-    	CurrEncdrCnt = Robot.kSENSORS.getRefEncoderCnt();
-    	return (CurrEncdrCnt >= EncdrTgtRefCnt);
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-  	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+    
 }
