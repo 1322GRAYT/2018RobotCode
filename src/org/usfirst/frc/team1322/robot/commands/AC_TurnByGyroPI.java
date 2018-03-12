@@ -21,7 +21,8 @@ public class AC_TurnByGyroPI extends Command {
 
 	// Autonomous Pattern Vars
 	private Timer RotateTmOut = new Timer();
-	private boolean RotPIDEnbl, RotClckWise;
+	private boolean RotPIDEnbl;
+	private boolean RotClckWise;
 	private double  RotPstnDsrd;
 	
 
@@ -37,17 +38,13 @@ public class AC_TurnByGyroPI extends Command {
      * ClockWise or Counter-ClockWise to a Desired Angular
      * Position Based on Gyro Angular Position Feedback using
      * a PI Control System.
-    *  @param1: Rotate PID Control Enable      (boolean)	
-    *  @param2: Is Desired Rotation ClockWise? (boolean)	
-    *  @param3: Desired Angular Rotation       (double: degrees +/-)
-    *           (+ = ClockWise, - = Counter-ClockWise)
-    *  @Return: Commanded Motor Driver Power   (double: normalized power)
-    *   */
-    public AC_TurnByGyroPI(boolean RotPIDEnbl,
-    		               boolean RotClckWise,
+     *  @param1: RotClckWise - Is Desired Rotation ClockWise? (boolean)	
+     *  @param2: RotPstnDsrd - Desired Angular Rotation       (double: degrees +/-)
+     *           (+ = ClockWise, - = Counter-ClockWise)
+     *   */
+    public AC_TurnByGyroPI(boolean RotClckWise,
     		               double  RotPstnDsrd) {
         requires(Robot.kDRIVE);
-    	this.RotPIDEnbl = RotPIDEnbl;
     	this.RotClckWise = RotClckWise;
     	this.RotPstnDsrd = RotPstnDsrd;
         
@@ -59,7 +56,8 @@ public class AC_TurnByGyroPI extends Command {
     	RotateTmOut.start();
     	Robot.kDRIVE.enable();
     	Robot.kPID.resetPIDRot();
-        Robot.kPID.putPIDRotPstnTgt(this.RotPIDEnbl,
+    	RotPIDEnbl = true;
+        Robot.kPID.putPIDRotPstnTgt(RotPIDEnbl,
         		                    this.RotClckWise,
         		                    this.RotPstnDsrd);
     }
@@ -91,7 +89,8 @@ public class AC_TurnByGyroPI extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.kDRIVE.disable();
-    	RotateTmOut.stop();    	
+    	RotateTmOut.stop();   
+    	RotPIDEnbl = false;
     }
 
     // Called when another command which requires one or more of the same

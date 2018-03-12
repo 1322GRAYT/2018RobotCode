@@ -34,19 +34,19 @@ public class AM_Test_RotPI_Swch1322 extends CommandGroup {
     addSequential(new AC_ResetGyro());
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
     addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
-    addSequential(new AC_TurnByGyroPI(true, true, 90.0));     // CW to 90
+    addSequential(new AC_TurnByGyroPI(true, 90.0));     // CW to 90
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(true, false, -90.0));   // CCW to 270
+    addSequential(new AC_TurnByGyroPI(false, -90.0));   // CCW to 270
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(true, true, 0.0));      // CW to 0
+    addSequential(new AC_TurnByGyroPI(true, 0.0));      // CW to 0
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(true, false,-180.0));   // CCW to 180
+    addSequential(new AC_TurnByGyroPI(false,-180.0));   // CCW to 180
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(true, true, 90.0));     // CW to 90
+    addSequential(new AC_TurnByGyroPI(true, 90.0));     // CW to 90
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(true, false, 0.0));     // CCW to 0
+    addSequential(new AC_TurnByGyroPI(false, 0.0));     // CCW to 0
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(false, true, 0.0));     // disable
+    addSequential(new AC_TurnByGyroPI(true, 0.0));     // disable
 	
 	
 /*	

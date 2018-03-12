@@ -34,23 +34,20 @@ public class AC_DriveEncdrByDistPI extends Command {
       * Autonomous Command to Drive Forwards or Backwards by
       * a Desired Distance (Feet) based on the Max of the
       * Encoder Counts of two Drive Motors/Wheels.
-      *  @param1: Drive Heading Control PID Enable   (boolean)	
-      *  @param2: Desired Drive Distance             (float: feet)	
-      *  @param3: Desired Drive Power                (float: normalized power)	
-      *  @param4: Desired Deceleration Distance      (float: feet)
-      *  @param5: Desired Deceleration Power         (float: normalized power)
-      *  @param6: Desired Drive Course Heading Angle (float: degrees)
-      *  @param7: Is Desired Direction Forward?      (boolean)
+      *  @param1: Desired Drive Distance             (float: feet)	
+      *  @param2: Desired Drive Power                (float: normalized power)	
+      *  @param3: Desired Deceleration Distance      (float: feet)
+      *  @param4: Desired Deceleration Power         (float: normalized power)
+      *  @param5: Desired Drive Course Heading Angle (float: degrees)
+      *  @param6: Is Desired Direction Forward?      (boolean)
       *   */
-    public AC_DriveEncdrByDistPI(boolean DrvPIDEnbl,
-    		                     float   DsrdDistFeet,
+    public AC_DriveEncdrByDistPI(float   DsrdDistFeet,
     		                     float   DsrdPriPwr,
     		                     float   DsrdDclFeet,
     		                     float   DsrdDclPwr,
     		                     float   DrvHdngDsrd,
     		                     boolean DrctnIsFwd) {
         requires(Robot.kDRIVE);        
-        this.DrvPIDEnbl = DrvPIDEnbl; 
         this.DrctnIsFwd = DrctnIsFwd;
         this.DrvHdngDsrd = DrvHdngDsrd;
         this.DsrdDistFeet = DsrdDistFeet;
@@ -74,8 +71,8 @@ public class AC_DriveEncdrByDistPI extends Command {
 
     	Robot.kDRIVE.enable();    	
     	Robot.kPID.resetPIDRot();
-        Robot.kPID.putPIDDrvPstnTgt(this.DrvPIDEnbl,
-        		                    this.DrvHdngDsrd);
+    	DrvPIDEnbl = true;
+        Robot.kPID.putPIDDrvPstnTgt(DrvPIDEnbl, this.DrvHdngDsrd);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -122,6 +119,8 @@ public class AC_DriveEncdrByDistPI extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+      DrvPIDEnbl = false;
+      Robot.kPID.putPIDDrvPstnTgt(DrvPIDEnbl, this.DrvHdngDsrd);    	
   	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
     }
 
