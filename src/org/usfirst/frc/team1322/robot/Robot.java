@@ -7,15 +7,15 @@
 
 package org.usfirst.frc.team1322.robot;
 
-import org.usfirst.frc.team1322.robot.commands.AM_Comp_DriveStraightCrossLine;
 import org.usfirst.frc.team1322.robot.commands.AM_StrtLeftSide_Swch1322;
-import org.usfirst.frc.team1322.robot.commands.AM_StrtLeftSide_SwchPartner;
-import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1323;
+import org.usfirst.frc.team1322.robot.commands.AM_StrtRightSide_Swch1322;
+import org.usfirst.frc.team1322.robot.commands.AM_StrtCenter_Swch1322;
+import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
+import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
-import org.usfirst.frc.team1322.robot.subsystems.PIDDRV;
-import org.usfirst.frc.team1322.robot.subsystems.PIDROT;
+import org.usfirst.frc.team1322.robot.subsystems.PID;
 import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
@@ -38,8 +38,7 @@ public class Robot extends IterativeRobot {
 	public static final CLAW kCLAW = new CLAW();
 	public static final DRIVE kDRIVE = new DRIVE();
 	public static final SENSORS kSENSORS = new SENSORS();
-	public static final PIDDRV kPIDDRV = new PIDDRV();
-	public static final PIDROT kPIDROT = new PIDROT();
+	public static final PID kPID = new PID();
 	public static final USERLIB kTBLLOOKUP = new USERLIB();
 	
 	
@@ -53,17 +52,17 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {;
+	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Cube in Switch", new AM_StrtLeftSide_Swch1322());
-		m_chooser.addObject("Cube in Scale", new AM_StrtLeftSide_SwchPartner());
-		m_chooser.addObject("Straight", new AM_Comp_DriveStraightCrossLine());
-		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1323());
+		m_chooser.addDefault("Cube in Switch: Robot L-Side", new AM_StrtLeftSide_Swch1322());
+		m_chooser.addObject("Cube in Switch: Robot R-Side", new AM_StrtRightSide_Swch1322());
+		m_chooser.addObject("Cube in Switch: Robot Center", new AM_StrtCenter_Swch1322());
+		m_chooser.addObject("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
+//		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1323());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
-		kPIDDRV.resetPIDDrv();
-		kPIDROT.resetPIDRot();
+		kPID.resetPIDRot();
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
 		CameraServer.getInstance().startAutomaticCapture();		
 	}
@@ -129,8 +128,7 @@ public class Robot extends IterativeRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		kPIDDRV.resetPIDDrv();
-		kPIDROT.resetPIDRot();
+		kPID.resetPIDRot();
 	}
 
 	/**

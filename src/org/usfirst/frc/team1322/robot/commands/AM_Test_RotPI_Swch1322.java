@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  * Class: AM_RedEnc - Autonomous Control Mode Pattern Lever Left.
  */
-public class AM_Test_RotPI_Swch1323 extends CommandGroup {
+public class AM_Test_RotPI_Swch1322 extends CommandGroup {
 
 	private static String fieldData;                 // String of Field Data
 	private static boolean ourSwitchNearSide;        // Is Our Side of Our Alliance Switch on Our Robots Side of the Field?
@@ -23,7 +23,7 @@ public class AM_Test_RotPI_Swch1323 extends CommandGroup {
 	public static final double KAMG_t_EncdrRstDly = 0.5; // sec
 	
 	
-    public AM_Test_RotPI_Swch1323() {
+    public AM_Test_RotPI_Swch1322() {
     	
     //	fieldData = DriverStation.getInstance().getGameSpecificMessage();
     //	alliance = DriverStation.getInstance().getAlliance();
@@ -32,16 +32,15 @@ public class AM_Test_RotPI_Swch1323 extends CommandGroup {
 
    
     addSequential(new AC_ResetGyro());
-    addSequential(new BM_RaiseToMid());
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
     addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
     addSequential(new AC_TurnByGyroPI(true, true, 90.0));     // CW to 90
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(true, false, 270.0));   // CCW to 270
+    addSequential(new AC_TurnByGyroPI(true, false, -90.0));   // CCW to 270
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(true, true, 0.0));      // CW to 0
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_TurnByGyroPI(true, false, 180.0));   // CCW to 180
+    addSequential(new AC_TurnByGyroPI(true, false,-180.0));   // CCW to 180
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(true, true, 90.0));     // CW to 90
 	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));

@@ -18,7 +18,7 @@ public class AC_ShootInBlock extends TimedCommand {
 
  // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kCLAW.clawSpeedInOut(1);
+    	Robot.kCLAW.clawSpeedInOut(-1);
     }
 
     // Called repeatedly when this Command is scheduled to run

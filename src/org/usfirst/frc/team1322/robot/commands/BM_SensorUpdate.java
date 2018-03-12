@@ -55,6 +55,9 @@ public class BM_SensorUpdate extends Command {
     	
     	//Update SmartDashboard
     	System.out.println("Encoder Counts: " + Robot.kSENSORS.getEncodersCnt());  
+    	System.out.println("Gyro Angle : " + Robot.kSENSORS.getGyroAngle());
+
+    	
     	SmartDashboard.updateValues();
     }
 

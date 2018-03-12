@@ -6,12 +6,20 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Turn A specific Angle at a specific speed
+ * Command Class: AM_TurnByGyro
+ * Turn To a a specific Angle at a specific Normalized Power.
+ * Positive Power is ClockWise, Negative is Counter-ClockWise.
  */
-public class BM_TurnByGyro extends Command {
+public class AC_TurnByGyro extends Command {
 	private Timer TurnTmOut = new Timer();
-	private double turnSpeed;
+	private double turnPwr;
 	private double turnAngle;
+	private double RotDsrdAng;	
+	private double RotFdbkAng;
+	private double RotFdbkAngInit;	
+	private double RotAngInitDelt;
+    private double RotAng70Pct;	
+    private double RotAng90Pct;	
 	
 	
     /** KATM_b_RotRstGyroOnInit: Enable the the Reset the Gyro at
@@ -21,18 +29,18 @@ public class BM_TurnByGyro extends Command {
 	/** KATM_t_RotSafetyTmOut: Amount of Time that must elapse before
      * a rotate command will cancel out due to taking too long to reach
      * the target angle due to some system loss. */
-	public static final float KATM_t_RotSafetyTmOut = (float)2.5; // sec 
+	public static final float KATM_t_RotSafetyTmOut = (float)1.0; // sec 
 	
 	
-	// Command Constructor 
 	/**
-	 * Turn to A specific Angle at a specific speed
-	 * @param turnSpeed Speed in which to turn  + = Right, - = Left
-	 * @param turnAngle Angle to turn
+	 * Command Method: AM_TurnByGyro
+	 * Turn to a specific Angle at a specific Normalized Power.
+	 * @param1: turnPwr, Normalized Power To Turn  + = ClckWise, - = CntrClckWise
+	 * @param2: turnAngle, Desired Turn Target Angle
 	 */
-    public BM_TurnByGyro(double turnSpeed, double turnAngle) {
+    public AC_TurnByGyro(double turnPwr, double turnAngle) {
         requires(Robot.kDRIVE);
-        this.turnSpeed = turnSpeed;
+        this.turnPwr = turnPwr;
         this.turnAngle = turnAngle;
     }
 
@@ -44,46 +52,51 @@ public class BM_TurnByGyro extends Command {
         if (KATM_b_RotRstGyroOnInit == true)
         	Robot.kSENSORS.resetGyro();
     	Robot.kDRIVE.enable();
-    	Robot.kDRIVE.mechDrive(0, 0, turnSpeed);
-    	if(turnSpeed < .3) {
+    	
+    	RotDsrdAng = this.turnAngle;
+    	RotFdbkAngInit = Robot.kSENSORS.getGyroAngle(); 	
+    	RotAngInitDelt = RotDsrdAng - RotFdbkAngInit;
+        RotAng70Pct = RotAngInitDelt * 0.7;	
+        RotAng90Pct = RotAngInitDelt * 0.9;	
+    	
+    	if(Math.abs(turnPwr) < .3) {
     		System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
-    		turnSpeed = .3;
+    		if (turnPwr > 0.0)  {
+    			turnPwr =  0.3;
+    		} else {
+    			turnPwr = -0.3;    			
+    		}
     	}
+    	
+    	Robot.kDRIVE.mechDrive(0, 0, turnPwr);
     }
 
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double turnAngleAbs;
     	float  turnDirctnScalar = (float)1.0;
     	float  nearTrgtScalar =   (float)1.0;
-    	double sevenTenthsOfTotal;
-    	double nineTenthsOfTotal;
         double turnNormPwrCmnd;
     	
         /* TurnTmOut is a Free Running Timer */	
-    	
-    	if (turnSpeed < (double)0.0) {
+
+        RotFdbkAng = Robot.kSENSORS.getGyroAngle();
+        
+    	if (turnPwr < (double)0.0) {
     		// Turn Counter-ClockWise
-    		turnAngleAbs = (double)360 - turnAngle;
     		turnDirctnScalar = (float)-1;
-    	}
-    	else {
+    	} else {
     		// Turn ClockWise 
-        	turnAngleAbs = turnAngle;
     		turnDirctnScalar = (float)1;        	
     	}
-    	sevenTenthsOfTotal = .7 * turnAngleAbs;
-    	nineTenthsOfTotal  = .9 * turnAngleAbs;
 
-    	if(Robot.kSENSORS.getGyroAngle() >= nineTenthsOfTotal) {
+    	if(RotFdbkAng >= RotAng90Pct) {
     		nearTrgtScalar = (float)0.25;
-    	}
-    	else if (Robot.kSENSORS.getGyroAngle() >= sevenTenthsOfTotal) {
+    	} else if (RotFdbkAng >= RotAng70Pct) {
     		nearTrgtScalar = (float)0.50;    		
     	}
     	 
-    	turnNormPwrCmnd = (double)turnDirctnScalar * (double)nearTrgtScalar * turnSpeed;
+    	turnNormPwrCmnd = (double)turnDirctnScalar * (double)nearTrgtScalar * turnPwr;
     	
 		Robot.kDRIVE.mechDrive(0, 0, turnNormPwrCmnd);
     }
@@ -93,15 +106,13 @@ public class BM_TurnByGyro extends Command {
     protected boolean isFinished() {
     	boolean exitCond = false;
     	 
-	    	if ((turnSpeed >= (double)0.0) &&
-	    		(Robot.kSENSORS.getGyroAngle() >= turnAngle)) {
+	    	if ((turnPwr >= (double)0.0) &&
+	    		(RotFdbkAng >= turnAngle)) {
 	    		exitCond = true;
-    	    }
-	    	else if ((turnSpeed < (double)0.0) &&
-		    		(Robot.kSENSORS.getGyroAngle() <= turnAngle)) {
+    	    } else if ((turnPwr < (double)0.0) &&
+		    		   (RotFdbkAng <= turnAngle)) {
 		    	exitCond = true;
-	        }
-	    	else if (TurnTmOut.get() >= KATM_t_RotSafetyTmOut) {
+	        } else if (TurnTmOut.get() >= KATM_t_RotSafetyTmOut) {
 		    	exitCond = true;	    		
 	    	}
          

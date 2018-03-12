@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * Command Group Class: AM_StrtLeftSide_Swch1322
+ * Command Group Class: AM_StrtCenter_Swch1322
  * Autonomous Control Group Pattern: Robot Starts Left Side
  * and Robot puts PwrCube in the Switch.
  */
-public class AM_StrtLeftSide_Swch1322 extends CommandGroup {
+public class AM_StrtCenter_Swch1322 extends CommandGroup {
 	
 	private static String fieldData;                 // String of Field Data
 	private static boolean ourSwitchLeftSide;        // Is Our Side of Our Alliance Switch on the Left Side of the Field?
@@ -28,11 +28,11 @@ public class AM_StrtLeftSide_Swch1322 extends CommandGroup {
 	
 
 	/**
-	 * Command Group Method: AM_StrtLeftSide_Swch1322
+	 * Command Group Method: AM_StrtCenter_Swch1322
 	 * Autonomous Control Group Pattern: Robot Starts Left Side
 	 * and Robot puts PwrCube in the Switch.
 	 */	
-    public AM_StrtLeftSide_Swch1322() {
+    public AM_StrtCenter_Swch1322() {
     	
     	fieldData = DriverStation.getInstance().getGameSpecificMessage();
     	alliance = DriverStation.getInstance().getAlliance();
@@ -44,42 +44,44 @@ public class AM_StrtLeftSide_Swch1322 extends CommandGroup {
     	addSequential(new BM_RaiseToMid());
 		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
     	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+    	addSequential(new AC_DriveEncdrByDist((float)5.0, (float)0.8, (float)1.0, (float)0.10, (float)0.0, true));
     	if(ourSwitchLeftSide) { // Our Alliance Switch is on Left Side
-        	addSequential(new AC_DriveEncdrByDist((float)12.0, (float)0.8, (float)1.5, (float)0.20, (float)0.0, true));
-        	addSequential(new AC_TurnByGyro(0.7, 90.0)); // Turn CW to 90 deg
+        	addSequential(new AC_TurnByGyro(-0.7, -90.0)); // Turn CCW to -90 deg
+    		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+        	addSequential(new AC_DriveEncdrByDist((float)3.0, (float)0.7, (float)1.0, (float)0.10, (float)-90.0, true));
+        	addSequential(new AC_TurnByGyro(0.7, 0.0)); // Turn CW to 0 deg
+    		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.7, (float)1.0, (float)0.10, (float)0.0, true));
         	addSequential(new BM_RaiseToMid());
     	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75));
     	    addSequential(new BM_LiftClaw(false));
     	    addSequential(new BM_OpenClaw(true));
     		addSequential(new AC_TimeDelay((float)0.5));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
-        	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.6, (float)0.5, (float)0.20, (float)90.0, false));
     	    addSequential(new AC_DriveByGyroTime(-0.5, 0.0, 2.5));  // Straffe to the Left
-     		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
-        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.8, (float)1.0, (float)0.20, (float)90.0, true));
-        	addSequential(new AC_TurnByGyro(0.7, 180.0)); // Turn CW to 180 deg
     	}
-    	else // Our Alliance Switch is On Right Side
+    	else // Our Alliance Switch is on Right Side
     	{
-        	addSequential(new AC_DriveEncdrByDist((float)17.0, (float)1.0, (float)2.0, (float)0.10, (float)0.0, true));
-        	addSequential(new AC_TurnByGyro(0.7, 75.0)); // Turn CW to 90 deg
+        	addSequential(new AC_TurnByGyro(0.7, 90.0)); // Turn CW to 90 deg
     		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
-        	addSequential(new AC_DriveEncdrByDist((float)16.0, (float)1.0, (float)2.0, (float)0.10, (float)90.0, true));
-    	    addSequential(new AC_TurnByGyro(0.7, 190.0)); // Turn CW to 180 deg
+        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+        	addSequential(new AC_DriveEncdrByDist((float)3.0, (float)0.7, (float)1.0, (float)0.10, (float)90.0, true));
+    	    addSequential(new AC_TurnByGyro(-0.7, 0.0)); // Turn CCW to 0 deg
     		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
-        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.8, (float)1.0, (float)0.20, (float)180.0, true));
-    	    addSequential(new AC_TurnByGyro(0.7, 280.0)); // Turn CW to 270 deg
-    		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
+        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.7, (float)1.0, (float)0.10, (float)0.0, true));
         	addSequential(new BM_RaiseToMid());
     	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75));
     	    addSequential(new BM_LiftClaw(false));
     	    addSequential(new BM_OpenClaw(true));
-    	    // addSequential(new AC_ShootOutBlock(2.0));
+    		addSequential(new AC_TimeDelay((float)0.5));
+    	    addSequential(new AC_DriveByGyroTime(0.5, 0.0, 2.5));  // Straffe to the Right    		
     	}
+    	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+    	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
+    	addSequential(new AC_DriveEncdrByDist((float)6.0, (float)0.8, (float)1.0, (float)0.15, (float)0.0, true));
+    	
     }
 
     /** Method: dtrmnOurSwitchPstn() -  Calculate if the our color of the Switch
