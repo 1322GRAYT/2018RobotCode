@@ -3,6 +3,7 @@ package org.usfirst.frc.team1322.robot.subsystems;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -20,6 +21,13 @@ public class CLAW extends Subsystem {
 	private Solenoid clawPneC = new Solenoid(RobotMap.CLAW_CLOSE_C);				//Claw Close Solenoid Valve 2
 	private Solenoid clawLiftO = new Solenoid(RobotMap.CLAW_LIFT_O);				//Claw Lift Solenoid Valve 1
 	private Solenoid clawLiftC = new Solenoid(RobotMap.CLAW_LIFT_C);				//Claw Lift Solenoid Valve 2
+
+    public CLAW() {
+    	clawL.setNeutralMode(NeutralMode.Brake);
+    	clawR.setNeutralMode(NeutralMode.Brake); 	
+    }
+	
+	
 	
 	/**
 	 * Set the in/out speed of the claw motors
