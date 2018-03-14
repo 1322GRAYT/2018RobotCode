@@ -2,6 +2,7 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal; 
 
 /**
  * Class: AM_RedEnc - Autonomous Control Mode Pattern Lever Left.
@@ -14,14 +15,6 @@ public class AM_Test_RotPI_Swch1322 extends CommandGroup {
 	private static DriverStation.Alliance alliance;  //Our Alliance Color
 
 
-	/** KAMG_t_PostMoveDly: Time Delay Movement prior to Starting another
-	 * Drive or Rotate Movement to allow the robot and sensors/encoders
-	 * to stabilize. (sec). */
-	public static final float KAMG_t_PostMoveDly = (float)1.0; // sec
-	
-	/** KAMG_t_EncdrRstDly: Time Delay after Encoder Counter Reset. (sec). */
-	public static final double KAMG_t_EncdrRstDly = 0.5; // sec
-	
 	
     public AM_Test_RotPI_Swch1322() {
     	
@@ -32,20 +25,20 @@ public class AM_Test_RotPI_Swch1322 extends CommandGroup {
 
    
     addSequential(new AC_ResetGyro());
-	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-    addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
+	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
+    addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
     addSequential(new AC_TurnByGyroPI(true, 90.0));     // CW to 90
-	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(false, -90.0));   // CCW to 270
-	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(true, 0.0));      // CW to 0
-	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(false,-180.0));   // CCW to 180
-	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(true, 90.0));     // CW to 90
-	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(false, 0.0));     // CCW to 0
-	addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
+	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     addSequential(new AC_TurnByGyroPI(true, 0.0));     // disable
 	
 	

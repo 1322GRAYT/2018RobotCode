@@ -3,6 +3,7 @@ package org.usfirst.frc.team1322.robot.commands;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal; 
 
 /**
  *  Command Group Class: AM_TestEnc
@@ -15,16 +16,7 @@ public class AM_TestEnc extends CommandGroup {
 	private static boolean ourScaleLeftSide;         // Is Our Side of the Scale on the Left Side of the Field?
 	private static DriverStation.Alliance alliance;  // Our Alliance Color
 	
-	
-	/** KAMG_t_PostMoveDly: Time Delay Movement prior to Starting another
-	 * Drive or Rotate Movement to allow the robot and sensors/encoders
-	 * to stabilize. (sec). */
-	public static final float KAMG_t_PostMoveDly = (float)0.250; // sec
-	
-	/** KAMG_t_EncdrRstDly: Time Delay after Encoder Counter Reset. (sec). */
-	public static final double KAMG_t_EncdrRstDly = 0.250; // sec
-	
-	
+		
 	
 	/**
 	 *  Command Group Method: AM_TestEnc
@@ -39,23 +31,23 @@ public class AM_TestEnc extends CommandGroup {
 
     	
     	addSequential(new AC_ResetGyro());  	
-    	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+    	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	
     	if(ourSwitchLeftSide) {
-    		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+    		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
+        	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	} else {
-    		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+    		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
+        	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	}
 
     	if(ourScaleLeftSide) {
-    		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+    		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
+        	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     		
     	} else {
-    		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
-        	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
+    		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
+        	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	}
     	
     }

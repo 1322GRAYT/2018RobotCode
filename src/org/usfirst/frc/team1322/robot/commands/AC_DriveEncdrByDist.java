@@ -2,6 +2,7 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
+import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,13 +31,7 @@ public class AC_DriveEncdrByDist extends Command {
 	private double DrvHdngAngErrRaw;
 	private double DrvHdngAngErr;
  	private final double CorrPwrCmnd = RobotMap.autonDriveCorrectionSpeed;
- 	private final double CorrDeadBand = RobotMap.autonDriveLeeway;
-
-	/** KAMC_r_LiftMtrHldPwr: Normalized Power Command to Hold/Return
-	 * the Lift Motor to the Middle or High position once it drifts
-	 * down due to the weight of the Arm and PwrCube that may be present.
-	 * (double: normalized power). */
-	public static final double KAMC_r_LiftMtrHldPwr = 0.05; // Norm Pwr
+ 	private final double CorrDeadBand = RobotMap.autonDriveLeeway;	
  	
  	
 	
@@ -145,7 +140,7 @@ public class AC_DriveEncdrByDist extends Command {
   	    if ((this.LftHldEnbl == true) &&
   	    	(Robot.kLIFT.getMidSen() == true)) {
   	        // PwrCube not sensed by N/C Sensor
-  	    	LftPwrCmndSgnd = KAMC_r_LiftMtrHldPwr;	
+  	    	LftPwrCmndSgnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
   	    } else {
   	    	// PwrCube is sensed by N/C Sensor
   	    	LftPwrCmndSgnd = 0.0;	
