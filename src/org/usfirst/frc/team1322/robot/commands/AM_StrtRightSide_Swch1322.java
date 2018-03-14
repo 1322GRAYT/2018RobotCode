@@ -45,7 +45,7 @@ public class AM_StrtRightSide_Swch1322 extends CommandGroup {
 		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
     	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
     	if(!ourSwitchLeftSide) { // Our Alliance Switch is on Right Side
-        	addSequential(new AC_DriveEncdrByDist((float)12.0, (float)0.8, (float)1.5, (float)0.20, (float)0.0, true));
+        	addSequential(new AC_DriveEncdrByDist((float)12.0, (float)0.8, (float)1.5, (float)0.20, (float)0.0, true, true));
         	addSequential(new AC_TurnByGyro(-0.7, -90.0)); // Turn CCW to -90 deg
         	addSequential(new BM_RaiseToMid());
     	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75));
@@ -53,24 +53,24 @@ public class AM_StrtRightSide_Swch1322 extends CommandGroup {
     	    addSequential(new BM_OpenClaw(true));
     		addSequential(new AC_TimeDelay((float)0.5));
         	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));    	
-        	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.6, (float)0.5, (float)0.20, (float)-90.0, false));
-    	    addSequential(new AC_DriveByGyroTime(0.5, 0.0, 2.5));  // Straffe to the Right
+        	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.6, (float)0.5, (float)0.20, (float)-90.0, false, false));
+    	    addSequential(new AC_DriveByGyroTime(0.5, 0.0, 2.5));  // Strafe to the Right
      		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
-        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.8, (float)1.0, (float)0.20, (float)-90.0, true));
+        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.8, (float)1.0, (float)0.20, (float)-90.0, true, false));
         	addSequential(new AC_TurnByGyro(0.7, -180.0)); // Turn CCW to -180 deg
     	}
     	else // Our Alliance Switch is On the Left Side
     	{
-        	addSequential(new AC_DriveEncdrByDist((float)17.0, (float)1.0, (float)2.0, (float)0.10, (float)0.0, true));
+        	addSequential(new AC_DriveEncdrByDist((float)17.0, (float)1.0, (float)2.0, (float)0.10, (float)0.0, true, true));
         	addSequential(new AC_TurnByGyro(-0.7, -75.0)); // Turn CCW to -90 deg
     		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
-        	addSequential(new AC_DriveEncdrByDist((float)16.0, (float)1.0, (float)2.0, (float)0.10, (float)-90.0, true));
+        	addSequential(new AC_DriveEncdrByDist((float)16.0, (float)1.0, (float)2.0, (float)0.10, (float)-90.0, true, true));
     	    addSequential(new AC_TurnByGyro(-0.7, -190.0)); // Turn CCW to -180 deg
     		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));
-        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.8, (float)1.0, (float)0.20, (float)-180.0, true));
+        	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.8, (float)1.0, (float)0.20, (float)-180.0, true, true));
     	    addSequential(new AC_TurnByGyro(-0.7, -280.0)); // Turn CCW to -270 deg
     		addSequential(new AC_TimeDelay(KAMG_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(KAMG_t_EncdrRstDly));

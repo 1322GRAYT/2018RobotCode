@@ -17,7 +17,7 @@ public class AC_DriveEncdrByDist extends Command {
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
     private float   DsrdHdngAng;
-	private boolean DrctnIsFwd;
+	private boolean DrctnIsFwd, LftHldEnbl;
 	
 	private double EncdrActCnt;
 	private double EncdrInitRefCnt;
@@ -32,6 +32,13 @@ public class AC_DriveEncdrByDist extends Command {
  	private final double CorrPwrCmnd = RobotMap.autonDriveCorrectionSpeed;
  	private final double CorrDeadBand = RobotMap.autonDriveLeeway;
 
+	/** KAMC_r_LiftMtrHldPwr: Normalized Power Command to Hold/Return
+	 * the Lift Motor to the Middle or High position once it drifts
+	 * down due to the weight of the Arm and PwrCube that may be present.
+	 * (double: normalized power). */
+	public static final double KAMC_r_LiftMtrHldPwr = 0.05; // Norm Pwr
+ 	
+ 	
 	
     /**
       *  Command Method: AC_DriveEncdrByDist - Autonomous Command to Drive Forwards
@@ -42,15 +49,19 @@ public class AC_DriveEncdrByDist extends Command {
       *  @param3: Desired Deceleration Distance (float: feet)
       *  @param4: Desired Deceleration Power    (float: normalized power)
       *  @param5: Is Desired Direction Forward? (boolean)
+      *  @param6: Enable Lift Hold Function?    (boolean)
       *   */
     public AC_DriveEncdrByDist(float   DsrdDistFeet,
     		                   float   DsrdPriPwr,
     		                   float   DsrdDclFeet,
     		                   float   DsrdDclPwr,
     		                   float   DsrdHdngAng,    		                   
-    		                   boolean DrctnIsFwd) {
+    		                   boolean DrctnIsFwd,
+    		                   boolean LftHldEnbl) {
         requires(Robot.kDRIVE);        
+        requires(Robot.kLIFT);        
         this.DrctnIsFwd = DrctnIsFwd;
+        this.LftHldEnbl = LftHldEnbl;
         this.DsrdDistFeet = DsrdDistFeet;
         this.DsrdPriPwr = DsrdPriPwr;
         this.DsrdDclFeet = DsrdDclFeet;
@@ -79,7 +90,8 @@ public class AC_DriveEncdrByDist extends Command {
     	double DclPwr;
         double DrvPwrCmndSgnd;
         double CorrPwrCmndSgnd;
-
+        double LftPwrCmndSgnd;
+        
     	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();
     	DrvFdbkHdngAng = Robot.kSENSORS.getGyroAngle(); 	    	
     	
@@ -125,9 +137,24 @@ public class AC_DriveEncdrByDist extends Command {
     	  {
     	  DrvPwrCmndSgnd = DclPwr;
     	  }   	 	
-    	
+	
   	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmndSgnd, CorrPwrCmndSgnd);
 
+  	    
+  	    // Keep Lift in Elevated Position
+  	    if ((this.LftHldEnbl == true) &&
+  	    	(Robot.kLIFT.getMidSen() == true)) {
+  	        // PwrCube not sensed by N/C Sensor
+  	    	LftPwrCmndSgnd = KAMC_r_LiftMtrHldPwr;	
+  	    } else {
+  	    	// PwrCube is sensed by N/C Sensor
+  	    	LftPwrCmndSgnd = 0.0;	
+  	    }
+  	    
+  	    Robot.kLIFT.setSpeed(LftPwrCmndSgnd);
+  	    
+  	    
+  	    // Update Smart Dashboard Data
   	    updateSmartDashData();    	
     }
 
@@ -141,7 +168,8 @@ public class AC_DriveEncdrByDist extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-  	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
+  	    Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
+  	    Robot.kLIFT.setSpeed(0.0);
     }
 
     // Called when another command which requires one or more of the same
