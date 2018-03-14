@@ -40,11 +40,11 @@ public class AM_StrtCenter_Swch1322 extends CommandGroup {
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	addSequential(new AC_DriveEncdrByDist((float)5.0, (float)0.8, (float)1.0, (float)0.10, (float)0.0, true, true));
     	if(ourSwitchLeftSide) { // Our Alliance Switch is on Left Side
-        	addSequential(new AC_TurnByGyro(-0.7, -90.0)); // Turn CCW to -90 deg
+        	addSequential(new AC_TurnByGyro(-0.7, -90.0, true)); // Turn CCW to -90 deg
     		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
         	addSequential(new AC_DriveEncdrByDist((float)3.0, (float)0.7, (float)1.0, (float)0.10, (float)-90.0, true, true));
-        	addSequential(new AC_TurnByGyro(0.7, 0.0)); // Turn CW to 0 deg
+        	addSequential(new AC_TurnByGyro(0.7, 0.0, true)); // Turn CW to 0 deg
     		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
         	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.7, (float)1.0, (float)0.10, (float)0.0, true, true));
@@ -57,11 +57,11 @@ public class AM_StrtCenter_Swch1322 extends CommandGroup {
     	}
     	else // Our Alliance Switch is on Right Side
     	{
-        	addSequential(new AC_TurnByGyro(0.7, 90.0)); // Turn CW to 90 deg
+        	addSequential(new AC_TurnByGyro(0.7, 90.0, true)); // Turn CW to 90 deg
     		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
         	addSequential(new AC_DriveEncdrByDist((float)3.0, (float)0.7, (float)1.0, (float)0.10, (float)90.0, true, true));
-    	    addSequential(new AC_TurnByGyro(-0.7, 0.0)); // Turn CCW to 0 deg
+    	    addSequential(new AC_TurnByGyro(-0.7, 0.0, true)); // Turn CCW to 0 deg
     		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
         	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.7, (float)1.0, (float)0.10, (float)0.0, true, true));

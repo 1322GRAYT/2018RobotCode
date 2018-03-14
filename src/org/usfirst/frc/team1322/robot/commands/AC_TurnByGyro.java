@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
+import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Positive Power is ClockWise, Negative is Counter-ClockWise.
  */
 public class AC_TurnByGyro extends Command {
+	boolean liftHldEnbl;
 	private Timer TurnTmOut = new Timer();
 	private double turnPwr;
 	private double turnAngle;
@@ -36,12 +38,15 @@ public class AC_TurnByGyro extends Command {
 	 * Command Method: AM_TurnByGyro
 	 * Turn to a specific Angle at a specific Normalized Power.
 	 * @param1: turnPwr, Normalized Power To Turn  + = ClckWise, - = CntrClckWise
-	 * @param2: turnAngle, Desired Turn Target Angle
+	 * @param2: turnAngle, Desired Turn Target Angle (boolean)
+	 * @param3: liftHldEnbl, Enable the Lift Hold Function (boolean)
 	 */
-    public AC_TurnByGyro(double turnPwr, double turnAngle) {
+    public AC_TurnByGyro(double turnPwr, double turnAngle, boolean liftHldEnbl) {
         requires(Robot.kDRIVE);
+        requires(Robot.kLIFT);
         this.turnPwr = turnPwr;
         this.turnAngle = turnAngle;
+        this.liftHldEnbl = liftHldEnbl;
     }
 
     
@@ -69,6 +74,7 @@ public class AC_TurnByGyro extends Command {
     	}
     	
     	Robot.kDRIVE.mechDrive(0, 0, turnPwr);
+    	  	    	
     }
 
     
@@ -77,6 +83,7 @@ public class AC_TurnByGyro extends Command {
     	float  turnDirctnScalar = (float)1.0;
     	float  nearTrgtScalar =   (float)1.0;
         double turnNormPwrCmnd;
+        double liftPwrCmnd;
     	
         /* TurnTmOut is a Free Running Timer */	
 
@@ -99,6 +106,19 @@ public class AC_TurnByGyro extends Command {
     	turnNormPwrCmnd = (double)turnDirctnScalar * (double)nearTrgtScalar * turnPwr;
     	
 		Robot.kDRIVE.mechDrive(0, 0, turnNormPwrCmnd);
+		
+		
+	    // Keep Lift in Elevated Position
+	    if ((this.liftHldEnbl == true) &&
+	    	(Robot.kLIFT.getMidSen() == true)) {
+	        // PwrCube not sensed by N/C Sensor
+	    	liftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
+	    } else {
+	    	// PwrCube is sensed by N/C Sensor
+	    	liftPwrCmnd = 0.0;	
+	    }
+	    
+	    Robot.kLIFT.setSpeed(liftPwrCmnd);  
     }
 
     
@@ -123,6 +143,7 @@ public class AC_TurnByGyro extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.kDRIVE.disable();
+  	    Robot.kLIFT.setSpeed(0.0);
     	TurnTmOut.stop();	
     }
 
