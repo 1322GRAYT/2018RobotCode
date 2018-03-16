@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Command Class: AC_DriveEncdrByDist - Autonomous Command to Drive Forwards
- * or Backwards by a Desired Distance (Feet) based on the Maximum of the
+ * Command Class: AC_StrafeEncdrByDist - Autonomous Command to Strafe
+ * Right or Left by a Desired Distance (Feet) based on the Maximum of the
  * Encoder Counts of two Drive Motors/Wheels.
  */
-public class AC_DriveEncdrByDist extends Command {
+public class AC_StrafeEncdrByDist extends Command {
 	
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
     private float   DsrdHdngAng;
-	private boolean DrctnIsFwd, LftHldEnbl;
+	private boolean DrctnIsRght, LftHldEnbl;
 	
 	private double EncdrActCnt;
 	private double EncdrInitRefCnt;
@@ -37,26 +37,26 @@ public class AC_DriveEncdrByDist extends Command {
  	
 	
     /**
-      *  Command Method: AC_DriveEncdrByDist - Autonomous Command to Drive Forwards
-      *  or Backwards by a Desired Distance (Feet) based on the Average of
+      *  Command Method: AC_StrafeEncdrByDist - Autonomous Command to Strafe
+      *  Right or Left by a Desired Distance (Feet) based on the Average of
       *  the Encoder Counts of two Drive Motors/Wheels.
       *  @param1: Desired Drive Distance        (float: feet)	
       *  @param2: Desired Drive Power           (float: normalized power)	
       *  @param3: Desired Deceleration Distance (float: feet)
       *  @param4: Desired Deceleration Power    (float: normalized power)
-      *  @param5: Is Desired Direction Forward? (boolean)
+      *  @param5: Is Desired Strafe To Right?   (boolean)
       *  @param6: Enable Lift Hold Function?    (boolean)
       *   */
-    public AC_DriveEncdrByDist(float   DsrdDistFeet,
-    		                   float   DsrdPriPwr,
-    		                   float   DsrdDclFeet,
-    		                   float   DsrdDclPwr,
-    		                   float   DsrdHdngAng,    		                   
-    		                   boolean DrctnIsFwd,
-    		                   boolean LftHldEnbl) {
+    public AC_StrafeEncdrByDist(float   DsrdDistFeet,
+    		                    float   DsrdPriPwr,
+    		                    float   DsrdDclFeet,
+    		                    float   DsrdDclPwr,
+    		                    float   DsrdHdngAng,    		                   
+    		                    boolean DrctnIsRght,
+    		                    boolean LftHldEnbl) {
         requires(Robot.kDRIVE);        
         requires(Robot.kLIFT);        
-        this.DrctnIsFwd = DrctnIsFwd;
+        this.DrctnIsRght = DrctnIsRght;
         this.LftHldEnbl = LftHldEnbl;
         this.DsrdDistFeet = DsrdDistFeet;
         this.DsrdPriPwr = DsrdPriPwr;
@@ -84,7 +84,7 @@ public class AC_DriveEncdrByDist extends Command {
     protected void execute() {
     	double PriPwr;
     	double DclPwr;
-        double DrvPwrCmndSgnd;
+        double StrfPwrCmndSgnd;
         double CorrPwrCmndSgnd;
         double LftPwrCmndSgnd;
         
@@ -111,36 +111,36 @@ public class AC_DriveEncdrByDist extends Command {
   	    }
     	
     	// Calculate Robot Drive Power
-    	if (DrctnIsFwd == false) {
-    		// Driving Reverse
+    	if (DrctnIsRght == false) {
+    		// Straffing Left
     		PriPwr = (double)-(DsrdPriPwr);
     	    DclPwr = (double)-(DsrdDclPwr);
     	    if (CorrPwrCmndSgnd != 0.0) {
-    	    	// When Driving Reverse, Head Correction Needs to be Reversed
+    	    	// When Straffing Left, Heading Correction Needs to be Reversed
     	    	CorrPwrCmndSgnd = -(CorrPwrCmndSgnd);   
     	    }
     	} else {
-    		// Driving Forward
+    		// Straffing Right
     		PriPwr = (double)DsrdPriPwr;
     	    DclPwr = (double)DsrdDclPwr;    		
     	}
     	    	
     	if (EncdrActCnt < EncdrTgtDclCnts)
     	  {
-          DrvPwrCmndSgnd = PriPwr;
+    		StrfPwrCmndSgnd = PriPwr;
     	  }
     	else // (EncdrActCnt >= EncdrTgtDclCnts)
     	  {
-    	  DrvPwrCmndSgnd = DclPwr;
+    		StrfPwrCmndSgnd = DclPwr;
     	  }   	 	
 	
-  	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmndSgnd, CorrPwrCmndSgnd);
+  	    Robot.kDRIVE.mechDrive(StrfPwrCmndSgnd, 0.0, CorrPwrCmndSgnd);
 
   	    
   	    // Keep Lift in Elevated Position
   	    if ((this.LftHldEnbl == true) &&
   	    	(Robot.kLIFT.getMidSen() == true) &&
-  		    (Robot.kLIFT.getHighSen() == true)) {
+  			(Robot.kLIFT.getHighSen() == true)) {
   	        // PwrCube not sensed by N/C Sensor
   	    	LftPwrCmndSgnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
   	    } else {

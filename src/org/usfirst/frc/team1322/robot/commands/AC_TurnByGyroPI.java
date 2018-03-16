@@ -2,6 +2,7 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import edu.wpi.first.wpilibj.Timer;
@@ -80,7 +81,8 @@ public class AC_TurnByGyroPI extends Command {
     			
 	    // Keep Lift in Elevated Position
 	    if ((this.LftHldEnbl == true) &&
-	    	(Robot.kLIFT.getMidSen() == true)) {
+	        (Robot.kLIFT.getMidSen() == true) &&
+			(Robot.kLIFT.getHighSen() == true)) {
 	        // PwrCube not sensed by N/C Sensor
 	    	LftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
 	    } else {
@@ -92,7 +94,8 @@ public class AC_TurnByGyroPI extends Command {
     	
 	    
   	    // Update Smart Dashboard Data
-    	updateSmartDashData();
+	    if (K_CmndCal.KCMD_b_DebugEnbl)
+    	    updateSmartDashData();
     }
 
     // Make this return true when this Command no longer needs to run execute()

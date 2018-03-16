@@ -7,12 +7,14 @@
 
 package org.usfirst.frc.team1322.robot;
 
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_RaiseToMid;
 import org.usfirst.frc.team1322.robot.commands.BM_EngageJammer;
 import org.usfirst.frc.team1322.robot.commands.BM_LiftClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_OpenClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_ShiftLift;
+import org.usfirst.frc.team1322.robot.commands.BM_StrafeAndRotate;
 import org.usfirst.frc.team1322.robot.commands.TC_RunWheelsInOut;
 import org.usfirst.frc.team1322.robot.commands.TC_RunWheelsRotate;
 import org.usfirst.frc.team1322.robot.triggers.*;
@@ -32,7 +34,8 @@ public class OI {
 			  						   AuxStick    = new XboxController(RobotMap.USB_AUX);
 	//Create Buttons
 	private Button
-					auxRightBumper,
+					auxLeftBumper,
+	                auxRightBumper,
 					auxA,
 					auxY,
 					auxStart,
@@ -50,7 +53,8 @@ public class OI {
 	
 	public OI(){		
 		//Assign Buttons
-		auxRightBumper = 	new JoystickButton(AuxStick,6);	 //RightBumper
+		auxLeftBumper = 	new JoystickButton(AuxStick, 5); //LeftBumper
+		auxRightBumper = 	new JoystickButton(AuxStick, 6); //RightBumper
 		auxA = 				new JoystickButton(AuxStick, 1); //A
 		auxY = 				new JoystickButton(AuxStick, 4); //Y
 		auxStart = 			new JoystickButton(AuxStick, 8); //Start
@@ -71,14 +75,16 @@ public class OI {
 		auxLeftStickUp.whileActive(new TC_RunWheelsInOut(false));  		//Run Block In
 		auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));		//Rotate Block 
 		auxLeftStickRight.whileActive(new TC_RunWheelsRotate(false));  	//Rotate Block
-		//auxRTrigger.toggleWhenActive(new BM_OpenClaw(false));			//Open Claw
-		//auxLTrigger.toggleWhenActive(new BM_OpenClaw(true));			//Close Claw
-		//auxA.whileActive(new BM_LiftClaw(false));						//Tilt Claw Up
-		//auxY.whileActive(new BM_LiftClaw(true));						//Tilt Claw Down
 		auxRTrigger.whileActive(new BM_OpenClaw(false));				//Open Claw
 		auxLTrigger.whileActive(new BM_OpenClaw(true));					//Close Claw
 		auxA.toggleWhenActive(new BM_LiftClaw(false));					//Tilt Claw Up
 		auxY.toggleWhenActive(new BM_LiftClaw(true));					//Tilt Claw Down
+		auxLeftBumper.toggleWhenActive(new BM_StrafeAndRotate(false,    //Sideways Inner Arc To Left
+				                                              true,
+				                                              (float)90.0,
+				                                              K_CmndCal.KCMD_Pct_SideArcRot2StrfRatTight,
+				                                              (float)-0.9,
+				                                              false));		
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
 		auxStart.toggleWhenActive(new BM_EngageJammer(true));			//Engage Lift Jammer
 		auxSelect.toggleWhenActive(new BM_EngageJammer(false));			//Disengage Lift Jammer

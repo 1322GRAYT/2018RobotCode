@@ -80,7 +80,8 @@ public class AM_StrtLeftSide_Swch1322 extends CommandGroup {
       * starting Position. */
     private boolean dtrmnOurSwitchPstn() {
     	if(fieldData.length() > 0) {
-    		return (fieldData.charAt(0) == getColorFromAlliance(alliance));
+//    		return (fieldData.charAt(0) == getColorFromAlliance(alliance));
+    		return (fieldData.charAt(0) == 'L');
     	}else {
     		return false;
     	}
@@ -93,7 +94,8 @@ public class AM_StrtLeftSide_Swch1322 extends CommandGroup {
       * starting Position.  */
     private boolean dtrmnOurScalePstn() {
     	if(fieldData.length() > 0) {
-    		return fieldData.charAt(1) == getColorFromAlliance(alliance);
+//    		return fieldData.charAt(1) == getColorFromAlliance(alliance);
+    		return (fieldData.charAt(1) == 'L');    		
     	}else {
     		return false;
     	}

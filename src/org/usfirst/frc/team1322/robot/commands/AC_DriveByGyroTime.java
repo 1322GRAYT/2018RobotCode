@@ -57,7 +57,8 @@ public class AC_DriveByGyroTime extends Command {
     	
 	    // Keep Lift in Elevated Position
 	    if ((this.liftHldEnbl == true) &&
-	    	(Robot.kLIFT.getMidSen() == true)) {
+	    	(Robot.kLIFT.getMidSen() == true) &&
+		    (Robot.kLIFT.getHighSen() == true)) {
 	        // PwrCube not sensed by N/C Sensor
 	    	LftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
 	    } else {

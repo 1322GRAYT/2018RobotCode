@@ -1,10 +1,13 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Command Class: AM_TurnByGyro
@@ -15,13 +18,15 @@ public class AC_TurnByGyro extends Command {
 	boolean liftHldEnbl;
 	private Timer TurnTmOut = new Timer();
 	private double turnPwr;
+	private double turnPwrCmnd;	
 	private double turnAngle;
 	private double RotDsrdAng;	
 	private double RotFdbkAng;
 	private double RotFdbkAngInit;	
 	private double RotAngInitDelt;
     private double RotAng70Pct;	
-    private double RotAng90Pct;	
+    private double RotAng90Pct;
+    private double LiftPwrCmnd;
 	
 	
     /** KATM_b_RotRstGyroOnInit: Enable the the Reset the Gyro at
@@ -54,7 +59,7 @@ public class AC_TurnByGyro extends Command {
     protected void initialize() {
         TurnTmOut.reset();
         TurnTmOut.start();
-        if (KATM_b_RotRstGyroOnInit == true)
+        if (K_CmndCal.KCMD_b_RotRstGyroOnInit == true)
         	Robot.kSENSORS.resetGyro();
     	Robot.kDRIVE.enable();
     	
@@ -82,8 +87,7 @@ public class AC_TurnByGyro extends Command {
     protected void execute() {
     	float  turnDirctnScalar = (float)1.0;
     	float  nearTrgtScalar =   (float)1.0;
-        double turnNormPwrCmnd;
-        double liftPwrCmnd;
+
     	
         /* TurnTmOut is a Free Running Timer */	
 
@@ -98,27 +102,32 @@ public class AC_TurnByGyro extends Command {
     	}
 
     	if(RotFdbkAng >= RotAng90Pct) {
-    		nearTrgtScalar = (float)0.25;
+    		nearTrgtScalar = (float)0.30;
     	} else if (RotFdbkAng >= RotAng70Pct) {
-    		nearTrgtScalar = (float)0.50;    		
+    		nearTrgtScalar = (float)0.60;    		
     	}
     	 
-    	turnNormPwrCmnd = (double)turnDirctnScalar * (double)nearTrgtScalar * turnPwr;
+    	turnPwrCmnd = (double)turnDirctnScalar * (double)nearTrgtScalar * turnPwr;
     	
-		Robot.kDRIVE.mechDrive(0, 0, turnNormPwrCmnd);
+		Robot.kDRIVE.mechDrive(0, 0, turnPwrCmnd);
 		
 		
 	    // Keep Lift in Elevated Position
 	    if ((this.liftHldEnbl == true) &&
-	    	(Robot.kLIFT.getMidSen() == true)) {
+	    	(Robot.kLIFT.getMidSen() == true) &&
+			(Robot.kLIFT.getHighSen() == true)) {
 	        // PwrCube not sensed by N/C Sensor
-	    	liftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
+	    	LiftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
 	    } else {
 	    	// PwrCube is sensed by N/C Sensor
-	    	liftPwrCmnd = 0.0;	
+	    	LiftPwrCmnd = 0.0;	
 	    }
 	    
-	    Robot.kLIFT.setSpeed(liftPwrCmnd);  
+	    Robot.kLIFT.setSpeed(LiftPwrCmnd);
+	    
+  	    // Update Smart Dashboard Data
+	    if (K_CmndCal.KCMD_b_DebugEnbl)
+	    	updateSmartDashData();  
     }
 
     
@@ -153,5 +162,48 @@ public class AC_TurnByGyro extends Command {
     protected void interrupted() {
     	end();
     }
+    
+    
+	// Call to Update SmartDash Data for Display
+    protected void updateSmartDashData() {
+    	double EncdrCnt[] = new double[4]; 
+
+    	//Gyro
+    	SmartDashboard.putNumber("Gyro Angle : ", RotFdbkAng);
+    	//Drive Speeds
+    	SmartDashboard.putNumberArray("Encoder Velocity : ", Robot.kSENSORS.getEncodersVelRaw());
+    	SmartDashboard.putNumberArray("Encoder Counts : ", Robot.kSENSORS.getEncodersCnt());
+    	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
+    	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
+        SmartDashboard.putNumber("Rotate Timeout Timer : ", TurnTmOut.get());
+    	SmartDashboard.putNumber("Rotate Desired Angle : ", RotDsrdAng);
+    	SmartDashboard.putNumber("Rotate Feedback Angle : ", RotFdbkAng);
+    	SmartDashboard.putNumber("Rotate Feedback Angle Init : ", RotFdbkAngInit);
+    	SmartDashboard.putNumber("Rotate Angle Init Delta : ", RotAngInitDelt);
+    	SmartDashboard.putNumber("Rotate 70 Percent Angle : ", RotAng70Pct);
+    	SmartDashboard.putNumber("Rotate 90 Percent Angle : ", RotAng90Pct);
+    	SmartDashboard.putNumber("Rotate Power Cmnd : ", turnPwr);
+    	SmartDashboard.putNumber("Rotate Power Cmnd Adjusted : ", turnPwrCmnd);
+    	SmartDashboard.putBoolean("Lift Hold Enable during Side Arc? : ", liftHldEnbl);
+    	SmartDashboard.putNumber("Lift Hold Power Cmnd : ", LiftPwrCmnd);    	
+    	
+    	EncdrCnt = Robot.kSENSORS.getEncodersCnt(); 
+    	//Update SmartDashboard
+    	System.out.print("Raw Encoder Counts Ref A : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct]);
+    	System.out.print("Raw Encoder Counts Ref B : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct]);
+    	System.out.println("Rotate Timeout Timer : " + TurnTmOut.get());
+    	System.out.println("Rotate Desired Angle : " + RotDsrdAng);
+    	System.out.println("Rotate Feedback Angle : " + RotFdbkAng);
+    	System.out.println("Rotate Feedback Angle Init : " + RotFdbkAngInit);
+    	System.out.println("Rotate Angle Init Delta : " + RotAngInitDelt);
+    	System.out.println("Rotate 70 Percent Angle : " + RotAng70Pct);
+    	System.out.println("Rotate 90 Percent Angle : " + RotAng90Pct);
+    	System.out.println("Rotate Power Cmnd : " + turnPwr);
+    	System.out.println("Rotate Power Cmnd Adjusted : " + turnPwrCmnd);
+    	System.out.println("Lift Hold Enable during Side Arc? : " + liftHldEnbl);
+    	System.out.println("Lift Hold Power Cmnd : " + LiftPwrCmnd); 
+    	
+    }
+      
     
 }
