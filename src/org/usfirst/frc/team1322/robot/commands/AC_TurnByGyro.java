@@ -29,16 +29,6 @@ public class AC_TurnByGyro extends Command {
     private double LiftPwrCmnd;
 	
 	
-    /** KATM_b_RotRstGyroOnInit: Enable the the Reset the Gyro at
-      * the initialization at each Turn by Gryo Step. */
-	public static final boolean KATM_b_RotRstGyroOnInit = false; 
-	
-	/** KATM_t_RotSafetyTmOut: Amount of Time that must elapse before
-     * a rotate command will cancel out due to taking too long to reach
-     * the target angle due to some system loss. */
-	public static final float KATM_t_RotSafetyTmOut = (float)1.0; // sec 
-	
-	
 	/**
 	 * Command Method: AM_TurnByGyro
 	 * Turn to a specific Angle at a specific Normalized Power.
@@ -141,7 +131,7 @@ public class AC_TurnByGyro extends Command {
     	    } else if ((turnPwr < (double)0.0) &&
 		    		   (RotFdbkAng <= turnAngle)) {
 		    	exitCond = true;
-	        } else if (TurnTmOut.get() >= KATM_t_RotSafetyTmOut) {
+	        } else if (TurnTmOut.get() >= K_CmndCal.KCMD_t_RotSafetyTmOut) {
 		    	exitCond = true;	    		
 	    	}
          

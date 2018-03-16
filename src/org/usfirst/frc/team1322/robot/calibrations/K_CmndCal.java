@@ -32,7 +32,12 @@ public class K_CmndCal extends Subsystem {
      * a rotate command will cancel out due to taking too long to reach
      * the target angle due to some system loss. */
 	public static final float KCMD_t_RotSafetyTmOut = (float)1.0; // sec 	 
-	 
+		
+    /** KCMD_t_RotSafetyTmOutPI: Amount of Time that must elapse before
+     * a P-I Controlled rotate command will cancel out due to taking too
+     * long to reach the target angle due to some system loss. */
+	public static final float KCMD_t_RotSafetyTmOutPI = (float)1.5; // sec 
+		 
 	/** KCMD_t_SideArcSafetyTmOut: Amount of Time that must elapse before
      * a strafe and rotate command will cancel out due to taking too long to
      * reach the target angle due to some system loss. */

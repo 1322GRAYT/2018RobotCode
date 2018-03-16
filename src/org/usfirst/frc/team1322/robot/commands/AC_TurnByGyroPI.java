@@ -27,13 +27,6 @@ public class AC_TurnByGyroPI extends Command {
 	private double  RotPstnDsrd;
 	
 
-    /** KATM_t_RotSafetyTmOutPI: Amount of Time that must elapse before
-     * a P-I Controlled rotate command will cancel out due to taking too
-     * long to reach the target angle due to some system loss. */
-	public static final float KATM_t_RotSafetyTmOutPI = (float)2.5; // sec 
-	
-	
-	
 	//  Autonomous Pattern Constructor
     /** Method: AC_TurnByGyroPI - Autonomous Command to Rotate
      * ClockWise or Counter-ClockWise to a Desired Angular
@@ -103,7 +96,7 @@ public class AC_TurnByGyroPI extends Command {
     	boolean exitCond = false;
     	
     	if ((Robot.kPID.getPIDRotTgtCondMet() == true) ||
-    		(RotateTmOut.get() >= KATM_t_RotSafetyTmOutPI)) {
+    		(RotateTmOut.get() >= K_CmndCal.KCMD_t_RotSafetyTmOutPI)) {
     		exitCond = true;
     	}
     	
