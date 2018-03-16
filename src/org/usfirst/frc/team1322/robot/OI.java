@@ -1,4 +1,5 @@
 /*----------------------------------------------------------------------------*/
+
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -50,6 +51,9 @@ public class OI {
 	private LeftStickRight auxLeftStickRight;
 	private RTrigger auxRTrigger;
 	private LTrigger auxLTrigger;
+	private DrvRTrigger drvRTrigger;
+	private DrvLTrigger drvLTrigger;
+
 	
 	public OI(){		
 		//Assign Buttons
@@ -67,6 +71,10 @@ public class OI {
 		auxLeftStickRight = 	new LeftStickRight();		 //Left Stick Left
 		auxRTrigger = 			new RTrigger();				 //Right Trigger
 		auxLTrigger = 			new LTrigger();				 //Left Trigger
+		drvRTrigger = 			new DrvRTrigger();			 //Driver Right Trigger
+		drvLTrigger = 			new DrvLTrigger();			 //Driver Left Trigger
+
+		
 		
 		//Assign Actions
 		auxDpadUp.whenActive(new BM_ShiftLift(true)); 					//Shift Lift high gear
@@ -79,15 +87,24 @@ public class OI {
 		auxLTrigger.whileActive(new BM_OpenClaw(true));					//Close Claw
 		auxA.toggleWhenActive(new BM_LiftClaw(false));					//Tilt Claw Up
 		auxY.toggleWhenActive(new BM_LiftClaw(true));					//Tilt Claw Down
-		auxLeftBumper.toggleWhenActive(new BM_StrafeAndRotate(false,    //Sideways Inner Arc To Left
-				                                              true,
-				                                              (float)90.0,
-				                                              K_CmndCal.KCMD_Pct_SideArcRot2StrfRatTight,
-				                                              (float)-0.9,
-				                                              false));		
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
 		auxStart.toggleWhenActive(new BM_EngageJammer(true));			//Engage Lift Jammer
 		auxSelect.toggleWhenActive(new BM_EngageJammer(false));			//Disengage Lift Jammer
+		drvRTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Left, Rotate Right
+				                                       true,
+				                                       (float)90.0,
+                                                       (float)K_CmndCal.KCMD_r_SideArcRotPwrRight,
+                                                       (float)-(K_CmndCal.KCMD_r_SideArcStrfPwr),
+                                                       (float)K_CmndCal.KCMD_r_SideArcDrvPwrRight,
+                                                       false));
+		drvLTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Right, Rotate Left
+                                                       false,
+                                                       (float)-90.0,
+		                                               (float)K_CmndCal.KCMD_r_SideArcRotPwrLeft,
+				                                       (float)K_CmndCal.KCMD_r_SideArcStrfPwr,
+				                                       (float)K_CmndCal.KCMD_r_SideArcDrvPwrLeft,
+                                                       false));
+		
 	}
 	
 	

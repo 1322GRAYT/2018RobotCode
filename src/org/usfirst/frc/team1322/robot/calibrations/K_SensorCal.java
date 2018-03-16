@@ -77,5 +77,8 @@ public class K_SensorCal {
    * of the robot (positive number is in-board) for the Right UltraSonic Sensor. */
   public static final float KUSS_l_DistOfstRight = (float) 2.0; // inch
 
+  /* KUSS_r_StrfToDrvRat: Ratio of Strafe to Drive Wheel Rotation to Travel the
+   * same distance due to Mecanum Drive angle and Wheel Slip. */
+  public static final float KUSS_r_StrfToDrvRat = (float) 1.0; // inch
   
 }

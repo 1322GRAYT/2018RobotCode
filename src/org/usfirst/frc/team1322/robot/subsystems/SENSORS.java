@@ -237,6 +237,24 @@ public class SENSORS extends Subsystem {
    return EncdrCnts;
    }
 
+ /** Method: cvrtDistToCntsStrf - Calculates the nominal number 
+  *  of Drive encoder counts that would be registered if
+  *  the the Drive Wheel traveled forward/backward the
+  *  desired distance given (cnts).
+  *  @param: Desired Distance (feet)
+  *  @return: Encoder Counts (cnts) */
+private double cvrtDistToCntsStrf(float DistFeet)
+  {
+  double WhlRevs;
+  double EncdrRevs;
+  double EncdrCnts;
+  
+  WhlRevs = (double)((DistFeet * 12) / K_SensorCal.KWSS_l_DistPerRevWheel);	 
+  EncdrRevs = WhlRevs * (double)K_SensorCal.KWSS_r_EncoderToWheel;	 
+  EncdrCnts = EncdrRevs * (double)K_SensorCal.KWSS_Cnt_PulsePerRevEncoder * (double)K_SensorCal.KUSS_r_StrfToDrvRat;
+  
+  return EncdrCnts;
+  } 
     
   
 	

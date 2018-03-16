@@ -2,6 +2,7 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
 
@@ -25,12 +26,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		private double  RotFdbkAng;
 		private double  RotFdbkAngInit;	
 		private double  RotAngInitDelt;
-	    private double  RotAng70Pct;	
 	    private double  RotAng90Pct;
-	    private double  RotPwrCmndPct;
+	    private double  RotPwrCmndAbs;
 	    private double  RotPwrCmnd;
 	    private double  RotPwrCmndAdj;
 	    private double  StrfPwrCmnd;
+	    private double  StrfPwrCmndLim;
+	    private double  DrvPwrCmnd;
 	    private boolean LftHldEnbl;
         private double  LftPwrCmnd;
  	
@@ -42,23 +44,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
       *  @param1: Mode is Autonomous (Not Tele-Op)?      (boolean)	
       *  @param2: Desired Rotation ClockWise?            (boolean)	
       *  @param3: Desired Rotation Position Angle        (float: degrees)	
-      *  @param4: Desired Rotate Power (Abs Value)       (float: percent)
+      *  @param4: Desired Rotate Power (Abs Value)       (float: normalized power)
       *  @param5: Desired Strafe Power (+=right,-=left)  (float: normalized power)
+      *  @param5: Drive Power Correction (+=Fwd,-=Rvrs)  (float: normalized power)
       *  @param6: Enable Lift Hold Function?             (boolean)
       *   */
     public BM_StrafeAndRotate(boolean ModeIsAuton,
     		                  boolean RotClckWise,
                               float   RotDsrdAng,
-                              float   RotPwrCmndPct,
+                              float   RotPwrCmndAbs,
                               float   StrfPwrCmnd,
+                              float   DrvPwrCmnd,
                               boolean LftHldEnbl) {
         requires(Robot.kDRIVE);        
         // requires(Robot.kLIFT);
         this.ModeIsAuton = ModeIsAuton;
         this.RotClckWise = RotClckWise;
         this.RotDsrdAng = RotDsrdAng;
-        this.RotPwrCmndPct = RotPwrCmndPct;
+        this.RotPwrCmndAbs = RotPwrCmndAbs;
         this.StrfPwrCmnd = StrfPwrCmnd;
+        this.DrvPwrCmnd = DrvPwrCmnd;
         this.LftHldEnbl =  LftHldEnbl;
     }
 
@@ -66,6 +71,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	// Called just before this Command runs the first time
     protected void initialize() {
     	double RotPwrTemp;
+    	
+    	StrfPwrCmndLim = 0.0;
     	
     	RotTmOut.reset();
     	RotTmOut.start();
@@ -76,33 +83,40 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	
     	RotFdbkAngInit = Robot.kSENSORS.getGyroAngle(); 	
     	RotAngInitDelt = RotDsrdAng - RotFdbkAngInit;
-        RotAng70Pct = RotAngInitDelt * 0.7;	
         RotAng90Pct = RotAngInitDelt * 0.9;	
         
-        RotPwrTemp = (double)Math.abs(StrfPwrCmnd * (RotPwrCmndPct/(float)100));
+        RotPwrTemp = (double)Math.abs(RotPwrCmndAbs);
         
     	if(RotPwrTemp < 0.3) {
     		System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
     		RotPwrTemp = 0.3;
     	}
-        if (this.RotClckWise == false) {
-        	// Rotation is Counter-ClockWise
-    		RotPwrTemp = -(RotPwrTemp);        	
-    	}
-        RotPwrCmnd = RotPwrTemp;        
-        
-    	Robot.kDRIVE.mechDrive(StrfPwrCmnd, 0.0, RotPwrCmnd);
+        RotPwrCmndAbs = RotPwrTemp;        
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	float  turnDirctnScalar = (float)1.0;
     	float  nearTrgtScalar =   (float)1.0;
+    	double StrfPwrCmndDelt;
     	
         /* TurnTmOut is a Free Running Timer */	
 
+    	// Rate Limit the Strafing Power
+    	StrfPwrCmndDelt = Math.abs(StrfPwrCmnd) - Math.abs(StrfPwrCmndLim);
+    	if (StrfPwrCmndDelt > K_DriveCal.KDRV_r_StrfPwrDeltIncLimMax) {
+    		StrfPwrCmndDelt = K_DriveCal.KDRV_r_StrfPwrDeltIncLimMax;
+    	}
+    	if (StrfPwrCmnd >= 0.0) {
+    	    StrfPwrCmndLim = StrfPwrCmndLim + StrfPwrCmndDelt;
+    	} else {
+    	    StrfPwrCmndLim = StrfPwrCmndLim - StrfPwrCmndDelt;    		
+    	}
+    	  
+    	
+    	// Determine Rotate Power
         RotFdbkAng = Robot.kSENSORS.getGyroAngle();
-        
+
         if (RotClckWise == false) {
     		// Turn Counter-ClockWise
     		turnDirctnScalar = (float)-1;
@@ -110,17 +124,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     		// Turn ClockWise 
     		turnDirctnScalar = (float)1;        	        	
         }
-
+        
     	if(RotFdbkAng >= RotAng90Pct) {
-    		nearTrgtScalar = (float)0.30;
-    	} else if (RotFdbkAng >= RotAng70Pct) {
-    		nearTrgtScalar = (float)0.60;    		
+    		nearTrgtScalar = (float)0.50;   		
     	}
     	RotPwrCmndAdj = (double)turnDirctnScalar * (double)nearTrgtScalar * RotPwrCmnd;
     	
-		Robot.kDRIVE.mechDrive(StrfPwrCmnd, 0, RotPwrCmndAdj);
+		Robot.kDRIVE.mechDrive(StrfPwrCmndLim, DrvPwrCmnd, RotPwrCmndAdj);
 		
 		
+		// Determine Lift Power
 	    // Keep Lift in Elevated Position
 	    if ((ModeIsAuton == false) &&
 	    	(LftHldEnbl == true) &&
@@ -190,12 +203,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	SmartDashboard.putNumber("Rotate Feedback Angle : ", RotFdbkAng);
     	SmartDashboard.putNumber("Rotate Feedback Angle Init : ", RotFdbkAngInit);
     	SmartDashboard.putNumber("Rotate Angle Init Delta : ", RotAngInitDelt);
-    	SmartDashboard.putNumber("Rotate 70 Percent Angle : ", RotAng70Pct);
     	SmartDashboard.putNumber("Rotate 90 Percent Angle : ", RotAng90Pct);
-    	SmartDashboard.putNumber("Rotate Power Cmnd Percent Of Strafe Power : ", RotPwrCmndPct);
+    	SmartDashboard.putNumber("Rotate Power Cmnd : ", RotPwrCmndAbs);
     	SmartDashboard.putNumber("Rotate Power Cmnd : ", RotPwrCmnd);
     	SmartDashboard.putNumber("Rotate Power Cmnd Adjusted : ", RotPwrCmndAdj);
     	SmartDashboard.putNumber("Strafe Power Cmnd : ", StrfPwrCmnd);
+    	SmartDashboard.putNumber("Strafe Power Cmnd : ", DrvPwrCmnd);
     	SmartDashboard.putBoolean("Lift Hold Enable during Side Arc? : ", LftHldEnbl);
     	SmartDashboard.putNumber("Lift Hold Power Cmnd : ", LftPwrCmnd);    	
     	
@@ -209,12 +222,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	System.out.println("Rotate Feedback Angle : " + RotFdbkAng);
     	System.out.println("Rotate Feedback Angle Init : " + RotFdbkAngInit);
     	System.out.println("Rotate Angle Init Delta : " + RotAngInitDelt);
-    	System.out.println("Rotate 70 Percent Angle : " + RotAng70Pct);
     	System.out.println("Rotate 90 Percent Angle : " + RotAng90Pct);
-    	System.out.println("Rotate Power Cmnd Percent Of Strafe Power : " + RotPwrCmndPct);
+    	System.out.println("Rotate Power Cmnd : " + RotPwrCmndAbs);
     	System.out.println("Rotate Power Cmnd : " + RotPwrCmnd);
     	System.out.println("Rotate Power Cmnd Adjusted : " + RotPwrCmndAdj);
     	System.out.println("Strafe Power Cmnd : " + StrfPwrCmnd);
+    	System.out.println("Strafe Power Cmnd : " + DrvPwrCmnd);
     	System.out.println("Lift Hold Enable during Side Arc? : " + LftHldEnbl);
     	System.out.println("Lift Hold Power Cmnd : " + LftPwrCmnd); 
     	
