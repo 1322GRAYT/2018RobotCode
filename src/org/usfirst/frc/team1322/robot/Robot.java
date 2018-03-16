@@ -12,6 +12,7 @@ import org.usfirst.frc.team1322.robot.commands.AM_StrtRightSide_Swch1322;
 import org.usfirst.frc.team1322.robot.commands.AM_StrtCenter_Swch1322;
 import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
 import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
+import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
@@ -34,6 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends IterativeRobot {
+	public static final AUTON kAUTON = new AUTON();
 	public static final LIFT kLIFT = new LIFT();
 	public static final CLAW kCLAW = new CLAW();
 	public static final DRIVE kDRIVE = new DRIVE();
@@ -54,17 +56,17 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Cube in Switch: Robot L-Side", new AM_StrtLeftSide_Swch1322());
+		m_chooser.addDefault("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
+		m_chooser.addObject("Cube in Switch: Robot L-Side", new AM_StrtLeftSide_Swch1322());
 		m_chooser.addObject("Cube in Switch: Robot R-Side", new AM_StrtRightSide_Swch1322());
 		m_chooser.addObject("Cube in Switch: Robot Center", new AM_StrtCenter_Swch1322());
-		m_chooser.addObject("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
 //		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1323());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
 		kPID.resetPIDRot();
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
-		CameraServer.getInstance().startAutomaticCapture();		
+		CameraServer.getInstance().startAutomaticCapture().setResolution(640, 320);
 	}
 
 	/**

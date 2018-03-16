@@ -2,6 +2,8 @@ package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
+import org.usfirst.frc.team1322.robot.commands.TM_VariableClaw;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -83,7 +85,7 @@ public class CLAW extends Subsystem {
 	 * Sets the default command so that it is ALWAYS running throughout teleop
 	 */
     public void initDefaultCommand() {
-        
+        setDefaultCommand(new TM_VariableClaw());
     }
 }
 

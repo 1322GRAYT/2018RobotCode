@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
+import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -7,8 +10,7 @@ public class USERLIB extends Subsystem {
 	
     private static final int MIN_INT =  0x8000;
     private static final int MAX_INT =  0x7FFF;	
-
-
+    
     
 	/** Method: AxisPieceWiseLinear_int - This function will return an rescaled
 	  * axis index value from a Piece-Wise Linear tunable axis of type Integer.
@@ -263,11 +265,11 @@ public class USERLIB extends Subsystem {
      * @param4: Table Y-Axis Size (int)
      * @param5: Table X-Axis Size (int)
 	 * @return: Table Look-Up Output value in engineering units (float) */	
-	float XYZ_Lookup_flt(float [][] TblArray,
-                         float AxisInpIdxY,
-                         float AxisInpIdxX,
-                         int   TblSizeY,
-                         int   TblSizeX)
+	public float XYZ_Lookup_flt(float [][] TblArray,
+                                float AxisInpIdxY,
+                                float AxisInpIdxX,
+                                int   TblSizeY,
+                                int   TblSizeX)
 	{
         int   TblSegsX;
         int   TblSegsY;
@@ -359,6 +361,82 @@ public class USERLIB extends Subsystem {
 		return TblOutVal;
 	}
 	
+	
+    /** Method: RateLimOnInc - This function will rate limit an increase
+      *  delta command based on a maximum limit threshold in delta
+      *  units per loop.
+      * @param1: Interpolation Input Value (float)
+      * @param2: Lower Reference value to Interpolate Between (float)
+      * @param3: Upper Reference value to Interpolate Between (float)
+	  * @return: Fractional Interpolated Output Value (float) */	
+	 public static double RateLimOnInc(double ValRaw,
+			                           double ValLim,
+			                           float  DeltLimMax) {
+	     double DeltUpd;          
+	     double ValLimNew;  
+	
+	     // Rate Limit the Strafing Power
+	     DeltUpd = Math.abs(ValRaw) - Math.abs(ValLim);
+	     if (DeltUpd > DeltLimMax) {
+		     DeltUpd = DeltLimMax;
+	     }
+	     if (ValRaw >= 0.0) {
+		     ValLimNew = ValLim + DeltUpd;
+	     } else {
+		     ValLimNew = ValLim - DeltUpd;    		
+	     }
+
+	     return (ValLimNew);
+     }
+
+	  
+	/** Method: dtrmnOurSwitchPstn() -  Calculate if the our color of the Switch
+      * on our Alliance Half of the field is on the near-side wrt. our robot
+      * starting Position. */
+/*
+     public static boolean dtrmnOurSwitchPstn() {
+     	  fieldData = DriverStation.getInstance().getGameSpecificMessage();
+
+     	 if(fieldData.length() > 0) {
+    		 while((fieldData.charAt(0) != 'L') && fieldData.charAt(0) != 'R' && timesRun <= timeout) {
+    		 	 value = (fieldData.charAt(0) == 'L');
+    	     }
+    	 return value;
+    	 }else {
+    	 return false;
+    	 }
+     }
+*/
+
+ 	/** Method: dtrmnOurScalsePstn() -  Calculate if the our color of the Switch
+      * on our Alliance Half of the field is on the near-side wrt. our robot
+      * starting Position. */
+/*
+     public static boolean dtrmnOurScalePstn() {
+     	fieldData = DriverStation.getInstance().getGameSpecificMessage();
+    	 
+     	 if(fieldData.length() > 0) {
+    		 int timeout = 20;
+    		 int timesRun = 0;
+    		 boolean value = false;
+    		 while((fieldData.charAt(1) != 'L') && fieldData.charAt(1) != 'R' && timesRun <= timeout) {
+    		 	 value = (fieldData.charAt(1) == 'L');
+    	     }
+    	 return value;
+    	 }else {
+    	 return false;
+    	 }
+     }
+*/
+
+     public static char getColorFromAlliance(DriverStation.Alliance alliance) {    	 
+         if(alliance.equals(DriverStation.Alliance.Red)) {
+     	     return "R".charAt(0);
+     	 }else {
+     	     return "B".charAt(0);
+     	 }
+     }
+     
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

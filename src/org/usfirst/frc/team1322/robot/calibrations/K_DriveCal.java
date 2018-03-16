@@ -17,12 +17,12 @@ public class K_DriveCal extends Subsystem {
 	/** KDRV_r_DrvPwrDeltIncLimMax: Maximum about of Delta Normalized Power
 	 * that is allowed per-loop to prevent Over-Loading the Motor Drivers
 	 * during Drive Motor Control (Brown-Out Prevention). */
-	public static final float KDRV_r_DrvPwrDeltIncLimMax = (float)0.50; // normalized power delta per loop	
+	public static final float KDRV_r_DrvPwrDeltIncLimMax = (float)0.10; // normalized power delta per loop	
 
 	/** KDRV_r_RotPwrDeltIncLimMax: Maximum about of Delta Normalized Power
 	 * that is allowed per-loop to prevent Over-Loading the Motor Drivers
 	 * during Rotate Motor Control (Brown-Out Prevention). */
-	public static final float KDRV_r_RotPwrDeltIncLimMax = (float)0.50; // normalized power delta per loop	
+	public static final float KDRV_r_RotPwrDeltIncLimMax = (float)0.10; // normalized power delta per loop	
 		
 	  
     public void initDefaultCommand() {

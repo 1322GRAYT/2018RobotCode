@@ -3,8 +3,10 @@ package org.usfirst.frc.team1322.robot.commands;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
+import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +29,7 @@ public class AC_DriveEncdrByDist extends Command {
 	private double EncdrDsrdDclCnts;	
 	private double EncdrTgtDclCnts;	
 	private double EncdrTgtRefCnt;
+	private double DrvPwrCmdLim;
 	private double DrvDsrdHdngAng;	
 	private double DrvFdbkHdngAng;
 	private double DrvHdngAngErrRaw;
@@ -77,6 +80,8 @@ public class AC_DriveEncdrByDist extends Command {
     	EncdrDsrdDclCnts = Robot.kSENSORS.getCntsToDrv(DsrdDclFeet);
     	EncdrTgtDclCnts = EncdrTgtRefCnt - EncdrDsrdDclCnts;    	
     	
+    	DrvPwrCmdLim = 0.0;
+    	
         DrvDsrdHdngAng = this.DsrdHdngAng;	
     }
 
@@ -124,7 +129,8 @@ public class AC_DriveEncdrByDist extends Command {
     		PriPwr = (double)DsrdPriPwr;
     	    DclPwr = (double)DsrdDclPwr;    		
     	}
-    	    	
+    	
+    	
     	if (EncdrActCnt < EncdrTgtDclCnts)
     	  {
           DrvPwrCmndSgnd = PriPwr;
@@ -134,7 +140,12 @@ public class AC_DriveEncdrByDist extends Command {
     	  DrvPwrCmndSgnd = DclPwr;
     	  }   	 	
 	
-  	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmndSgnd, CorrPwrCmndSgnd);
+    	
+    	DrvPwrCmdLim = USERLIB.RateLimOnInc(DrvPwrCmndSgnd,
+    			                            DrvPwrCmdLim,
+    			                            K_DriveCal.KDRV_r_DrvPwrDeltIncLimMax);
+    	
+  	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmdLim, CorrPwrCmndSgnd);
 
   	    
   	    // Keep Lift in Elevated Position

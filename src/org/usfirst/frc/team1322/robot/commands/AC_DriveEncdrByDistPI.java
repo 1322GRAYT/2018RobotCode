@@ -3,7 +3,9 @@ package org.usfirst.frc.team1322.robot.commands;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
+import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +31,7 @@ public class AC_DriveEncdrByDistPI extends Command {
 	private double EncdrDsrdDclCnts;	
 	private double EncdrTgtDclCnts;	
 	private double EncdrTgtRefCnt;
+	private double DrvPwrCmdLim;
 	
 	
 	
@@ -79,6 +82,7 @@ public class AC_DriveEncdrByDistPI extends Command {
     	Robot.kDRIVE.enable();    	
     	Robot.kPID.resetPIDRot();
     	DrvPIDEnbl = true;
+    	DrvPwrCmdLim = 0.0;
         Robot.kPID.putPIDDrvPstnTgt(DrvPIDEnbl, this.DrvHdngDsrd);
     }
 
@@ -111,8 +115,12 @@ public class AC_DriveEncdrByDistPI extends Command {
     	} else { // (EncdrActCnt >= EncdrTgtDclCnts)
     	    DrvPwrCmnd = DclPwr;
     	}
+
+    	DrvPwrCmdLim = USERLIB.RateLimOnInc(DrvPwrCmnd,
+                                            DrvPwrCmdLim,
+                                            K_DriveCal.KDRV_r_DrvPwrDeltIncLimMax);    	
     	
-  	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmnd, HdngCorrCmnd);
+  	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmdLim, HdngCorrCmnd);
 
   	  
 	    // Keep Lift in Elevated Position

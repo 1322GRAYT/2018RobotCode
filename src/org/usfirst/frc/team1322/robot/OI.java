@@ -79,17 +79,17 @@ public class OI {
 		//Assign Actions
 		auxDpadUp.whenActive(new BM_ShiftLift(true)); 					//Shift Lift high gear
 		auxDpadDown.whenActive(new BM_ShiftLift(false));				//Shift lift low gear
-		auxLeftStickDown.whileActive(new TC_RunWheelsInOut(true)); 		//Run Block Out
-		auxLeftStickUp.whileActive(new TC_RunWheelsInOut(false));  		//Run Block In
-		auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));		//Rotate Block 
-		auxLeftStickRight.whileActive(new TC_RunWheelsRotate(false));  	//Rotate Block
+		//auxLeftStickDown.whileActive(new TC_RunWheelsInOut(true)); 		//Run Block Out
+		//auxLeftStickUp.whileActive(new TC_RunWheelsInOut(false));  		//Run Block In
+		//auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));		//Rotate Block 
+		//auxLeftStickRight.whileActive(new TC_RunWheelsRotate(false));  	//Rotate Block
 		auxRTrigger.whileActive(new BM_OpenClaw(false));				//Open Claw
 		auxLTrigger.whileActive(new BM_OpenClaw(true));					//Close Claw
 		auxA.toggleWhenActive(new BM_LiftClaw(false));					//Tilt Claw Up
 		auxY.toggleWhenActive(new BM_LiftClaw(true));					//Tilt Claw Down
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
-		auxStart.toggleWhenActive(new BM_EngageJammer(true));			//Engage Lift Jammer
-		auxSelect.toggleWhenActive(new BM_EngageJammer(false));			//Disengage Lift Jammer
+		//auxStart.toggleWhenActive(new BM_EngageJammer(true));			//Engage Lift Jammer
+		//auxSelect.toggleWhenActive(new BM_EngageJammer(false));		//Disengage Lift Jammer
 		drvRTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Left, Rotate Right
 				                                       true,
 				                                       (float)90.0,

@@ -5,6 +5,7 @@ import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
+import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -103,16 +104,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         /* TurnTmOut is a Free Running Timer */	
 
     	// Rate Limit the Strafing Power
-    	StrfPwrCmndDelt = Math.abs(StrfPwrCmnd) - Math.abs(StrfPwrCmndLim);
-    	if (StrfPwrCmndDelt > K_DriveCal.KDRV_r_StrfPwrDeltIncLimMax) {
-    		StrfPwrCmndDelt = K_DriveCal.KDRV_r_StrfPwrDeltIncLimMax;
-    	}
-    	if (StrfPwrCmnd >= 0.0) {
-    	    StrfPwrCmndLim = StrfPwrCmndLim + StrfPwrCmndDelt;
-    	} else {
-    	    StrfPwrCmndLim = StrfPwrCmndLim - StrfPwrCmndDelt;    		
-    	}
-    	  
+    	StrfPwrCmndLim = USERLIB.RateLimOnInc(StrfPwrCmnd,
+    			                              StrfPwrCmndLim,
+    			                              K_DriveCal.KDRV_r_StrfPwrDeltIncLimMax);
     	
     	// Determine Rotate Power
         RotFdbkAng = Robot.kSENSORS.getGyroAngle();

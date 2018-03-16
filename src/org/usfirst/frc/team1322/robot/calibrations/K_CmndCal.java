@@ -13,7 +13,12 @@ public class K_CmndCal extends Subsystem {
 	 * Are Broadcast and Updated, if False they are turned off to maximize
 	 * thru-put for controls. */
 	 public static final boolean KCMD_b_DebugEnbl = false;
-	
+
+    /** KCMD_t_FieldDataTmOut: Maximum Safety Time Out if the Field Data
+      * is not being received from the Field Management System Properly.
+      * will assume a drive straight command.  */
+	 public static final float KCMD_t_FieldDataTmOut = (float)0.200; // sec	 
+	 
 	/** KCMD_t_PostMoveDly: Time Delay Movement prior to Starting another
 	  * Drive or Rotate Movement to allow the robot and sensors/encoders
 	  * to stabilize when critical, e.g. stable encoder reading. (sec). */
@@ -24,7 +29,7 @@ public class K_CmndCal extends Subsystem {
 	 public static final double KCMD_t_EncdrRstDly = 0.250; // sec
 
 
-		
+
     /**************************/
 	/*    Rotation Control    */
 	/**************************/	 

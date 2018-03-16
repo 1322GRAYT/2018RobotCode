@@ -2,8 +2,10 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
+import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -19,6 +21,7 @@ public class AC_TurnByGyro extends Command {
 	private Timer TurnTmOut = new Timer();
 	private double turnPwr;
 	private double turnPwrCmnd;	
+	private double turnPwrCmndLim;
 	private double turnAngle;
 	private double RotDsrdAng;	
 	private double RotFdbkAng;
@@ -52,13 +55,15 @@ public class AC_TurnByGyro extends Command {
         if (K_CmndCal.KCMD_b_RotRstGyroOnInit == true)
         	Robot.kSENSORS.resetGyro();
     	Robot.kDRIVE.enable();
+
+        turnPwrCmndLim = 0.0;
     	
     	RotDsrdAng = this.turnAngle;
     	RotFdbkAngInit = Robot.kSENSORS.getGyroAngle(); 	
     	RotAngInitDelt = RotDsrdAng - RotFdbkAngInit;
         RotAng70Pct = RotAngInitDelt * 0.7;	
         RotAng90Pct = RotAngInitDelt * 0.9;	
-    	
+        
     	if(Math.abs(turnPwr) < .3) {
     		System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
     		if (turnPwr > 0.0)  {
@@ -99,7 +104,11 @@ public class AC_TurnByGyro extends Command {
     	 
     	turnPwrCmnd = (double)turnDirctnScalar * (double)nearTrgtScalar * turnPwr;
     	
-		Robot.kDRIVE.mechDrive(0, 0, turnPwrCmnd);
+        turnPwrCmndLim = USERLIB.RateLimOnInc(turnPwrCmnd,
+        		                              turnPwrCmndLim,
+        		                              K_DriveCal.KDRV_r_RotPwrDeltIncLimMax);
+    	
+		Robot.kDRIVE.mechDrive(0, 0, turnPwrCmndLim);
 		
 		
 	    // Keep Lift in Elevated Position
