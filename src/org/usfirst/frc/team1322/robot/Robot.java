@@ -60,10 +60,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		m_chooser.addDefault("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
-		m_chooser.addObject("Cube in Switch: Robot L-Side", new AM_StrtLeftSide_Swch1322());
-		m_chooser.addObject("Cube in Switch: Robot R-Side", new AM_StrtRightSide_Swch1322());
+//		m_chooser.addObject("Cube in Switch: Robot L-Side", new AM_StrtLeftSide_Swch1322());
+//		m_chooser.addObject("Cube in Switch: Robot R-Side", new AM_StrtRightSide_Swch1322());
 		m_chooser.addObject("New Cube in Switch: Robot R-Side", new Auto_RightSide());
-		m_chooser.addObject("Cube in Switch: Robot Center", new AM_StrtCenter_Swch1322());
+//		m_chooser.addObject("Cube in Switch: Robot Center", new AM_StrtCenter_Swch1322());
 //		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1323());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();

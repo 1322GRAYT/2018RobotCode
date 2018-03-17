@@ -16,6 +16,7 @@ public class AC_CaptureFieldData extends Command {
     
 	private Timer TmOutTmr = new Timer();
 
+	
     public AC_CaptureFieldData(float TmOutThrsh) {
     	this.TmOutThrsh = TmOutThrsh;
     }
@@ -32,7 +33,8 @@ public class AC_CaptureFieldData extends Command {
 
     	// Timer is Free Running.
 
-	    fieldData = Robot.kAUTON.getFieldData();
+	    Robot.kAUTON.updateFieldData();
+    	fieldData = Robot.kAUTON.getFieldData();
 	
 	    if(fieldData.length() > 0)
 	    {
