@@ -17,6 +17,7 @@ public class AC_CaptureFieldData extends Command {
 	private Timer TmOutTmr = new Timer();
 
 	
+	
     public AC_CaptureFieldData(float TmOutThrsh) {
     	this.TmOutThrsh = TmOutThrsh;
     }

@@ -1,30 +1,32 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
-import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 
 /**
-  * Class: AC_TimeDelay - Delays the Robot for the time value supplied
-  *        as an argument by the calling Command Group (seconds).  
-  * @param: Desired Delay Time (seconds)
+  * Class: AutoSlct_RightSide - Starting with the Robot in
+ * the Far Right position, performs the Autonomous Mode
+ * Selection based on the Field Data from the FMS Data.
   */
-public class Auto_RightSide extends Command {
+public class AutoSlct_RightSide extends Command {
 
 	CommandGroup autoCommandGroup;
 	
-	public Auto_RightSide() {
+	public AutoSlct_RightSide() {
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.fieldString.charAt(0) == 'R')
+    	Robot.kAUTON.updateFieldData();
+    	//if (Robot.fieldString.charAt(0) == 'R')
+    	if (Robot.kAUTON.getFieldData().charAt(0) == 'R')    	
     	{
-    		autoCommandGroup = new AM_StrtRightSide_Swch1322();
+    		autoCommandGroup = new AM_StrtRightSide_SwchRightSide();
     	} else {
+//    		autoCommandGroup = new AM_StrtRightSide_SwchLeftSide();    		    		
     		autoCommandGroup = new AM_DriveStraightCrossLine();    		
     	}
     	autoCommandGroup.start();
@@ -32,7 +34,7 @@ public class Auto_RightSide extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    // Just Wait - Timer is Free Running.
+    // nothing to do    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -7,12 +7,11 @@
 
 package org.usfirst.frc.team1322.robot;
 
-import org.usfirst.frc.team1322.robot.commands.AM_StrtLeftSide_Swch1322;
-import org.usfirst.frc.team1322.robot.commands.AM_StrtRightSide_Swch1322;
-import org.usfirst.frc.team1322.robot.commands.AM_StrtCenter_Swch1322;
 import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_Center;
 import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
-import org.usfirst.frc.team1322.robot.commands.Auto_RightSide;
 import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
@@ -60,10 +59,9 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		m_chooser.addDefault("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
-//		m_chooser.addObject("Cube in Switch: Robot L-Side", new AM_StrtLeftSide_Swch1322());
-//		m_chooser.addObject("Cube in Switch: Robot R-Side", new AM_StrtRightSide_Swch1322());
-		m_chooser.addObject("New Cube in Switch: Robot R-Side", new Auto_RightSide());
-//		m_chooser.addObject("Cube in Switch: Robot Center", new AM_StrtCenter_Swch1322());
+		m_chooser.addObject("Start Robot L-Side", new AutoSlct_LeftSide());
+		m_chooser.addObject("Start Robot R-Side", new AutoSlct_RightSide());
+        m_chooser.addObject("Start Robot Center", new AutoSlct_Center());
 //		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1323());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
