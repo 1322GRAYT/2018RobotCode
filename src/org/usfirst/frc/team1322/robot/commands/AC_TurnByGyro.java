@@ -60,9 +60,16 @@ public class AC_TurnByGyro extends Command {
     	
     	RotDsrdAng = this.turnAngle;
     	RotFdbkAngInit = Robot.kSENSORS.getGyroAngle(); 	
-    	RotAngInitDelt = RotDsrdAng - RotFdbkAngInit;
-        RotAng70Pct = RotAngInitDelt * 0.7;	
-        RotAng90Pct = RotAngInitDelt * 0.9;	
+    	RotAngInitDelt = Math.abs(RotDsrdAng - RotFdbkAngInit);
+    	if (turnPwr >= 0.0) {
+    		// Turn ClockWise
+            RotAng70Pct = RotDsrdAng - (RotAngInitDelt * 0.3);	
+            RotAng90Pct = RotDsrdAng - (RotAngInitDelt) * 0.1;	    		
+    	} else {
+    		// Turn Counter-ClockWise
+            RotAng70Pct = RotDsrdAng + (RotAngInitDelt * 0.3);	
+            RotAng90Pct = RotDsrdAng + (RotAngInitDelt) * 0.1;	
+    	}
         
     	if(Math.abs(turnPwr) < .3) {
     		System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
@@ -80,36 +87,35 @@ public class AC_TurnByGyro extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	float  turnDirctnScalar = (float)1.0;
-    	float  nearTrgtScalar =   (float)1.0;
+    	float  nearTrgtScalar = (float)1.0;
 
     	
         /* TurnTmOut is a Free Running Timer */	
 
         RotFdbkAng = Robot.kSENSORS.getGyroAngle();
         
-    	if (turnPwr < (double)0.0) {
-    		// Turn Counter-ClockWise
-    		turnDirctnScalar = (float)-1;
+    	if (turnPwr >= 0.0) {
+    		// Turn ClockWise
+	    	if(RotFdbkAng >= RotAng90Pct) {
+	    		nearTrgtScalar = (float)0.30;
+	    	} else if (RotFdbkAng >= RotAng70Pct) {
+	    		nearTrgtScalar = (float)0.60;    		
+	    	}
     	} else {
-    		// Turn ClockWise 
-    		turnDirctnScalar = (float)1;        	
+	    	if(RotFdbkAng <= RotAng90Pct) {
+	    		nearTrgtScalar = (float)0.30;
+	    	} else if (RotFdbkAng <= RotAng70Pct) {
+	    		nearTrgtScalar = (float)0.60;    		
+	    	}    		
     	}
-
-    	if(RotFdbkAng >= RotAng90Pct) {
-    		nearTrgtScalar = (float)0.30;
-    	} else if (RotFdbkAng >= RotAng70Pct) {
-    		nearTrgtScalar = (float)0.60;    		
-    	}
-    	 
-    	turnPwrCmnd = (double)turnDirctnScalar * (double)nearTrgtScalar * turnPwr;
+    	
+    	turnPwrCmnd = (double)nearTrgtScalar * turnPwr;
     	
         turnPwrCmndLim = USERLIB.RateLimOnInc(turnPwrCmnd,
         		                              turnPwrCmndLim,
         		                              K_DriveCal.KDRV_r_RotPwrDeltIncLimMax);
     	
 		Robot.kDRIVE.mechDrive(0, 0, turnPwrCmndLim);
-		
 		
 	    // Keep Lift in Elevated Position
 	    if ((this.liftHldEnbl == true) &&
