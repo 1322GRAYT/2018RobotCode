@@ -5,7 +5,6 @@ import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
-import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -190,20 +189,8 @@ public class AC_DriveEncdrByDist extends Command {
     
 	// Called to Update SmartDash Data for Display
     protected void updateSmartDashData() {
-    	double EncdrCnt[] = new double[4]; 
 
-    	//Ultra Sonic Sensor Values
-    	SmartDashboard.putNumber("Rear US : ", Robot.kSENSORS.getRearUSDistance());
-    	SmartDashboard.putNumber("Left US : ", Robot.kSENSORS.getLeftUSDistance());
-    	SmartDashboard.putNumber("Right US : ", Robot.kSENSORS.getRightUSDistance());
-    	//Gyro
-    	SmartDashboard.putNumber("Gyro Angle : ", Robot.kSENSORS.getGyroAngle());
-    	//Drive Speeds
-    	SmartDashboard.putNumberArray("Encoder Velocity : ", Robot.kSENSORS.getEncodersVelRaw());
-    	SmartDashboard.putNumberArray("Encoder Counts : ", Robot.kSENSORS.getEncodersCnt());
-    	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
-    	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
-    	SmartDashboard.putNumber("Desired Distance : ", this.DsrdDistFeet);
+    	SmartDashboard.putNumber("Desired Distance : ", DsrdDistFeet);
         SmartDashboard.putNumber("Encoder Ref Init Count : ", EncdrInitRefCnt);
     	SmartDashboard.putNumber("Encoder Desired Travel Counts : ", EncdrDsrdTrvlCnts);
     	SmartDashboard.putNumber("Encoder Desired Decel Counts : ", EncdrDsrdDclCnts);
@@ -215,12 +202,8 @@ public class AC_DriveEncdrByDist extends Command {
     	SmartDashboard.putNumber("Drive Heading Angle Error Raw : ", DrvHdngAngErrRaw);
     	SmartDashboard.putNumber("Drive Heading Angle Error : ", DrvHdngAngErr);
     	
-    	
-    	EncdrCnt = Robot.kSENSORS.getEncodersCnt(); 
     	//Update SmartDashboard
-    	System.out.print("Raw Encoder Counts Ref A : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct]);
-    	System.out.print("Raw Encoder Counts Ref B : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct]);
-    	System.out.println("Desired Distance : " + this.DsrdDistFeet);
+    	System.out.println("Desired Distance : " + DsrdDistFeet);
     	System.out.println("Encoder Ref Avg Init Count : " + EncdrInitRefCnt);
     	System.out.println("Encoder Desired Travel Counts : " + EncdrDsrdTrvlCnts);
     	System.out.println("Encoder Desired Decel Counts : " + EncdrDsrdDclCnts);
@@ -232,7 +215,6 @@ public class AC_DriveEncdrByDist extends Command {
     	System.out.println("Drive Heading Angle Error Raw : " + DrvHdngAngErrRaw);
     	System.out.println("Drive Heading Angle Error : " + DrvHdngAngErr);
     	
-    }
-    
+    }    
     
 }

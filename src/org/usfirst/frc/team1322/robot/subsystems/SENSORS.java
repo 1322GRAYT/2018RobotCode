@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.calibrations.K_SensorCal;
-import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_SensorUpdate;
@@ -11,7 +10,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Class: SENSORS - Provides Get access to Sensors Inputs, determines 

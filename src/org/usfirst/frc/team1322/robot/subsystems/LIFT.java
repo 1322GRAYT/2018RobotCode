@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Class: LIFT - Controls the Telescopic Lift System that the Claw that
@@ -91,12 +92,14 @@ public class LIFT extends Subsystem {
      *  locks the lift in position to allow the lift to move.  */    
     public void disengageJammer() {
     	liftJam.set(true);
+    	SmartDashboard.putBoolean("Jammer Locked? ", false);
     }
     
     /** Method: engageJammer - Engage the Lift Gear Block mechanism that 
      *  locks the lift in position to prevent the lift from back-driving.  */    
     public void engageJammer() {
-    	liftJam.set(true);
+    	liftJam.set(false);
+    	SmartDashboard.putBoolean("Jammer Locked? ", true);
     }
     
     /**
@@ -110,13 +113,9 @@ public class LIFT extends Subsystem {
     	   (!lowSen.get() && upPower > 0.31) || //If Low Sensor is triggered, but power is greater than 3
     	   (!highSen.get() && upPower < -0.31)) //If High Sensor is triggered but power is less than -3
     	  {
-    	  if(speed != 0.0)disengageJammer();
-    	  lift1.set(ControlMode.PercentOutput, -upPower);
-    	  lift2.set(ControlMode.PercentOutput, -upPower);
-    	  //if(getLowGear() && speed == 0.0) engageJammer(); //Check If We are in low gear
-    	  } 	
-    	//lift1.set(ControlMode.PercentOutput, speed);
-  	  	//lift2.set(ControlMode.PercentOutput, speed);
+	    	  lift1.set(ControlMode.PercentOutput, -upPower);
+	    	  lift2.set(ControlMode.PercentOutput, -upPower);
+    	  }
     }
    
     /**

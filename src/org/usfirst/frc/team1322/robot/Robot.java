@@ -12,6 +12,7 @@ import org.usfirst.frc.team1322.robot.commands.AM_StrtRightSide_Swch1322;
 import org.usfirst.frc.team1322.robot.commands.AM_StrtCenter_Swch1322;
 import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
 import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
+import org.usfirst.frc.team1322.robot.commands.Auto_RightSide;
 import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
@@ -21,6 +22,7 @@ import org.usfirst.frc.team1322.robot.subsystems.SENSORS;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -43,6 +45,7 @@ public class Robot extends IterativeRobot {
 	public static final PID kPID = new PID();
 	public static final USERLIB kTBLLOOKUP = new USERLIB();
 	
+	public static String fieldString;
 	
 	public static OI m_oi;
 
@@ -59,6 +62,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addDefault("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
 		m_chooser.addObject("Cube in Switch: Robot L-Side", new AM_StrtLeftSide_Swch1322());
 		m_chooser.addObject("Cube in Switch: Robot R-Side", new AM_StrtRightSide_Swch1322());
+		m_chooser.addObject("New Cube in Switch: Robot R-Side", new Auto_RightSide());
 		m_chooser.addObject("Cube in Switch: Robot Center", new AM_StrtCenter_Swch1322());
 //		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1323());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -76,7 +80,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		kLIFT.engageJammer();
 	}
 
 	@Override
@@ -97,7 +101,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		kAUTON.resetFieldDataCapture();
+		kAUTON.updateAllianceColor();
+		kAUTON.updateFieldData();
+		kLIFT.disengageJammer();
+
+		fieldString = DriverStation.getInstance().getGameSpecificMessage();
 		m_autonomousCommand = m_chooser.getSelected();
+		
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -123,6 +134,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		kLIFT.disengageJammer();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

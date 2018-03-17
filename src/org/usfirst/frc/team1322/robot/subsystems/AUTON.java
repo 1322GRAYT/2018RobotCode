@@ -13,65 +13,35 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class AUTON extends Subsystem {
 	
 	// Variable Declarations
-	private static String FieldData;                 // String of Field Data
-	private static boolean SwitchDataCaptured;       // Has the Switch Data been Captured for this Autonomous Mode?
-	private static boolean ScaleDataCaptured;        // Has the Scale  Data been Captured for this Autonomous Mode?
-	private static boolean FieldDataTimedOut;        // Has the Field Data Timed Out befoe being Captured?
-	private static boolean OurSwitchLeftSide;        // Is Our Side of Our Alliance Switch on the Left Side of the Field?
-	private static boolean OurScaleLeftSide;         // Is Our Side of the Scale on the Left Side of the Field?
-	private static DriverStation.Alliance Alliance;  // Our Alliance Color	
+	private static DriverStation.Alliance AllianceColor;  // Our Alliance Color	
+	private static String  FieldData;                     // String of Field Data
+	private static boolean SwitchDataCaptured;            // Has the Switch Data been Captured for this Autonomous Mode?
+	private static boolean ScaleDataCaptured;             // Has the Scale  Data been Captured for this Autonomous Mode?
+	private static boolean FieldDataTimedOut;             // Has the Field Data Timed Out befoe being Captured?
+	private static boolean OurSwitchLeftSide;             // Is Our Side of Our Alliance Switch on the Left Side of the Field?
+	private static boolean OurScaleLeftSide;              // Is Our Side of the Scale on the Left Side of the Field?
     
 
 	public AUTON() {
 		
 	}
 	
+
+    /**********************************************/
+    /* Public Set Interface Definitions        */
+    /**********************************************/
 	
-    /**********************************************/
-    /* Public Interface Definitions        */
-    /**********************************************/
-    
-    /** Method: getFieldData - Interface that returns Field Data String  */ 
-    public String getFieldData() {
-    	return FieldData;
-    }
-
-    /** Method: getSwitchDataCaptured - Interface to return the indication
-     * that Switch Data had been successfully captured.  */ 
-    public boolean getSwitchDataCaptured() {
-    	return SwitchDataCaptured;
-    }
-
-    /** Method: getScaleDataCaptured - Interface to return the indication
-     * that Field Data had been successfully captured.  */ 
-    public boolean getScaleDataCaptured() {
-    	return ScaleDataCaptured;
+    /** Method: updateAllianceColor - Interface to refresh Alliance Color Data
+      *  from the Field Management System.  */ 
+    public void updateAllianceColor() {
+    	AllianceColor = captureAllianceColor();
     }
     
-    /** Method: getFieldDataTimedOut - Interface to return the indication
-     * that the Capture Field Data function timed out before successfully
-     * capturing the Field Data.  */ 
-    public boolean getFieldDataTimedOut() {
-    	return FieldDataTimedOut;
-    }    
-    
-    /** Method: getOurSwitchLeftSide - Interface to return the indication
-     * if Our Allicance Switch is on the Left Side.  */ 
-    public boolean getOurSwitchLeftSide() {
-    	return OurSwitchLeftSide;
+    /** Method: updateFieldData - Interface to refresh Field Data from the
+      * the Field Management System.  */ 
+    public void updateFieldData() {
+    	FieldData = captureFieldData();
     }
-
-    /** Method: getOurSwitchLeftSide - Interface to return the indication
-     * if Our Allicance Scale is on the Left Side.  */ 
-    public boolean getOurScaleLeftSide() {
-    	return OurScaleLeftSide;
-    }
-    
-    /** Method: getAlliance - Interface to return Our Alliance Color  */ 
-    public DriverStation.Alliance getAlliance() {
-    	return Alliance;
-    }
-
 
     /** Method: setSwitchDataCaptured - Interface to set the indication
      * that Switch Data had been successfully captured.  */ 
@@ -113,14 +83,79 @@ public class AUTON extends Subsystem {
     	OurSwitchLeftSide = true;
     	OurScaleLeftSide = true;
     	}
+	
+	
+    /**********************************************/
+    /* Public Get Interface Definitions        */
+    /**********************************************/
+	
+    /** Method: getAlliance - Interface to return Our Alliance Color  */ 
+    public DriverStation.Alliance getAlliance() {
+    	return AllianceColor;
+    }
+	
+    /** Method: getFieldData - Interface that returns Field Data String  */ 
+    public String getFieldData() {
+    	return FieldData;
+    }
+
+    /** Method: getSwitchDataCaptured - Interface to return the indication
+     * that Switch Data had been successfully captured.  */ 
+    public boolean getSwitchDataCaptured() {
+    	return SwitchDataCaptured;
+    }
+
+    /** Method: getScaleDataCaptured - Interface to return the indication
+     * that Field Data had been successfully captured.  */ 
+    public boolean getScaleDataCaptured() {
+    	return ScaleDataCaptured;
+    }
     
+    /** Method: getFieldDataTimedOut - Interface to return the indication
+     * that the Capture Field Data function timed out before successfully
+     * capturing the Field Data.  */ 
+    public boolean getFieldDataTimedOut() {
+    	return FieldDataTimedOut;
+    }    
+    
+    /** Method: getOurSwitchLeftSide - Interface to return the indication
+     * if Our Allicance Switch is on the Left Side.  */ 
+    public boolean getOurSwitchLeftSide() {
+    	return OurSwitchLeftSide;
+    }
+
+    /** Method: getOurSwitchLeftSide - Interface to return the indication
+     * if Our Allicance Scale is on the Left Side.  */ 
+    public boolean getOurScaleLeftSide() {
+    	return OurScaleLeftSide;
+    }
+        
    
     /**********************************************/
     /* Internal Class Methods                     */
     /**********************************************/
-   
      
-     
+    /** Method: captureAllianceColor - Capture Alliance Color
+      * from the Field Management System.  */ 
+    private static DriverStation.Alliance captureAllianceColor() {
+    	DriverStation.Alliance allianceColor;
+    	
+    	allianceColor = DriverStation.getInstance().getAlliance();
+    	
+    	return allianceColor;
+    }
+
+    /** Method: captureFieldData - Capture Field Data from
+      * from the Field Management System.  */ 
+    private static String captureFieldData() {
+    	String fieldData; 
+
+    	fieldData = DriverStation.getInstance().getGameSpecificMessage();
+
+    	return fieldData;
+    }    
+    
+    
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

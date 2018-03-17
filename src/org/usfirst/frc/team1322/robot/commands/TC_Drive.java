@@ -45,8 +45,9 @@ public class TC_Drive extends Command {
     	
     	RotPwrCmndRaw = OI.DriverStick.getX(Hand.kRight);
     	RotPwrCmndLim = USERLIB.RateLimOnInc(RotPwrCmndRaw, RotPwrCmndLim, K_DriveCal.KDRV_r_RotPwrDeltIncLimMax);
-    	
-    	Robot.kDRIVE.mechDrive(StrfPwrCmndLim, DrvPwrCmndLim, RotPwrCmndLim);
+
+//    	Robot.kDRIVE.mechDrive(StrfPwrCmndLim, DrvPwrCmndLim, RotPwrCmndLim);
+    	Robot.kDRIVE.mechDrive(StrfPwrCmndRaw, DrvPwrCmndRaw, RotPwrCmndRaw);
     }
 
     // Make this return true when this Command no longer needs to run execute()

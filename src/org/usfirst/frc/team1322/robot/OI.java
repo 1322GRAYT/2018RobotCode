@@ -88,8 +88,8 @@ public class OI {
 		auxA.toggleWhenActive(new BM_LiftClaw(false));					//Tilt Claw Up
 		auxY.toggleWhenActive(new BM_LiftClaw(true));					//Tilt Claw Down
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
-		//auxStart.toggleWhenActive(new BM_EngageJammer(true));			//Engage Lift Jammer
-		//auxSelect.toggleWhenActive(new BM_EngageJammer(false));		//Disengage Lift Jammer
+		auxStart.whenPressed(new BM_EngageJammer(true));			    //Engage Lift Jammer
+		auxSelect.whenPressed(new BM_EngageJammer(false));		        //Disengage Lift Jammer
 		drvRTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Left, Rotate Right
 				                                       true,
 				                                       (float)90.0,
@@ -106,8 +106,6 @@ public class OI {
                                                        false));
 		
 	}
-	
-	
 	
 	
 }

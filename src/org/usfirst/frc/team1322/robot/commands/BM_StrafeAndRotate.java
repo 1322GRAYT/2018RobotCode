@@ -182,15 +182,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     
 	// Call to Update SmartDash Data for Display
     protected void updateSmartDashData() {
-    	double EncdrCnt[] = new double[4]; 
-
-    	//Gyro
-    	SmartDashboard.putNumber("Gyro Angle : ", RotFdbkAng);
-    	//Drive Speeds
-    	SmartDashboard.putNumberArray("Encoder Velocity : ", Robot.kSENSORS.getEncodersVelRaw());
-    	SmartDashboard.putNumberArray("Encoder Counts : ", Robot.kSENSORS.getEncodersCnt());
-    	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
-    	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
     	SmartDashboard.putBoolean("Rotate ClockWise? : ", RotClckWise);
         SmartDashboard.putNumber("Rotate Timeout Timer : ", RotTmOut.get());
     	SmartDashboard.putNumber("Rotate Desired Angle : ", RotDsrdAng);
@@ -206,10 +197,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	SmartDashboard.putBoolean("Lift Hold Enable during Side Arc? : ", LftHldEnbl);
     	SmartDashboard.putNumber("Lift Hold Power Cmnd : ", LftPwrCmnd);    	
     	
-    	EncdrCnt = Robot.kSENSORS.getEncodersCnt(); 
-    	//Update SmartDashboard
-    	System.out.print("Raw Encoder Counts Ref A : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct]);
-    	System.out.print("Raw Encoder Counts Ref B : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct]);
     	System.out.println("Rotate ClockWise? : " + RotClckWise);
     	System.out.println("Rotate Timeout Timer : " + RotTmOut.get());
     	System.out.println("Rotate Desired Angle : " + RotDsrdAng);

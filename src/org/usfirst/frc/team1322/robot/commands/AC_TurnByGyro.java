@@ -165,15 +165,6 @@ public class AC_TurnByGyro extends Command {
     
 	// Call to Update SmartDash Data for Display
     protected void updateSmartDashData() {
-    	double EncdrCnt[] = new double[4]; 
-
-    	//Gyro
-    	SmartDashboard.putNumber("Gyro Angle : ", RotFdbkAng);
-    	//Drive Speeds
-    	SmartDashboard.putNumberArray("Encoder Velocity : ", Robot.kSENSORS.getEncodersVelRaw());
-    	SmartDashboard.putNumberArray("Encoder Counts : ", Robot.kSENSORS.getEncodersCnt());
-    	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
-    	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
         SmartDashboard.putNumber("Rotate Timeout Timer : ", TurnTmOut.get());
     	SmartDashboard.putNumber("Rotate Desired Angle : ", RotDsrdAng);
     	SmartDashboard.putNumber("Rotate Feedback Angle : ", RotFdbkAng);
@@ -186,10 +177,6 @@ public class AC_TurnByGyro extends Command {
     	SmartDashboard.putBoolean("Lift Hold Enable during Side Arc? : ", liftHldEnbl);
     	SmartDashboard.putNumber("Lift Hold Power Cmnd : ", LiftPwrCmnd);    	
     	
-    	EncdrCnt = Robot.kSENSORS.getEncodersCnt(); 
-    	//Update SmartDashboard
-    	System.out.print("Raw Encoder Counts Ref A : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct]);
-    	System.out.print("Raw Encoder Counts Ref B : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct]);
     	System.out.println("Rotate Timeout Timer : " + TurnTmOut.get());
     	System.out.println("Rotate Desired Angle : " + RotDsrdAng);
     	System.out.println("Rotate Feedback Angle : " + RotFdbkAng);
@@ -200,9 +187,7 @@ public class AC_TurnByGyro extends Command {
     	System.out.println("Rotate Power Cmnd : " + turnPwr);
     	System.out.println("Rotate Power Cmnd Adjusted : " + turnPwrCmnd);
     	System.out.println("Lift Hold Enable during Side Arc? : " + liftHldEnbl);
-    	System.out.println("Lift Hold Power Cmnd : " + LiftPwrCmnd); 
-    	
+    	System.out.println("Lift Hold Power Cmnd : " + LiftPwrCmnd);     	
     }
-      
     
 }

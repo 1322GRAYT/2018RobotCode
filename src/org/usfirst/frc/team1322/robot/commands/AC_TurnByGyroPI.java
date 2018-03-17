@@ -121,14 +121,9 @@ public class AC_TurnByGyroPI extends Command {
 	// Called to Update SmartDash Data for Display
     protected void updateSmartDashData() {
 
-    	//Gyro
-    	SmartDashboard.putNumber("Gyro Angle : ", Robot.kSENSORS.getGyroAngle());
     	//Drive Speeds
-    	SmartDashboard.putNumberArray("Encoder Velocity : ", Robot.kSENSORS.getEncodersVelRaw());
-    	SmartDashboard.putNumberArray("Encoder Counts : ", Robot.kSENSORS.getEncodersCnt());
-    	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
-    	SmartDashboard.putBoolean("Dsrd Rotate Clockwise : ", this.RotClckWise);
-    	SmartDashboard.putNumber("Desired Rotate Position : ", this.RotPstnDsrd);
+    	SmartDashboard.putBoolean("Dsrd Rotate Clockwise : ", RotClckWise);
+    	SmartDashboard.putNumber("Desired Rotate Position : ", RotPstnDsrd);
     	SmartDashboard.putNumber("Actual Rotate Position : ", Robot.kPID.getPIDRotPstnAct());
     	SmartDashboard.putNumber("Position Error: ", Robot.kPID.getPIDRotPstnErr());
     	SmartDashboard.putNumber("Position Error Accumulator : ", Robot.kPID.getPIDRotErrAccum());
@@ -139,9 +134,8 @@ public class AC_TurnByGyroPI extends Command {
     	SmartDashboard.putBoolean("PID Target Condition Met : ", Robot.kPID.getPIDRotTgtCondMet());    	
     	SmartDashboard.putNumber("PID Time Out : ", RotateTmOut.get());
     	
-    	//Update SmartDashboard
-    	System.out.println("Dsrd Rotate Clockwise : " + this.RotClckWise);
-    	System.out.println("Desired Rotate Position : " + this.RotPstnDsrd);
+    	System.out.println("Dsrd Rotate Clockwise : " + RotClckWise);
+    	System.out.println("Desired Rotate Position : " + RotPstnDsrd);
     	System.out.println("Actual Rotate Position : " + Robot.kPID.getPIDRotPstnAct());
     	System.out.println("Position Error: " + Robot.kPID.getPIDRotPstnErr());
     	System.out.println("Position Error Accumulator : " + Robot.kPID.getPIDRotErrAccum());

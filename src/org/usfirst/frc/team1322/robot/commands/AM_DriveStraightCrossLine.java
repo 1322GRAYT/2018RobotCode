@@ -11,5 +11,6 @@ public class AM_DriveStraightCrossLine extends CommandGroup {
     	addSequential(new AC_ResetGyro());
     	addSequential(new BM_RaiseToMid());
     	addSequential(new AC_DriveEncdrByDist((float)12.0, (float)0.8, (float)1.5, (float)0.20, (float)0.0, true, true));    	
+    	System.out.println("drive straight");
     }
 }

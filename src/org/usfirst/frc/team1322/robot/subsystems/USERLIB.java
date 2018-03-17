@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
-import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
+import org.usfirst.frc.team1322.robot.Robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -393,42 +393,56 @@ public class USERLIB extends Subsystem {
 	/** Method: dtrmnOurSwitchPstn() -  Calculate if the our color of the Switch
       * on our Alliance Half of the field is on the near-side wrt. our robot
       * starting Position. */
-/*
-     public static boolean dtrmnOurSwitchPstn() {
-     	  fieldData = DriverStation.getInstance().getGameSpecificMessage();
 
-     	 if(fieldData.length() > 0) {
-    		 while((fieldData.charAt(0) != 'L') && fieldData.charAt(0) != 'R' && timesRun <= timeout) {
-    		 	 value = (fieldData.charAt(0) == 'L');
-    	     }
-    	 return value;
-    	 }else {
-    	 return false;
-    	 }
+	 public static boolean dtrmnOurSwitchPstn() {
+         String fieldData;     // String of Field Data
+         
+    	  fieldData = DriverStation.getInstance().getGameSpecificMessage();  	 
+   	 
+	      if(fieldData.length() > 0) {
+	    	  if (fieldData.charAt(0) == 'L') {
+                  Robot.kAUTON.setSwitchDataCaptured(true);
+                  Robot.kAUTON.setOurSwitchLeftSide(true);
+	    	  } else if (fieldData.charAt(0) == 'R') {
+                  Robot.kAUTON.setSwitchDataCaptured(true);
+                  Robot.kAUTON.setOurSwitchLeftSide(false);
+	    	  } else {
+                  Robot.kAUTON.setSwitchDataCaptured(false);
+	    	  }
+	      }else {
+              Robot.kAUTON.setSwitchDataCaptured(false);
+	      }
+	      
+	      return Robot.kAUTON.getSwitchDataCaptured();    	 
      }
-*/
 
- 	/** Method: dtrmnOurScalsePstn() -  Calculate if the our color of the Switch
-      * on our Alliance Half of the field is on the near-side wrt. our robot
-      * starting Position. */
-/*
+ 	/** Method: dtrmnOurScalePstn() -  Calculate if the our color of the Switch
+      * on our Alliance Half of the field is on the left-side of our robot
+      * starting Position.
+      * *@return:  Was Scale position Captured? */
      public static boolean dtrmnOurScalePstn() {
-     	fieldData = DriverStation.getInstance().getGameSpecificMessage();
-    	 
-     	 if(fieldData.length() > 0) {
-    		 int timeout = 20;
-    		 int timesRun = 0;
-    		 boolean value = false;
-    		 while((fieldData.charAt(1) != 'L') && fieldData.charAt(1) != 'R' && timesRun <= timeout) {
-    		 	 value = (fieldData.charAt(1) == 'L');
-    	     }
-    	 return value;
-    	 }else {
-    	 return false;
-    	 }
+          String fieldData;     // String of Field Data
+          
+    	  fieldData = DriverStation.getInstance().getGameSpecificMessage();  	 
+    	   	 
+	      if(fieldData.length() > 0) {
+	    	  if (fieldData.charAt(1) == 'L') {
+                  Robot.kAUTON.setScaleDataCaptured(true);
+                  Robot.kAUTON.setOurScaleLeftSide(true);
+	    	  } else if (fieldData.charAt(1) == 'R') {
+                  Robot.kAUTON.setScaleDataCaptured(true);
+                  Robot.kAUTON.setOurScaleLeftSide(false);
+	    	  } else {
+                  Robot.kAUTON.setScaleDataCaptured(false);
+	    	  }
+	      }else {
+              Robot.kAUTON.setScaleDataCaptured(false);
+	      }
+	      
+	      return Robot.kAUTON.getScaleDataCaptured();    	 
      }
-*/
 
+  	/** Method: getColorFromAlliance() -  Determine the color of our Alliance. */
      public static char getColorFromAlliance(DriverStation.Alliance alliance) {    	 
          if(alliance.equals(DriverStation.Alliance.Red)) {
      	     return "R".charAt(0);
@@ -437,7 +451,8 @@ public class USERLIB extends Subsystem {
      	 }
      }
      
-	
+
+     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
