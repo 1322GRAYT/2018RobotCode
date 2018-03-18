@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
+import org.usfirst.frc.team1322.robot.Robot;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -155,8 +157,68 @@ public class AUTON extends Subsystem {
     	return fieldData;
     }    
     
+	/** Method: dtrmnOurSwitchPstn() -  Determine Our Alliance Switch Position
+	  * from the Field Management System Data  A boolean is returned to indicate
+	  * Valid data has been captured.  A getOurSwitchLeftSide() is then used
+	  * to retrieve the Switch information.
+     * @return: SwchPosDataVld: Is The Switch Position Data Valid? (boolean) 
+     * */
+	 public static boolean dtrmnOurSwitchPstn() {
+  	 
+	      if(FieldData.length() > 0) {
+	    	  if (FieldData.charAt(0) == 'L') {
+	    		 SwitchDataCaptured = true;
+                 OurSwitchLeftSide = true;
+	    	  } else if (FieldData.charAt(0) == 'R') {
+	    		  SwitchDataCaptured = true;
+                 OurSwitchLeftSide = false;
+	    	  } else {
+	    		  SwitchDataCaptured = false;
+	    	  }
+	      }else {
+	    	  SwitchDataCaptured = false;
+	      }
+	      
+	      return SwitchDataCaptured;    	 
+    }
+
+	/** Method: dtrmnOurScalePstn() -  Determine Our Alliance Switch Position
+	  * from the Field Management System Data  A boolean is returned to indicate
+	  * Valid data has been captured.  A getOurScaleLeftSide() is then used
+	  * to retrieve the Scale information.
+     * @return: SclPosDataVld: Is The Scale Position Data Valid? (boolean)
+     */
+    public static boolean dtrmnOurScalePstn() {
+   	   	 
+	      if(FieldData.length() > 0) {
+	    	  if (FieldData.charAt(1) == 'L') {
+	    		  ScaleDataCaptured = true;
+                  OurScaleLeftSide = true;
+	    	  } else if (FieldData.charAt(1) == 'R') {
+	    		  ScaleDataCaptured = true;
+                  OurScaleLeftSide = false;
+	    	  } else {
+	    		  ScaleDataCaptured = false;
+	    	  }
+	      }else {
+	    	  ScaleDataCaptured = false;
+	      }
+	      
+	      return ScaleDataCaptured;    	 
+    }
+
     
-	
+ 	/** Method: getColorFromAlliance() -  Determine the color of our Alliance. */
+    public static char getColorFromAlliance() {    	 
+        if(AllianceColor.equals(DriverStation.Alliance.Red)) {
+    	     return "R".charAt(0);
+    	 }else {
+    	     return "B".charAt(0);
+    	 }
+    }
+
+    
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

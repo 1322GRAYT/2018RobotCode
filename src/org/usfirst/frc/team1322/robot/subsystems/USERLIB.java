@@ -1,8 +1,5 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
-import org.usfirst.frc.team1322.robot.Robot;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 
@@ -372,83 +369,68 @@ public class USERLIB extends Subsystem {
 	 public static double RateLimOnInc(double ValRaw,
 			                           double ValLim,
 			                           float  DeltLimMax) {
-	     double DeltUpd;          
-	     double ValLimNew;  
-	
-	     // Rate Limit the Strafing Power
+	     double DeltUpd;
+	     double ValTemp;
+	     double ValLimNew;
+	     boolean LimPosInc;
+	     boolean LimNegInc;
+	     	     
+
+	     // Determine if PosIncLim, NegIncLim, or No Limiting
+	     if (ValLim >= 0) {
+	    	 // ValLim is Positive
+	    	 if (ValRaw < 0.0) {
+	    		 // Sign Flip to Negative
+	    		 ValLim = 0.0;
+	    		 LimNegInc = true;
+	    		 LimPosInc = false;
+	    	 } else if (ValRaw > ValLim) {
+	    		 LimPosInc = true;
+	    		 LimNegInc = false;
+	         } else {
+	    		 // (ValRaw <= ValLim) && ValRaw is not Negative
+	    		 // Decreasing Positive, No Limit Applied.
+	    		 LimPosInc = false;
+	    		 LimNegInc = false;
+	    	 }
+	     } else {
+	    	 //  ValLim is Negative
+	    	 if (ValRaw > 0.0) {
+	    		 // Sign Flip to Positive
+	    		 ValLim = 0.0;
+	    		 LimPosInc = true;	    		 
+	    		 LimNegInc = false;
+	    	 } else if (ValRaw < ValLim) {
+	    		 LimNegInc = true;	    		 
+	    		 LimPosInc = false;
+	    	 } else {
+	    		 // (ValRaw >= ValLim) && ValRaw is not Positive
+	    		 // Increasing Negative, No Limit Applied.
+	    		 LimPosInc = false;
+	    		 LimNegInc = false;
+	    	 }	    	 
+	     }
+
+	     
+	     // Apply Delta Limit
 	     DeltUpd = Math.abs(ValRaw) - Math.abs(ValLim);
 	     if (DeltUpd > DeltLimMax) {
 		     DeltUpd = DeltLimMax;
 	     }
-	     if (ValRaw >= 0.0) {
-		     ValLimNew = ValLim + DeltUpd;
+	     
+	     // Add Delta to Last Loop Value
+         if (LimPosInc == true) {
+    	     ValTemp = ValLim + DeltUpd;        
+         } else if (LimNegInc == true) {
+    	     ValTemp = ValLim - DeltUpd;              	 
 	     } else {
-		     ValLimNew = ValLim - DeltUpd;    		
+	    	 // No Limiting;
+	    	 ValTemp = ValRaw;
 	     }
-
-	     return (ValLimNew);
-     }
-
-	  
-	/** Method: dtrmnOurSwitchPstn() -  Calculate if the our color of the Switch
-      * on our Alliance Half of the field is on the near-side wrt. our robot
-      * starting Position. */
-
-	 public static boolean dtrmnOurSwitchPstn() {
-         String fieldData;     // String of Field Data
          
-    	  fieldData = DriverStation.getInstance().getGameSpecificMessage();  	 
-   	 
-	      if(fieldData.length() > 0) {
-	    	  if (fieldData.charAt(0) == 'L') {
-                  Robot.kAUTON.setSwitchDataCaptured(true);
-                  Robot.kAUTON.setOurSwitchLeftSide(true);
-	    	  } else if (fieldData.charAt(0) == 'R') {
-                  Robot.kAUTON.setSwitchDataCaptured(true);
-                  Robot.kAUTON.setOurSwitchLeftSide(false);
-	    	  } else {
-                  Robot.kAUTON.setSwitchDataCaptured(false);
-	    	  }
-	      }else {
-              Robot.kAUTON.setSwitchDataCaptured(false);
-	      }
-	      
-	      return Robot.kAUTON.getSwitchDataCaptured();    	 
-     }
+         ValLimNew = ValTemp; 
 
- 	/** Method: dtrmnOurScalePstn() -  Calculate if the our color of the Switch
-      * on our Alliance Half of the field is on the left-side of our robot
-      * starting Position.
-      * *@return:  Was Scale position Captured? */
-     public static boolean dtrmnOurScalePstn() {
-          String fieldData;     // String of Field Data
-          
-    	  fieldData = DriverStation.getInstance().getGameSpecificMessage();  	 
-    	   	 
-	      if(fieldData.length() > 0) {
-	    	  if (fieldData.charAt(1) == 'L') {
-                  Robot.kAUTON.setScaleDataCaptured(true);
-                  Robot.kAUTON.setOurScaleLeftSide(true);
-	    	  } else if (fieldData.charAt(1) == 'R') {
-                  Robot.kAUTON.setScaleDataCaptured(true);
-                  Robot.kAUTON.setOurScaleLeftSide(false);
-	    	  } else {
-                  Robot.kAUTON.setScaleDataCaptured(false);
-	    	  }
-	      }else {
-              Robot.kAUTON.setScaleDataCaptured(false);
-	      }
-	      
-	      return Robot.kAUTON.getScaleDataCaptured();    	 
-     }
-
-  	/** Method: getColorFromAlliance() -  Determine the color of our Alliance. */
-     public static char getColorFromAlliance(DriverStation.Alliance alliance) {    	 
-         if(alliance.equals(DriverStation.Alliance.Red)) {
-     	     return "R".charAt(0);
-     	 }else {
-     	     return "B".charAt(0);
-     	 }
+	     return ValLimNew;
      }
      
 
