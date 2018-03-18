@@ -97,15 +97,15 @@ public class AC_TurnByGyro extends Command {
     	if (turnPwr >= 0.0) {
     		// Turn ClockWise
 	    	if(RotFdbkAng >= RotAng90Pct) {
-	    		nearTrgtScalar = (float)0.30;
+	    		nearTrgtScalar = (float)0.25;
 	    	} else if (RotFdbkAng >= RotAng70Pct) {
-	    		nearTrgtScalar = (float)0.60;    		
+	    		nearTrgtScalar = (float)0.75;    		
 	    	}
     	} else {
 	    	if(RotFdbkAng <= RotAng90Pct) {
-	    		nearTrgtScalar = (float)0.30;
+	    		nearTrgtScalar = (float)0.25;
 	    	} else if (RotFdbkAng <= RotAng70Pct) {
-	    		nearTrgtScalar = (float)0.60;    		
+	    		nearTrgtScalar = (float)0.75;    		
 	    	}    		
     	}
     	
