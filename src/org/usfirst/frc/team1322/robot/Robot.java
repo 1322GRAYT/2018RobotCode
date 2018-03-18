@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Start Robot L-Side", new AutoSlct_LeftSide());
 		m_chooser.addObject("Start Robot R-Side", new AutoSlct_RightSide());
         m_chooser.addObject("Start Robot Center", new AutoSlct_Center());
-//		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1323());
+		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1322());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
