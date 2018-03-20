@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
-import org.usfirst.frc.team1322.robot.Robot;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -163,7 +161,7 @@ public class AUTON extends Subsystem {
 	  * to retrieve the Switch information.
      * @return: SwchPosDataVld: Is The Switch Position Data Valid? (boolean) 
      * */
-	 public static boolean dtrmnOurSwitchPstn() {
+	 public boolean dtrmnOurSwitchPstn() {
   	 
 	      if(FieldData.length() > 0) {
 	    	  if (FieldData.charAt(0) == 'L') {
@@ -188,7 +186,7 @@ public class AUTON extends Subsystem {
 	  * to retrieve the Scale information.
      * @return: SclPosDataVld: Is The Scale Position Data Valid? (boolean)
      */
-    public static boolean dtrmnOurScalePstn() {
+    public boolean dtrmnOurScalePstn() {
    	   	 
 	      if(FieldData.length() > 0) {
 	    	  if (FieldData.charAt(1) == 'L') {

@@ -13,12 +13,12 @@ public class AC_ShootInBlock extends TimedCommand {
         super(timeout);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.kCLAW);
+        requires(Robot.kSHOOTER);
     }
 
  // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kCLAW.clawSpeedInOut(-1);
+    	Robot.kSHOOTER.clawSpeedInOut(-1);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,7 +27,7 @@ public class AC_ShootInBlock extends TimedCommand {
 
     // Called once after timeout
     protected void end() {
-    	Robot.kCLAW.clawSpeedInOut(0);
+    	Robot.kSHOOTER.clawSpeedInOut(0);
     }
 
     // Called when another command which requires one or more of the same

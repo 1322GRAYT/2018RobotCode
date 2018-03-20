@@ -11,9 +11,11 @@ import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_Center;
+import org.usfirst.frc.team1322.robot.commands.NewAutoSlct_RightSide;
 import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
 import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
+import org.usfirst.frc.team1322.robot.subsystems.SHOOTER;
 import org.usfirst.frc.team1322.robot.subsystems.DRIVE;
 import org.usfirst.frc.team1322.robot.subsystems.LIFT;
 import org.usfirst.frc.team1322.robot.subsystems.PID;
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static final AUTON kAUTON = new AUTON();
 	public static final LIFT kLIFT = new LIFT();
 	public static final CLAW kCLAW = new CLAW();
+	public static final SHOOTER kSHOOTER = new SHOOTER();
 	public static final DRIVE kDRIVE = new DRIVE();
 	public static final SENSORS kSENSORS = new SENSORS();
 	public static final PID kPID = new PID();
@@ -62,6 +65,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Start Robot L-Side", new AutoSlct_LeftSide());
 		m_chooser.addObject("Start Robot R-Side", new AutoSlct_RightSide());
         m_chooser.addObject("Start Robot Center", new AutoSlct_Center());
+		m_chooser.addObject("New: Start Robot R-Side", new NewAutoSlct_RightSide());
 		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1322());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();

@@ -12,7 +12,7 @@ public class TC_RunWheelsRotate extends Command {
 	boolean side;
 	
     public TC_RunWheelsRotate(boolean side) {
-        requires(Robot.kCLAW);
+        requires(Robot.kSHOOTER);
         //pass side to global
         this.side = side;
     }
@@ -25,9 +25,9 @@ public class TC_RunWheelsRotate extends Command {
     protected void execute() {
     	//if side, rotate block at power 1, else, rotate block at power -1
     	if(side) {
-    		Robot.kCLAW.clawSpeedRotate(1);
+    		Robot.kSHOOTER.clawSpeedRotate(1);
     	}else {
-    		Robot.kCLAW.clawSpeedRotate(-1);
+    		Robot.kSHOOTER.clawSpeedRotate(-1);
     	}
     }
 
@@ -39,7 +39,7 @@ public class TC_RunWheelsRotate extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	//Set claw speed to 0
-    	Robot.kCLAW.clawSpeedInOut(0);
+    	Robot.kSHOOTER.clawSpeedInOut(0);
     }
 
     // Called when another command which requires one or more of the same
