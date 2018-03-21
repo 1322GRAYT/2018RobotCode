@@ -12,6 +12,7 @@ import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_RaiseToMid;
 import org.usfirst.frc.team1322.robot.commands.BM_EngageJammer;
+import org.usfirst.frc.team1322.robot.commands.BM_DisengageJammer;
 import org.usfirst.frc.team1322.robot.commands.BM_LiftClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_OpenClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_ShiftLift;
@@ -88,8 +89,8 @@ public class OI {
 		auxA.toggleWhenActive(new BM_LiftClaw(false));					//Tilt Claw Up
 		auxY.toggleWhenActive(new BM_LiftClaw(true));					//Tilt Claw Down
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
-		auxStart.whenPressed(new BM_EngageJammer(true));			    //Engage Lift Jammer
-		auxSelect.whenPressed(new BM_EngageJammer(false));		        //Disengage Lift Jammer
+		auxStart.whenPressed(new BM_EngageJammer());			        //Engage Lift Jammer
+		auxSelect.whenPressed(new BM_DisengageJammer());		        //Disengage Lift Jammer
 		drvRTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Left, Rotate Right
 				                                       true,
 				                                       (float)90.0,
