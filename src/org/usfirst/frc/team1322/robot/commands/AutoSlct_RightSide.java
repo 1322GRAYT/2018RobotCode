@@ -21,13 +21,12 @@ public class AutoSlct_RightSide extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.kAUTON.updateFieldData();
-    	//if (Robot.fieldString.charAt(0) == 'R')
     	if (Robot.kAUTON.getFieldData().charAt(0) == 'R')    	
     	{
     		autoCommandGroup = new AM_StrtRightSide_SwchRightSide();
     	} else {
-//    		autoCommandGroup = new AM_StrtRightSide_SwchLeftSide();    		    		
-    		autoCommandGroup = new AM_DriveStraightCrossLine();    		
+//    		autoCommandGroup = new AM_DriveStraightCrossLine();    		
+    		autoCommandGroup = new AM_StrtRightSide_SwchLeftSide();    		    		
     	}
     	autoCommandGroup.start();
     }

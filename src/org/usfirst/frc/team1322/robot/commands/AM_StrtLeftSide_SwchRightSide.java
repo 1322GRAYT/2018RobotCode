@@ -2,7 +2,6 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal; 
 
 /**
@@ -19,7 +18,6 @@ public class AM_StrtLeftSide_SwchRightSide extends CommandGroup {
      * and Robot puts PwrCube in the Right-Side Switch.
 	 */	
     public AM_StrtLeftSide_SwchRightSide() {   	
-    	addSequential(new AC_CaptureFieldData(K_CmndCal.KCMD_t_FieldDataTmOut));
     	addSequential(new AC_ResetGyro());
     	addSequential(new BM_RaiseToMid());
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));

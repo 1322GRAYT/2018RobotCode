@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TM_VariableClaw extends Command {
 
     public TM_VariableClaw() {
-        requires(Robot.kCLAW);
         requires(Robot.kSHOOTER);
     }
 

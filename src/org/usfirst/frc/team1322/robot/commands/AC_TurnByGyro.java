@@ -51,8 +51,9 @@ public class AC_TurnByGyro extends Command {
     protected void initialize() {
         TurnTmOut.reset();
         TurnTmOut.start();
-        if (K_CmndCal.KCMD_b_RotRstGyroOnInit == true)
+        if (K_CmndCal.KCMD_b_RotRstGyroOnInit == true) {
         	Robot.kSENSORS.resetGyro();
+        }
     	Robot.kDRIVE.enable();
 
         turnPwrCmndLim = 0.0;

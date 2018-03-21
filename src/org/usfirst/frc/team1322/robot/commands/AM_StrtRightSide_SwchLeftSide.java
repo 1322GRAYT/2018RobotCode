@@ -18,7 +18,6 @@ public class AM_StrtRightSide_SwchLeftSide extends CommandGroup {
      * and Robot puts PwrCube in the Left-Side Switch.
 	 */	
     public AM_StrtRightSide_SwchLeftSide() {
-    	addSequential(new AC_CaptureFieldData(K_CmndCal.KCMD_t_FieldDataTmOut));
     	addSequential(new AC_ResetGyro());
     	addSequential(new BM_RaiseToMid());
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));

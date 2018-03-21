@@ -11,7 +11,7 @@ import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_Center;
-import org.usfirst.frc.team1322.robot.commands.NewAutoSlct_RightSide;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide_Validated;
 import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
 import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
@@ -47,8 +47,6 @@ public class Robot extends IterativeRobot {
 	public static final PID kPID = new PID();
 	public static final USERLIB kTBLLOOKUP = new USERLIB();
 	
-	public static String fieldString;
-	
 	public static OI m_oi;
 
 	Command m_autonomousCommand;
@@ -65,7 +63,7 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Start Robot L-Side", new AutoSlct_LeftSide());
 		m_chooser.addObject("Start Robot R-Side", new AutoSlct_RightSide());
         m_chooser.addObject("Start Robot Center", new AutoSlct_Center());
-		m_chooser.addObject("New: Start Robot R-Side", new NewAutoSlct_RightSide());
+		m_chooser.addObject("New: Start Robot R-Side", new AutoSlct_RightSide_Validated());
 		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1322());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
@@ -108,7 +106,6 @@ public class Robot extends IterativeRobot {
 		kAUTON.updateFieldData();
 		kLIFT.disengageJammer();
 
-		fieldString = DriverStation.getInstance().getGameSpecificMessage();
 		m_autonomousCommand = m_chooser.getSelected();
 		
 

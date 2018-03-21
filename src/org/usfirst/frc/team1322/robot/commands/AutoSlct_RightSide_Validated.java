@@ -2,7 +2,6 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
-import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -13,13 +12,13 @@ import edu.wpi.first.wpilibj.Timer;
  * the Far Right position, performs the Autonomous Mode
  * Selection based on the Field Data from the FMS Data.
   */
-public class NewAutoSlct_RightSide extends Command {
+public class AutoSlct_RightSide_Validated extends Command {
 	private Timer TmOutTmr = new Timer();
     private boolean AutoSlctCmplt;
 
 	CommandGroup autoCommandGroup;
 	
-	public NewAutoSlct_RightSide() {
+	public AutoSlct_RightSide_Validated() {
     }
 
     // Called just before this Command runs the first time

@@ -20,7 +20,6 @@ public class AM_StrtLeftSide_Swch_PICntrl extends CommandGroup {
 	 */	
     public AM_StrtLeftSide_Swch_PICntrl() {
 
-    	addSequential(new AC_CaptureFieldData(K_CmndCal.KCMD_t_FieldDataTmOut));
     	addSequential(new AC_ResetGyro());    	
     	addSequential(new BM_RaiseToMid());
 	  	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
