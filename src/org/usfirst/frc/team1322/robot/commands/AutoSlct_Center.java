@@ -23,9 +23,9 @@ public class AutoSlct_Center extends Command {
     	Robot.kAUTON.updateFieldData();
     	if (Robot.kAUTON.getFieldData().charAt(0) == 'L')    	
     	{
-    		autoCommandGroup = new AM_StrtCenter_SwchLeftSide();
+    		autoCommandGroup = new AM_StrtCenter_SwLeft();
     	} else {
-    		autoCommandGroup = new AM_StrtCenter_SwchRightSide();    		    		
+    		autoCommandGroup = new AM_StrtCenter_SwRight();    		    		
     	}
     	autoCommandGroup.start();
     }

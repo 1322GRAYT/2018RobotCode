@@ -23,10 +23,10 @@ public class AutoSlct_RightSide extends Command {
     	Robot.kAUTON.updateFieldData();
     	if (Robot.kAUTON.getFieldData().charAt(0) == 'R')    	
     	{
-    		autoCommandGroup = new AM_StrtRightSide_SwchRightSide();
+    		autoCommandGroup = new AM_StrtRightSide_SwRight();
     	} else {
 //    		autoCommandGroup = new AM_DriveStraightCrossLine();    		
-    		autoCommandGroup = new AM_StrtRightSide_SwchLeftSide();    		    		
+    		autoCommandGroup = new AM_StrtRightSide_SwLeft();    		    		
     	}
     	autoCommandGroup.start();
     }

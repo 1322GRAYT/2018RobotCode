@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
-  * Class: AutoSlct_RightSide - Starting with the Robot in
- * the Far Right position, performs the Autonomous Mode
+  * Class: AutoSlct_Center - Starting with the Robot in
+ * the Center position, performs the Autonomous Mode
  * Selection based on the Field Data from the FMS Data.
   */
-public class AutoSlct_RightSide_Validated extends Command {
+public class AutoSlct_Center_Validated extends Command {
 	private Timer TmOutTmr = new Timer();
     private boolean AutoSlctCmplt;
 
 	CommandGroup autoCommandGroup;
 	
-	public AutoSlct_RightSide_Validated() {
+	public AutoSlct_Center_Validated() {
     }
 
     // Called just before this Command runs the first time
@@ -53,19 +53,13 @@ public class AutoSlct_RightSide_Validated extends Command {
     	TmOutTmr.stop();    	
     	   	
     	if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-    		(Robot.kAUTON.getOurSwitchLeftSide() == false)) {
+    		(Robot.kAUTON.getOurSwitchLeftSide() == true)) {
+    		// Our Alliance Switch is On Left Side
+    		autoCommandGroup = new AM_StrtCenter_SwLeft();    		    		
+    	} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
+        		   (Robot.kAUTON.getOurSwitchLeftSide() == false)) {
     		// Our Alliance Switch is On Right Side
-    		autoCommandGroup = new AM_StrtRightSide_SwRight();    		    		
-    	} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-        		   (Robot.kAUTON.getOurSwitchLeftSide() == true) &&
-        		   (Robot.kAUTON.getOurScaleLeftSide() == false)) {
-    		// Our Alliance Switch is On Left Side, Scale Right Side
-    		autoCommandGroup = new AM_StrtRightSide_SwLeftSclRight();
-    	} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-     		       (Robot.kAUTON.getOurSwitchLeftSide() == true) &&
-     		       (Robot.kAUTON.getOurScaleLeftSide() == true)) {
- 		// Our Alliance Switch and Scale are both On Left Side
- 		    autoCommandGroup = new AM_StrtRightSide_SwLeftSclLeft();
+    		autoCommandGroup = new AM_StrtCenter_SwRight();
     	} else {
     		/* Timed-Out or Interrupted before Valid Data Detected,
     		   Just drive straight across the line. */

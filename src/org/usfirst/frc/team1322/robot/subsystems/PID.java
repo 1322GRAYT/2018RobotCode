@@ -381,7 +381,7 @@ public class PID extends Subsystem {
     		 CondTmr.reset(); 
     	 }
     	 else {
-    		 /* Do Nothing - Insided Target DB - Free-Running Timer */
+    		 /* Do Nothing - Inside Target DB - Free-Running Timer */
     	 }
 
     	 

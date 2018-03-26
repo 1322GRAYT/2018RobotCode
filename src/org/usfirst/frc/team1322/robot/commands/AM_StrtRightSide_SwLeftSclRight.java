@@ -5,19 +5,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal; 
 
 /**
- * Command Group Class: AM_StrtRightSide_SwchLeftSide
+ * Command Group Class: AM_StrtRightSide_SwLeftSclRight
  * Autonomous Control Group Pattern: Robot Starts Right-Side
- * and Robot puts PwrCube in the Left-Side Switch.
+ * and Robot puts PwrCube in the Left-Side Scale.
  */
-public class AM_StrtRightSide_SwchLeftSide extends CommandGroup {
+public class AM_StrtRightSide_SwLeftSclRight extends CommandGroup {
 	
 
 	/**
-	 * Command Group Method: AM_StrtRightSide_SwchLeftSide
+	 * Command Group Method: AM_StrtRightSide_SwLeftSclRight
      * Autonomous Control Group Pattern: Robot Starts Right-Side
-     * and Robot puts PwrCube in the Left-Side Switch.
+     * and Robot puts PwrCube in the Right-Side Scale.
 	 */	
-    public AM_StrtRightSide_SwchLeftSide() {
+    public AM_StrtRightSide_SwLeftSclRight() {
     	addSequential(new AC_ResetGyro());
     	addSequential(new BM_RaiseToMid());
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
@@ -38,7 +38,7 @@ public class AM_StrtRightSide_SwchLeftSide extends CommandGroup {
 	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
 	    addSequential(new BM_LiftClaw(false));
 	    addSequential(new BM_OpenClaw(true));
-    	System.out.println("StrtRightSide_SwchLeftSide");
+    	System.out.println("StrtRightSide_SwLeftSclRight");
     }   
 
 }
