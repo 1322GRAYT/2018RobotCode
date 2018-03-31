@@ -19,7 +19,7 @@ public class AM_StrtRightSide_SwLeftSclRight extends CommandGroup {
 	 */	
     public AM_StrtRightSide_SwLeftSclRight() {
     	addSequential(new AC_ResetGyro());
-    	addSequential(new BM_RaiseToMid());
+    	addSequential(new BM_LiftRaiseToMid());
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	addSequential(new AC_DriveEncdrByDist((float)26.5, (float)0.9, (float)1.0, (float)0.10, (float)1.77, true, true));
@@ -27,10 +27,10 @@ public class AM_StrtRightSide_SwLeftSclRight extends CommandGroup {
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
      	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
 	    addSequential(new BM_ClawTiltDown());
-	    addSequential(new BM_RaiseToHigh());
+	    addSequential(new BM_LiftRaiseToHigh());
     	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.7, (float)1.0, (float)0.10, (float)-90.0, true, true));
 	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.5, true));
-	    addSequential(new BM_RaiseToHigh());
+	    addSequential(new BM_LiftRaiseToHigh());
 	    addSequential(new BM_ClawOpen());
 		addSequential(new AC_TimeDelay((float)0.5));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	

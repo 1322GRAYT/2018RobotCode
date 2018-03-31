@@ -5,47 +5,38 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Class: BM_LiftRaiseToHigh Command - Raise the Lift System up to the high
+ * position sensor.
  */
-public class BM_ShiftLift extends Command {
+public class BM_LiftRaiseToHigh extends Command {
 
-	private boolean finished = false;
-	private boolean low = false;
-
-    public BM_ShiftLift(boolean low) {
-        //pass along low to global
-    	this.low = low;
-    	//Set the required subsystem
+    public BM_LiftRaiseToHigh() {
         requires(Robot.kLIFT);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kLIFT.setSpeed(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//if low, shift low, else, shift to high gear
-    	if(low) {
-    		Robot.kLIFT.shiftLiftHigh();
-    	}else{
-    		Robot.kLIFT.shiftLiftLow();
-    	}	
-    	//set global finished to true
-    	finished = true;
+      // Continue at Speed 1
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return finished;
+        return !Robot.kLIFT.getHighSen();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.kLIFT.setSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

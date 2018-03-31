@@ -10,14 +10,15 @@ package org.usfirst.frc.team1322.robot;
 
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
-import org.usfirst.frc.team1322.robot.commands.BM_RaiseToMid;
+import org.usfirst.frc.team1322.robot.commands.BM_LiftShiftHiGr;
+import org.usfirst.frc.team1322.robot.commands.BM_LiftShiftLoGr;
+import org.usfirst.frc.team1322.robot.commands.BM_LiftRaiseToMid;
 import org.usfirst.frc.team1322.robot.commands.BM_JammerEngage;
 import org.usfirst.frc.team1322.robot.commands.BM_JammerDisengage;
 import org.usfirst.frc.team1322.robot.commands.BM_ClawTiltDown;
 import org.usfirst.frc.team1322.robot.commands.BM_ClawTiltUp;
 import org.usfirst.frc.team1322.robot.commands.BM_ClawClose;
 import org.usfirst.frc.team1322.robot.commands.BM_ClawOpen;
-import org.usfirst.frc.team1322.robot.commands.BM_ShiftLift;
 import org.usfirst.frc.team1322.robot.commands.BM_StrafeAndRotate;
 import org.usfirst.frc.team1322.robot.commands.BM_ShootInBlock;
 import org.usfirst.frc.team1322.robot.commands.BM_ShootOutBlock;
@@ -81,8 +82,8 @@ public class OI {
 		
 		
 		//Assign Actions
-		auxDpadUp.whenActive(new BM_ShiftLift(true)); 					//Shift Lift high gear
-		auxDpadDown.whenActive(new BM_ShiftLift(false));				//Shift lift low gear
+		auxDpadUp.whenActive(new BM_LiftShiftHiGr()); 					//Shift Lift high gear
+		auxDpadDown.whenActive(new BM_LiftShiftLoGr());				    //Shift lift low gear
 		//auxLeftStickDown.whileActive(new BM_ShootOutBlock()); 		//Run Block Out
 		//auxLeftStickUp.whileActive(new BM_ShootInBlock());  		    //Run Block In
 		//auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));	//Rotate Block 
@@ -91,7 +92,7 @@ public class OI {
 		auxLTrigger.whileActive(new BM_ClawOpen());					    //Open Claw
 		auxA.toggleWhenActive(new BM_ClawTiltDown());					//Tilt Claw Down
 		auxY.toggleWhenActive(new BM_ClawTiltUp());					    //Tilt Claw Up
-		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
+		auxRightBumper.toggleWhenActive(new BM_LiftRaiseToMid());		//Jump To Mid
 		auxStart.whenPressed(new BM_JammerEngage());			        //Engage Lift Jammer
 		auxSelect.whenPressed(new BM_JammerDisengage());		        //Disengage Lift Jammer
 		drvRTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Left, Rotate Right

@@ -21,14 +21,14 @@ public class AM_StrtLeftSide_Swch_PICntrl extends CommandGroup {
     public AM_StrtLeftSide_Swch_PICntrl() {
 
     	addSequential(new AC_ResetGyro());    	
-    	addSequential(new BM_RaiseToMid());
+    	addSequential(new BM_LiftRaiseToMid());
 	  	addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	if((Robot.kAUTON.getScaleDataCaptured() == true) &&
     	   (Robot.kAUTON.getOurSwitchLeftSide() == true)) { // Our Alliance Switch is on Left Side
         	addSequential(new AC_DriveEncdrByDistPI((float)12.0, (float)0.8, (float)1.5, (float)0.20, (float)0.0, true, true));
         	addSequential(new AC_TurnByGyroPI(true, 90.0, true)); // Turn CW to 90 deg
-        	addSequential(new BM_RaiseToMid());
+        	addSequential(new BM_LiftRaiseToMid());
     	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
     	    addSequential(new BM_ClawTiltDown());
     	    addSequential(new BM_ClawOpen());
@@ -55,7 +55,7 @@ public class AM_StrtLeftSide_Swch_PICntrl extends CommandGroup {
     	    addSequential(new AC_TurnByGyroPI(true, 270.0, true)); // Turn CW to 270 deg
     		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
         	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
-        	addSequential(new BM_RaiseToMid());
+        	addSequential(new BM_LiftRaiseToMid());
     	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
     	    addSequential(new BM_ClawTiltDown());
     	    addSequential(new BM_ClawOpen());

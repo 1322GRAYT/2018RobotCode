@@ -10,7 +10,7 @@ public class AM_DropBlockTimed extends CommandGroup {
 	
     public AM_DropBlockTimed() {
     	addSequential(new AC_DriveByGyroTime(0, 0.4, 1, false));
-    	addSequential(new BM_RaiseToMid());
+    	addSequential(new BM_LiftRaiseToMid());
     	addSequential(new AC_TurnByGyro(-0.8, -270, true));
     	addSequential(new AC_DriveByGyroTime(0, 0.8, 2, true));
     	addSequential(new AC_TurnByGyro(0.8, 0, true));
