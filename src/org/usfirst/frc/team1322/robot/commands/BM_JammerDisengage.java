@@ -6,22 +6,22 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
-  *  Command Class: BM_EngageJammer
-  *  Engage Pneumatic Lift Jammer to mechanically lock lift
-  *  system so the Lift Motors are no longer required to hold
-  *  robot in lifted position.
-  */
-public class BM_EngageJammer extends Command {
+  *  Command Class: BM_JammerDisengage
+  *  Disengage Pneumatic Lift Jammer to release the mechanically lock
+  *  of the lift system so the Lift Motors can raise and lower the lift
+  *  and claw of the robot.
+ */
+public class BM_JammerDisengage extends Command {
 	private Timer time = new Timer();
-	
+ 
 	
 	/**
-	  *  Command Method Constructor: BM_EngageJammer
-	  *  Engage Pneumatic Lift Jammer to mechanically lock lift
-	  *  system so the Lift Motors are no longer required to hold
-	  *  robot in lifted position.
-	  */	
-    public BM_EngageJammer() {
+	  *  Command Method Constructor: BM_JammerDisengage
+      *  Disengage Pneumatic Lift Jammer to release the mechanically lock
+      *  of the lift system so the Lift Motors can raise and lower the lift
+      *  and claw of the robot.
+	  */		
+	public BM_JammerDisengage() {
         requires(Robot.kLIFT);        
     }
 
@@ -33,7 +33,7 @@ public class BM_EngageJammer extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.kLIFT.engageJammer();
+        Robot.kLIFT.disengageJammer();
     }
 
     // Make this return true when this Command no longer needs to run execute()
