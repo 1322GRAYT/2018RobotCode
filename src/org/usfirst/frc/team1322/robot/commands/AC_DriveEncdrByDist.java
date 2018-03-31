@@ -7,6 +7,7 @@ import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Encoder Counts of two Drive Motors/Wheels.
  */
 public class AC_DriveEncdrByDist extends Command {
+	private Timer TmOutTmr = new Timer();
 	
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
@@ -23,6 +25,8 @@ public class AC_DriveEncdrByDist extends Command {
 	private boolean DrctnIsFwd, LftHldEnbl;
 	
 	private double EncdrActCnt;
+	private double EncdrActCntPrev;	
+	private double EncdrActCntDelt;	
 	private double EncdrInitRefCnt;
 	private double EncdrDsrdTrvlCnts;	
 	private double EncdrDsrdDclCnts;	
@@ -70,8 +74,10 @@ public class AC_DriveEncdrByDist extends Command {
 
 	// Called just before this Command runs the first time
     protected void initialize() {
+    	TmOutTmr.reset();
     	
     	EncdrInitRefCnt = Robot.kSENSORS.getRefEncoderCnt();
+    	EncdrActCntPrev = EncdrInitRefCnt;
     	
     	EncdrDsrdTrvlCnts = Robot.kSENSORS.getCntsToDrv(DsrdDistFeet);
     	EncdrTgtRefCnt = EncdrInitRefCnt + EncdrDsrdTrvlCnts;
@@ -79,6 +85,7 @@ public class AC_DriveEncdrByDist extends Command {
     	EncdrDsrdDclCnts = Robot.kSENSORS.getCntsToDrv(DsrdDclFeet);
     	EncdrTgtDclCnts = EncdrTgtRefCnt - EncdrDsrdDclCnts;    	
     	
+    	EncdrActCntDelt = 0.0;
     	DrvPwrCmdLim = 0.0;
     	
         DrvDsrdHdngAng = this.DsrdHdngAng;	
@@ -91,6 +98,7 @@ public class AC_DriveEncdrByDist extends Command {
         double DrvPwrCmndSgnd;
         double CorrPwrCmndSgnd;
         double LftPwrCmndSgnd;
+        double MinDeltCntThrsh;
         
     	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();
     	DrvFdbkHdngAng = Robot.kSENSORS.getGyroAngle(); 	    	
@@ -129,7 +137,6 @@ public class AC_DriveEncdrByDist extends Command {
     	    DclPwr = (double)DsrdDclPwr;    		
     	}
     	
-    	
     	if (EncdrActCnt < EncdrTgtDclCnts)
     	  {
           DrvPwrCmndSgnd = PriPwr;
@@ -146,7 +153,20 @@ public class AC_DriveEncdrByDist extends Command {
     	
   	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmdLim, CorrPwrCmndSgnd);
 
-  	    
+    	EncdrActCntDelt = EncdrActCnt - EncdrActCntPrev;
+    	MinDeltCntThrsh = K_CmndCal.KCMD_v_DrvSafetyEncrSpdMin * K_CmndCal.KCMD_t_LoopRt;
+  	    if (EncdrActCntDelt >= MinDeltCntThrsh) {
+  	    	// Forward Movement Detected, Reset Timer
+  	    	TmOutTmr.reset();  	    	
+  	    }
+  	    else {
+  	    	// No Movement Detected, Reset Timer
+  	    	TmOutTmr.start();
+  	    }
+
+    	EncdrActCntPrev = EncdrActCnt;
+    	
+    	
   	    // Keep Lift in Elevated Position
   	    if ((this.LftHldEnbl == true) &&
   	    	(Robot.kLIFT.getMidSen() == true) &&
@@ -168,14 +188,23 @@ public class AC_DriveEncdrByDist extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	boolean EndCondMet = false;
     	double CurrEncdrCnt;
     	
     	CurrEncdrCnt = Robot.kSENSORS.getRefEncoderCnt();
-    	return (CurrEncdrCnt >= EncdrTgtRefCnt);
+    	
+    	if ((CurrEncdrCnt >= EncdrTgtRefCnt) ||
+    		(TmOutTmr.get() >= K_CmndCal.KCMD_t_DrvSafetyTmOut))
+    	{
+    		EndCondMet = true;
+    	}
+    		
+    	return (EndCondMet == true);
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	TmOutTmr.stop();
   	    Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
   	    Robot.kLIFT.setSpeed(0.0);
     }

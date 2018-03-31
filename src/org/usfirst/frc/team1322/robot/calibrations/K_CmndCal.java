@@ -13,12 +13,21 @@ public class K_CmndCal extends Subsystem {
 	 * Are Broadcast and Updated, if False they are turned off to maximize
 	 * thru-put for controls. */
 	 public static final boolean KCMD_b_DebugEnbl = false;
+	 
+	/** KCMD_t_LoopRt: Execution Loop Rate Period for the Autonomous
+	 * Command Group Controls (sec). */
+	 public static final float KCMD_t_LoopRt = (float)0.020; // sec 
 
     /** KCMD_t_FieldDataTmOut: Maximum Safety Time Out if the Field Data
       * is not being received from the Field Management System Properly.
       * will assume a drive straight command.  */
-	 public static final float KCMD_t_FieldDataTmOut = (float)0.200; // sec	 
+	 public static final float KCMD_t_FieldDataTmOut = (float)0.200; // sec	  
 	 
+
+	    /**************************/
+		/*    Drive Motor Control    */
+		/**************************/	 
+	
 	/** KCMD_t_PostMoveDly: Time Delay Movement prior to Starting another
 	  * Drive or Rotate Movement to allow the robot and sensors/encoders
 	  * to stabilize when critical, e.g. stable encoder reading. (sec). */
@@ -27,8 +36,22 @@ public class K_CmndCal extends Subsystem {
 	/** KCMD_t_EncdrRstDly: Time Delay after Encoder Counter Reset to
 	  * allow for CAN latency of the request . (sec). */
 	 public static final double KCMD_t_EncdrRstDly = 0.250; // sec
-
-
+	 
+	/** KCMD_t_RotSafetyTmOut: Min Wheel Motor Encoder Speed that
+	 * must be maintained before the Drive by Encoder counts
+	 * Safety Time-Out Timer starts counting up to time out of the
+	 * Drive Command because an obstacle must of been encountered
+	 * that is impeded progress. (counts/sec) */
+	public static final float KCMD_v_DrvSafetyEncrSpdMin = (float)1000; // counts/sec 	 
+		
+    /** KCMD_t_DrvSafetyTmOut: Amount of Time that must elapse with 
+     * the Drive Encoder Count Velocity below a threshold before
+     * the the Drive by Encoder Counts command will time out because
+     * it is not making significant progress (Hit and Obstacle and has
+     * traction, give up). */
+	public static final float KCMD_t_DrvSafetyTmOut = (float)1.0; // sec 
+	 
+	 
 
     /**************************/
 	/*    Rotation Control    */
