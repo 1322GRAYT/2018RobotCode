@@ -15,8 +15,8 @@ public class AM_DropBlockTimed extends CommandGroup {
     	addSequential(new AC_DriveByGyroTime(0, 0.8, 2, true));
     	addSequential(new AC_TurnByGyro(0.8, 0, true));
     	addSequential(new AC_DriveByGyroTime(0, 0.8, 1, true));
-    	addSequential(new BM_LiftClaw(true));
+    	addSequential(new BM_TiltDownClaw());
     	addSequential(new BM_OpenClaw(true));
-    	addSequential(new BM_LiftClaw(false));
+    	addSequential(new BM_TiltUpClaw());
     }
 }

@@ -5,16 +5,21 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+  *  Command Class: BM_TiltDownClaw
+  *  Trigger pneumatic pistons to tilt Claw Down to Horizontal
+  *  Position for dropping block and also to clear hanging
+  *  mechanism when raising Claw to high position.
  */
-public class BM_LiftClaw extends Command {
-	
+public class BM_TiltDownClaw extends Command {
 	private boolean finished = false;
-	private boolean lift;
 
-    public BM_LiftClaw(boolean lift) {
-    	//Set global this.lift
-        this.lift = lift;
+  /**	
+	*  Command Method: BM_TiltDownClaw
+	*  Trigger pneumatic pistons to tilt Claw Down to Horizontal
+	*  Position for dropping block and also to clear hanging
+	*  mechanism when raising Claw to high position.
+    */
+    public BM_TiltDownClaw() {
         //Set the required subsystem
         requires(Robot.kCLAW);
     }
@@ -25,13 +30,7 @@ public class BM_LiftClaw extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//If lift, tilt claw up, else, tilt it down
-    	if(lift) {
-    		Robot.kCLAW.liftClaw();
-    	}else {
-    		Robot.kCLAW.lowerClaw();
-    	}
-    	//tell everyone we finished
+    	Robot.kCLAW.lowerClaw();
     	finished = true;
     }
 
