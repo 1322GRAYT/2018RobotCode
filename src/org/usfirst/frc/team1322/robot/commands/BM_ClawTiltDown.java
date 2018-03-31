@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
   *  Position for dropping block and also to clear hanging
   *  mechanism when raising Claw to high position.
  */
-public class BM_TiltDownClaw extends Command {
+public class BM_ClawTiltDown extends Command {
 	private boolean finished = false;
 
   /**	
@@ -19,7 +19,7 @@ public class BM_TiltDownClaw extends Command {
 	*  Position for dropping block and also to clear hanging
 	*  mechanism when raising Claw to high position.
     */
-    public BM_TiltDownClaw() {
+    public BM_ClawTiltDown() {
         //Set the required subsystem
         requires(Robot.kCLAW);
     }

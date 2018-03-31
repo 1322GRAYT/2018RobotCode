@@ -36,8 +36,8 @@ public class AM_StrtRightSide_SwLeft extends CommandGroup {
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
     	addSequential(new BM_RaiseToMid());
 	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
-	    addSequential(new BM_TiltDownClaw());
-	    addSequential(new BM_OpenClaw(true));
+	    addSequential(new BM_ClawTiltDown());
+	    addSequential(new BM_ClawOpen());
     	System.out.println("StrtRightSide_SwchLeftSide");
     }   
 

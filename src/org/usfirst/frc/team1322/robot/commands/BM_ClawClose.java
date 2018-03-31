@@ -5,22 +5,20 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *  Command Class: BM_TiltUpClaw
-*  Trigger pneumatic pistons to tilt Claw Up to Vertical
-*  Position for retaining block and keeping claws out of
-*  the way when empty.
-*/
-public class BM_TiltUpClaw extends Command {	
+ *  Command Class: BM_ClawClose
+ *  Trigger pneumatic pistons to close Claw to grab
+ *  PwrCube.
+ */
+public class BM_ClawClose extends Command {
 	private boolean finished = false;
-
-  /**	
-	*  Command Method: BM_TiltUpClaw
-	*  Trigger pneumatic pistons to tilt Claw Up to Vertical
-	*  Position for retaining block and keeping claws out of
-	*  the way when empty.
-    */	
-    public BM_TiltUpClaw() {
-        //Set the required subsystem
+	
+   /**
+	*  Command Method: BM_ClawClose
+	*  Trigger pneumatic pistons to close Claw to grab
+    *  PwrCube.
+	*/
+    public BM_ClawClose() {
+    	//Set the required subsystem
         requires(Robot.kCLAW);
     }
 
@@ -30,7 +28,7 @@ public class BM_TiltUpClaw extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.kCLAW.liftClaw();
+        Robot.kCLAW.closeClaw();
     	finished = true;
     }
 

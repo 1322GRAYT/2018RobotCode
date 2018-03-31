@@ -13,9 +13,10 @@ import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_RaiseToMid;
 import org.usfirst.frc.team1322.robot.commands.BM_EngageJammer;
 import org.usfirst.frc.team1322.robot.commands.BM_DisengageJammer;
-import org.usfirst.frc.team1322.robot.commands.BM_TiltDownClaw;
-import org.usfirst.frc.team1322.robot.commands.BM_TiltUpClaw;
-import org.usfirst.frc.team1322.robot.commands.BM_OpenClaw;
+import org.usfirst.frc.team1322.robot.commands.BM_ClawTiltDown;
+import org.usfirst.frc.team1322.robot.commands.BM_ClawTiltUp;
+import org.usfirst.frc.team1322.robot.commands.BM_ClawClose;
+import org.usfirst.frc.team1322.robot.commands.BM_ClawOpen;
 import org.usfirst.frc.team1322.robot.commands.BM_ShiftLift;
 import org.usfirst.frc.team1322.robot.commands.BM_StrafeAndRotate;
 import org.usfirst.frc.team1322.robot.commands.BM_ShootInBlock;
@@ -86,10 +87,10 @@ public class OI {
 		//auxLeftStickUp.whileActive(new BM_ShootInBlock());  		    //Run Block In
 		//auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));	//Rotate Block 
 		//auxLeftStickRight.whileActive(new TC_RunWheelsRotate(false)); //Rotate Block
-		auxRTrigger.whileActive(new BM_OpenClaw(false));				//Open Claw
-		auxLTrigger.whileActive(new BM_OpenClaw(true));					//Close Claw
-		auxA.toggleWhenActive(new BM_TiltDownClaw());					//Tilt Claw Down
-		auxY.toggleWhenActive(new BM_TiltUpClaw());					    //Tilt Claw Up
+		auxRTrigger.whileActive(new BM_ClawClose());				    //Close Claw
+		auxLTrigger.whileActive(new BM_ClawOpen());					    //Open Claw
+		auxA.toggleWhenActive(new BM_ClawTiltDown());					//Tilt Claw Down
+		auxY.toggleWhenActive(new BM_ClawTiltUp());					    //Tilt Claw Up
 		auxRightBumper.toggleWhenActive(new BM_RaiseToMid());			//Jump To Mid
 		auxStart.whenPressed(new BM_EngageJammer());			        //Engage Lift Jammer
 		auxSelect.whenPressed(new BM_DisengageJammer());		        //Disengage Lift Jammer

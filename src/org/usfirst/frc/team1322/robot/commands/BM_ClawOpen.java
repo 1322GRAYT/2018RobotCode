@@ -5,18 +5,21 @@ import org.usfirst.frc.team1322.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *  Command Class: BM_ClawOpen
+ *  Trigger pneumatic pistons to open Claw to release
+ *  PwrCube or to prepare to grab PwrCube.
  */
-public class BM_OpenClaw extends Command {
-
-	private boolean open;
+public class BM_ClawOpen extends Command {
 	private boolean finished = false;
 	
-    public BM_OpenClaw(boolean open) {
+  /**
+	*  Command Method: BM_ClawOpen
+	*  Trigger pneumatic pistons to open Claw to release
+	*  PwrCube or to prepare to grab PwrCube.
+	*/
+    public BM_ClawOpen() {
     	//Set the required subsystem
         requires(Robot.kCLAW);
-        //Pass along open to global
-        this.open = open;
     }
 
     // Called just before this Command runs the first time
@@ -25,13 +28,7 @@ public class BM_OpenClaw extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//if open, open claw, else, close it
-    	if(open) {
-    		Robot.kCLAW.openClaw();
-    	}else {
-    		Robot.kCLAW.closeClaw();
-    	}
-    	//set global finished to true
+        Robot.kCLAW.openClaw();
     	finished = true;
     }
 

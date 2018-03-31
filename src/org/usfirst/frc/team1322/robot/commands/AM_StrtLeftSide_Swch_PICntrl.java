@@ -30,8 +30,8 @@ public class AM_StrtLeftSide_Swch_PICntrl extends CommandGroup {
         	addSequential(new AC_TurnByGyroPI(true, 90.0, true)); // Turn CW to 90 deg
         	addSequential(new BM_RaiseToMid());
     	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
-    	    addSequential(new BM_TiltDownClaw());
-    	    addSequential(new BM_OpenClaw(true));
+    	    addSequential(new BM_ClawTiltDown());
+    	    addSequential(new BM_ClawOpen());
     	  	addSequential(new AC_TimeDelay((float)0.5));
         	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
         	addSequential(new AC_DriveEncdrByDistPI((float)2.0, (float)0.6, (float)0.5, (float)0.20, (float)90.0, false, false));
@@ -57,8 +57,8 @@ public class AM_StrtLeftSide_Swch_PICntrl extends CommandGroup {
         	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
         	addSequential(new BM_RaiseToMid());
     	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
-    	    addSequential(new BM_TiltDownClaw());
-    	    addSequential(new BM_OpenClaw(true));
+    	    addSequential(new BM_ClawTiltDown());
+    	    addSequential(new BM_ClawOpen());
     	} else {
         	addSequential(new AC_DriveEncdrByDist((float)13.0, (float)0.9, (float)1.0, (float)0.10, (float)0.0, true, true));    		
     	}
