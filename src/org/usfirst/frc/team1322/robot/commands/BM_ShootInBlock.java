@@ -7,17 +7,18 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 /**
  *
  */
-public class AC_ShootOutBlock extends TimedCommand {
+public class BM_ShootInBlock extends TimedCommand {
 
-    public AC_ShootOutBlock(double timeout) {
+    public BM_ShootInBlock(double timeout) {
         super(timeout);
-        
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
         requires(Robot.kSHOOTER);
     }
 
-    // Called just before this Command runs the first time
+ // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kSHOOTER.clawSpeedInOut(1);
+    	Robot.kSHOOTER.clawSpeedInOut(-1);
     }
 
     // Called repeatedly when this Command is scheduled to run

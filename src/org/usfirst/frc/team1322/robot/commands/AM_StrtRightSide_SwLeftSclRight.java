@@ -22,22 +22,20 @@ public class AM_StrtRightSide_SwLeftSclRight extends CommandGroup {
     	addSequential(new BM_RaiseToMid());
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
-    	addSequential(new AC_DriveEncdrByDist((float)17.0, (float)0.9, (float)2.0, (float)0.10, (float)0.0, true, true));
-     	addSequential(new AC_TurnByGyro(-0.9, -75.0, true)); // Turn CCW to -90 deg       	
+    	addSequential(new AC_DriveEncdrByDist((float)26.5, (float)0.9, (float)1.0, (float)0.10, (float)1.77, true, true));
+     	addSequential(new AC_TurnByGyro(-0.9, -90, true)); // Turn CCW to -90 deg       	
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
      	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
-    	addSequential(new AC_DriveEncdrByDist((float)16.0, (float)0.9, (float)2.0, (float)0.10, (float)-90.0, true, true));
-	    addSequential(new AC_TurnByGyro(-0.9, -190.0, true)); // Turn CCW to -180 deg
-		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
-    	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
-    	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.8, (float)1.0, (float)0.20, (float)-180.0, true, true));
-	    addSequential(new AC_TurnByGyro(-0.9, -280.0, true)); // Turn CCW to -270 deg
-		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
-    	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
-    	addSequential(new BM_RaiseToMid());
-	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
 	    addSequential(new BM_LiftClaw(false));
+	    addSequential(new BM_RaiseToHigh());
+    	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.7, (float)1.0, (float)0.10, (float)-90.0, true, true));
+	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.5, true));
+	    addSequential(new BM_RaiseToHigh());
 	    addSequential(new BM_OpenClaw(true));
+		addSequential(new AC_TimeDelay((float)0.5));
+    	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
+    	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.5, (float)0.5, (float)0.10, (float)-90.0, false, false));
+     	addSequential(new AC_TurnByGyro(-0.9, -180, false)); // Turn CCW to 180 deg  	    
     	System.out.println("StrtRightSide_SwLeftSclRight");
     }   
 

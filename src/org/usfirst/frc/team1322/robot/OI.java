@@ -17,7 +17,8 @@ import org.usfirst.frc.team1322.robot.commands.BM_LiftClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_OpenClaw;
 import org.usfirst.frc.team1322.robot.commands.BM_ShiftLift;
 import org.usfirst.frc.team1322.robot.commands.BM_StrafeAndRotate;
-import org.usfirst.frc.team1322.robot.commands.TC_RunWheelsInOut;
+import org.usfirst.frc.team1322.robot.commands.BM_ShootInBlock;
+import org.usfirst.frc.team1322.robot.commands.BM_ShootOutBlock;
 import org.usfirst.frc.team1322.robot.commands.TC_RunWheelsRotate;
 import org.usfirst.frc.team1322.robot.triggers.*;
 import edu.wpi.first.wpilibj.XboxController;
@@ -80,8 +81,8 @@ public class OI {
 		//Assign Actions
 		auxDpadUp.whenActive(new BM_ShiftLift(true)); 					//Shift Lift high gear
 		auxDpadDown.whenActive(new BM_ShiftLift(false));				//Shift lift low gear
-		//auxLeftStickDown.whileActive(new TC_RunWheelsInOut(true)); 		//Run Block Out
-		//auxLeftStickUp.whileActive(new TC_RunWheelsInOut(false));  		//Run Block In
+		//auxLeftStickDown.whileActive(new BM_ShootOutBlock()); 		//Run Block Out
+		//auxLeftStickUp.whileActive(new BM_ShootInBlock());  		    //Run Block In
 		//auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));		//Rotate Block 
 		//auxLeftStickRight.whileActive(new TC_RunWheelsRotate(false));  	//Rotate Block
 		auxRTrigger.whileActive(new BM_OpenClaw(false));				//Open Claw
