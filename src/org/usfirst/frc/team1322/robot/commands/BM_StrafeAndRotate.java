@@ -26,8 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 		private double  RotFdbkAng;
 		private double  RotFdbkAngInit;	
 		private double  RotAngInitDelt;
-	    private double  RotAng90Pct;
-	    private double  RotPwrCmndAbs;
+	    private double  RotAng95Pct;
 	    private double  RotPwrCmnd;
 	    private double  RotPwrCmndAdj;
 	    private double  StrfPwrCmnd;
@@ -44,26 +43,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
       *  @param1: Mode is Autonomous (Not Tele-Op)?      (boolean)	
       *  @param2: Desired Rotation ClockWise?            (boolean)	
       *  @param3: Desired Rotation Position Angle        (float: degrees)	
-      *  @param4: Desired Rotate Power (Abs Value)       (float: normalized power)
-      *  @param5: Desired Strafe Power (+=right,-=left)  (float: normalized power)
-      *  @param5: Drive Power Correction (+=Fwd,-=Rvrs)  (float: normalized power)
-      *  @param6: Enable Lift Hold Function?             (boolean)
+      *  @param4: Enable Lift Hold Function?             (boolean)
       *   */
     public BM_StrafeAndRotate(boolean ModeIsAuton,
     		                  boolean RotClckWise,
                               float   RotDsrdAng,
-                              float   RotPwrCmndAbs,
-                              float   StrfPwrCmnd,
-                              float   DrvPwrCmnd,
                               boolean LftHldEnbl) {
         requires(Robot.kDRIVE);        
         // requires(Robot.kLIFT);
         this.ModeIsAuton = ModeIsAuton;
         this.RotClckWise = RotClckWise;
         this.RotDsrdAng = RotDsrdAng;
-        this.RotPwrCmndAbs = RotPwrCmndAbs;
-        this.StrfPwrCmnd = StrfPwrCmnd;
-        this.DrvPwrCmnd = DrvPwrCmnd;
         this.LftHldEnbl =  LftHldEnbl;
     }
 
@@ -83,21 +73,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	
     	RotFdbkAngInit = Robot.kSENSORS.getGyroAngle(); 	
     	RotAngInitDelt = RotDsrdAng - RotFdbkAngInit;
-        RotAng90Pct = RotAngInitDelt * 0.9;	
-        
-        RotPwrTemp = (double)Math.abs(RotPwrCmndAbs);
-        
-    	if(RotPwrTemp < 0.3) {
-    		System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
-    		RotPwrTemp = 0.3;
-    	}
-        RotPwrCmndAbs = RotPwrTemp;        
+        RotAng95Pct = RotAngInitDelt * 0.95;	
+
+       if (RotClckWise == false) {
+	   // Turn Counter-ClockWise
+    	   RotPwrTemp  = (float)K_CmndCal.KCMD_r_SideArcRotPwrLeft;
+       	   if(RotPwrTemp < 0.3) {
+    	       System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
+    		   RotPwrTemp = 0.3;
+    	   }
+           RotPwrCmnd = -RotPwrTemp;        
+           StrfPwrCmnd = (float)K_CmndCal.KCMD_r_SideArcStrfPwr;
+           DrvPwrCmnd = (float)K_CmndCal.KCMD_r_SideArcDrvPwrLeft;     
+       } else {
+	   // Turn ClockWise 
+    	   RotPwrTemp = (float)K_CmndCal.KCMD_r_SideArcRotPwrRight;
+       	   if(RotPwrTemp < 0.3) {
+    	       System.out.println("TurnByGyro Turn Speed to low, Upping to .3");
+    		   RotPwrTemp = 0.3;
+       	   }
+           RotPwrCmnd = RotPwrTemp;               	   
+           StrfPwrCmnd = (float)-(K_CmndCal.KCMD_r_SideArcStrfPwr);
+           DrvPwrCmnd = (float)K_CmndCal.KCMD_r_SideArcDrvPwrRight;     
+       }
+       
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	float  turnDirctnScalar = (float)1.0;
-    	float  nearTrgtScalar =   (float)1.0;
+    	float  nearTrgtScalar = (float)1.0;
     	
         /* TurnTmOut is a Free Running Timer */	
 
@@ -108,19 +112,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	
     	// Determine Rotate Power
         RotFdbkAng = Robot.kSENSORS.getGyroAngle();
-
-        if (RotClckWise == false) {
-    		// Turn Counter-ClockWise
-    		turnDirctnScalar = (float)-1;
-        } else {
-    		// Turn ClockWise 
-    		turnDirctnScalar = (float)1;        	        	
-        }
         
-    	if(RotFdbkAng >= RotAng90Pct) {
+    	if(RotFdbkAng >= RotAng95Pct) {
     		nearTrgtScalar = (float)0.50;   		
     	}
-    	RotPwrCmndAdj = (double)turnDirctnScalar * (double)nearTrgtScalar * RotPwrCmnd;
+    	RotPwrCmndAdj = (double)nearTrgtScalar * RotPwrCmnd;
     	
 		Robot.kDRIVE.mechDrive(StrfPwrCmndLim, DrvPwrCmnd, RotPwrCmndAdj);
 		
@@ -186,8 +182,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	SmartDashboard.putNumber("Rotate Feedback Angle : ", RotFdbkAng);
     	SmartDashboard.putNumber("Rotate Feedback Angle Init : ", RotFdbkAngInit);
     	SmartDashboard.putNumber("Rotate Angle Init Delta : ", RotAngInitDelt);
-    	SmartDashboard.putNumber("Rotate 90 Percent Angle : ", RotAng90Pct);
-    	SmartDashboard.putNumber("Rotate Power Cmnd : ", RotPwrCmndAbs);
+    	SmartDashboard.putNumber("Rotate 90 Percent Angle : ", RotAng95Pct);
     	SmartDashboard.putNumber("Rotate Power Cmnd : ", RotPwrCmnd);
     	SmartDashboard.putNumber("Rotate Power Cmnd Adjusted : ", RotPwrCmndAdj);
     	SmartDashboard.putNumber("Strafe Power Cmnd : ", StrfPwrCmnd);
@@ -201,8 +196,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	System.out.println("Rotate Feedback Angle : " + RotFdbkAng);
     	System.out.println("Rotate Feedback Angle Init : " + RotFdbkAngInit);
     	System.out.println("Rotate Angle Init Delta : " + RotAngInitDelt);
-    	System.out.println("Rotate 90 Percent Angle : " + RotAng90Pct);
-    	System.out.println("Rotate Power Cmnd : " + RotPwrCmndAbs);
+    	System.out.println("Rotate 90 Percent Angle : " + RotAng95Pct);
     	System.out.println("Rotate Power Cmnd : " + RotPwrCmnd);
     	System.out.println("Rotate Power Cmnd Adjusted : " + RotPwrCmndAdj);
     	System.out.println("Strafe Power Cmnd : " + StrfPwrCmnd);

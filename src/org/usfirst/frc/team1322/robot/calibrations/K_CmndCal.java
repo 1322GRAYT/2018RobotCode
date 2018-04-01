@@ -78,27 +78,27 @@ public class K_CmndCal extends Subsystem {
 	
 	/** KCMD_r_SideArcStrfPwr: Strafe Motor Normalized Power (Abs Value) for
 	  * a Sideways Arc for a Strafe and Rotate Maneuver. */
-	public static final float KCMD_r_SideArcStrfPwr = (float)0.6; // percent	
+	public static final float KCMD_r_SideArcStrfPwr = (float)0.7; // percent	
 	
 	/** KCMD_r_SideArcRotPwrRight: Rotate Motor Normalized Power (Abs Value) for
 	  * a Right Sideways Arc for a Strafe and Rotate Maneuver
 	  * (Strafe Left, Rotate Right). */
-	public static final float KCMD_r_SideArcRotPwrRight = (float)0.6; // percent
+	public static final float KCMD_r_SideArcRotPwrRight = (float)0.7; // percent
 
 	/** KCMD_r_SideArcRotPwrLeft: Rotate Motor Normalized Power (Abs Value) for
 	  * a Left Sideways Arc for a Strafe and Rotate Maneuver
 	  * (Strafe Right, Rotate Left). */
-	public static final float KCMD_r_SideArcRotPwrLeft = (float)0.4; // percent
+	public static final float KCMD_r_SideArcRotPwrLeft = (float)0.7; // percent
 	
 	/** KCMD_r_SideArcDrvPwrRight: Drive Correction Motor Normalized Power (Signed
 	  * Value) for a Right Sideways Arc for a Strafe and Rotate Maneuver
 	  * (Strafe Left, Rotate Right). */
-	public static final float KCMD_r_SideArcDrvPwrRight = (float)0.00; // percent
+	public static final float KCMD_r_SideArcDrvPwrRight = (float)0.0; // percent
 
 	/** KCMD_r_SideArcDrvPwrLeft: Drive Correction Motor Normalized Power (Signed
 	  * Value) for a Left Sideways Arc for a Strafe and Rotate Maneuver
 	  * (Strafe Right, Rotate Left). */
-	public static final float KCMD_r_SideArcDrvPwrLeft = (float)0.05; // percent
+	public static final float KCMD_r_SideArcDrvPwrLeft = (float)0.0; // percent
 
 	/** KCMD_t_SideArcSafetyTmOut: Amount of Time that must elapse before
      * a strafe and rotate command will cancel out due to taking too long to

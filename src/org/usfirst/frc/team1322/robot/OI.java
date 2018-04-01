@@ -82,8 +82,8 @@ public class OI {
 		
 		
 		//Assign Actions
-		auxDpadUp.whenActive(new BM_LiftShiftHiGr()); 					//Shift Lift high gear
-		auxDpadDown.whenActive(new BM_LiftShiftLoGr());				    //Shift lift low gear
+		auxDpadUp.whenActive(new BM_LiftShiftHiGr()); 					//Shift Lift High gear
+		auxDpadDown.whenActive(new BM_LiftShiftLoGr());				    //Shift lift Low gear
 		//auxLeftStickDown.whileActive(new BM_ShootOutBlock()); 		//Run Block Out
 		//auxLeftStickUp.whileActive(new BM_ShootInBlock());  		    //Run Block In
 		//auxLeftStickLeft.whileActive(new TC_RunWheelsRotate(true));	//Rotate Block 
@@ -95,21 +95,13 @@ public class OI {
 		auxRightBumper.toggleWhenActive(new BM_LiftRaiseToMid());		//Jump To Mid
 		auxStart.whenPressed(new BM_JammerEngage());			        //Engage Lift Jammer
 		auxSelect.whenPressed(new BM_JammerDisengage());		        //Disengage Lift Jammer
-		drvRTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Left, Rotate Right
-				                                       true,
+		drvRTrigger.whileActive(new BM_StrafeAndRotate(false, true,     //Sideways Arc: Strafe Left, Rotate Right
 				                                       (float)90.0,
-                                                       (float)K_CmndCal.KCMD_r_SideArcRotPwrRight,
-                                                       (float)-(K_CmndCal.KCMD_r_SideArcStrfPwr),
-                                                       (float)K_CmndCal.KCMD_r_SideArcDrvPwrRight,
-                                                       false));
-		drvLTrigger.whileActive(new BM_StrafeAndRotate(false,           //Sideways Arc: Strafe Right, Rotate Left
-                                                       false,
+				                                       false));
+		drvLTrigger.whileActive(new BM_StrafeAndRotate(false, false,    //Sideways Arc: Strafe Right, Rotate Left
                                                        (float)-90.0,
-		                                               (float)K_CmndCal.KCMD_r_SideArcRotPwrLeft,
-				                                       (float)K_CmndCal.KCMD_r_SideArcStrfPwr,
-				                                       (float)K_CmndCal.KCMD_r_SideArcDrvPwrLeft,
                                                        false));
-		
+
 	}
 	
 	
