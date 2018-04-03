@@ -67,13 +67,11 @@ public class BM_LiftHoldPstn extends Command {
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        /* None - Keep Enabled until another Command requiring
-    	 * the LIFT system interrupts it this command. */  
-        return (false);
+        return (Robot.kAUTON.getMasterTaskCmplt());
     }
 
     
-    // Called once after command is interrupted.
+    // Called once after command is finished.
     protected void end() {
   	    Robot.kLIFT.setSpeed(0.0);
     }

@@ -20,6 +20,7 @@ public class AUTON extends Subsystem {
 	private static boolean FieldDataTimedOut;             // Has the Field Data Timed Out befoe being Captured?
 	private static boolean OurSwitchLeftSide;             // Is Our Side of Our Alliance Switch on the Left Side of the Field?
 	private static boolean OurScaleLeftSide;              // Is Our Side of the Scale on the Left Side of the Field?
+	private static boolean MasterTaskCmplt;              // Trigger to Slave Parallel Tasks that Primary Task is Complete.
     
 
 	public AUTON() {
@@ -44,38 +45,38 @@ public class AUTON extends Subsystem {
     }
 
     /** Method: setSwitchDataCaptured - Interface to set the indication
-     * that Switch Data had been successfully captured.  */ 
+      * that Switch Data had been successfully captured.  */ 
     public void setSwitchDataCaptured(boolean DataCaptured) {
     	SwitchDataCaptured = DataCaptured;
     }
 
     /** Method: setScaleDataCaptured - Interface to set the indication
-     * that Scale Data had been successfully captured.  */ 
+      * that Scale Data had been successfully captured.  */ 
     public void setScaleDataCaptured(boolean DataCaptured) {
     	ScaleDataCaptured = DataCaptured;
     }
     
     /** Method: setFieldDataTimedOut - Interface to set the indication
-     * that the Capture Field Data function timed out before successfully
-     * capturing the Field Data.  */ 
+      * that the Capture Field Data function timed out before successfully
+      * capturing the Field Data.  */ 
     public void setFieldDataTimedOut(boolean CaptureTimedOut) {
     	FieldDataTimedOut = CaptureTimedOut;
     }    
     
     /** Method: setOurSwitchLeftSide - Interface to set the indication
-     * if Our Allicance Switch is on the Left Side.  */ 
+      * if Our Allicance Switch is on the Left Side.  */ 
     public void setOurSwitchLeftSide(boolean SwitchLeftSide) {
     	OurSwitchLeftSide = SwitchLeftSide;
     }
 
     /** Method: setOurSwitchLeftSide - Interface to set the indication
-     * if Our Allicance Scale is on the Left Side.  */ 
+      * if Our Allicance Scale is on the Left Side.  */ 
     public void setOurScaleLeftSide(boolean ScaleLeftSide) {
     	OurScaleLeftSide = ScaleLeftSide;
     }
 
     /** Method: resetFieldDataCapture - Resets the Field Management
-     * System Capture Field Data at the initiation of Autonomous.  */ 
+      * System Capture Field Data at the initiation of Autonomous.  */ 
     public void resetFieldDataCapture() {
     	SwitchDataCaptured = false;
     	ScaleDataCaptured = false;
@@ -84,7 +85,15 @@ public class AUTON extends Subsystem {
     	OurScaleLeftSide = true;
     	}
 	
-	
+    /** Method: setMasterTaskCmplt - Interface to set the indication
+      * of whether of not a Primary/Master task in a set of parallel tasks
+      * has completed in order to trigger the termination of a Secondary/
+      * Slave task. */ 
+    public void setMasterTaskCmplt(boolean TaskIsCmplt) {
+    	MasterTaskCmplt = TaskIsCmplt;
+    }
+
+    
     /**********************************************/
     /* Public Get Interface Definitions        */
     /**********************************************/
@@ -100,26 +109,26 @@ public class AUTON extends Subsystem {
     }
 
     /** Method: getSwitchDataCaptured - Interface to return the indication
-     * that Switch Data had been successfully captured.  */ 
+      * that Switch Data had been successfully captured.  */ 
     public boolean getSwitchDataCaptured() {
     	return SwitchDataCaptured;
     }
 
     /** Method: getScaleDataCaptured - Interface to return the indication
-     * that Field Data had been successfully captured.  */ 
+      * that Field Data had been successfully captured.  */ 
     public boolean getScaleDataCaptured() {
     	return ScaleDataCaptured;
     }
     
     /** Method: getFieldDataTimedOut - Interface to return the indication
-     * that the Capture Field Data function timed out before successfully
-     * capturing the Field Data.  */ 
+      * that the Capture Field Data function timed out before successfully
+      * capturing the Field Data.  */ 
     public boolean getFieldDataTimedOut() {
     	return FieldDataTimedOut;
     }    
     
     /** Method: getOurSwitchLeftSide - Interface to return the indication
-     * if Our Allicance Switch is on the Left Side.  */ 
+      * if Our Allicance Switch is on the Left Side.  */ 
     public boolean getOurSwitchLeftSide() {
     	return OurSwitchLeftSide;
     }
@@ -130,7 +139,15 @@ public class AUTON extends Subsystem {
     	return OurScaleLeftSide;
     }
         
-   
+    /** Method: getMasterTaskCmplt - Interface to get the indication
+      * of whether of not a Primary/Master task in a set of parallel tasks
+      * has completed in order to trigger the termination of a Secondary/
+      * Slave task. */ 
+    public boolean getMasterTaskCmplt() {
+    	return MasterTaskCmplt;
+    }
+    
+    
     /**********************************************/
     /* Internal Class Methods                     */
     /**********************************************/
