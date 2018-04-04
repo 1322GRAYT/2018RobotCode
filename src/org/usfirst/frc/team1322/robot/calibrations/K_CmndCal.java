@@ -105,6 +105,22 @@ public class K_CmndCal extends Subsystem {
      * reach the target angle due to some system loss. */
 	public static final float KCMD_t_SideArcSafetyTmOut = (float)1.5; // sec	 
 	
+
+	/**************************/
+	/*    Shooter Control     */
+	/**************************/
+	
+	/** KCMD_t_ShootPrdOut: Amount of Time that the motors will run
+	  * when shooting out the PwrCube. */
+	public static final float KCMD_t_ShootPrdOut = (float)1.5; // sec	 
+		
+	/** KCMD_t_ShootPrdIn: Amount of Time that the motors will run
+	  * when grabbing/shooting in the PwrCube. */
+	public static final float KCMD_t_ShootPrdIn = (float)2.0; // sec	 
+	
+	
+
+	
 	  
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

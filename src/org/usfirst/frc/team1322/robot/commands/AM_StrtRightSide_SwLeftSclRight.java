@@ -29,12 +29,10 @@ public class AM_StrtRightSide_SwLeftSclRight extends CommandGroup {
 	    addSequential(new BM_ClawTiltDown());
 	    addSequential(new BM_LiftRaiseToHigh());
     	addSequential(new AC_DriveEncdrByDist((float)4.0, (float)0.7, (float)1.0, (float)0.10, (float)-90.0, true, true));
-	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.5, true));
-	    addSequential(new BM_LiftRaiseToHigh());
-	    addSequential(new BM_ClawOpen());
+	    addSequential(new BM_ShootOutBlock(K_CmndCal.KCMD_t_ShootPrdOut));
 		addSequential(new AC_TimeDelay((float)0.5));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
-    	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.5, (float)0.5, (float)0.10, (float)-90.0, false, false));
+    	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.5, (float)0.5, (float)0.10, (float)-90.0, false, true));
      	addSequential(new AC_TurnByGyro(-0.9, -180, false)); // Turn CCW to 180 deg  	    
     	System.out.println("StrtRightSide_SwLeftSclRight");
     }   

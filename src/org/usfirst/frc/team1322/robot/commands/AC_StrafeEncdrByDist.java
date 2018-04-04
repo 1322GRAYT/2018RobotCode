@@ -67,6 +67,7 @@ public class AC_StrafeEncdrByDist extends Command {
 
 	// Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kAUTON.setMasterTaskCmplt(false);
     	
     	EncdrInitRefCnt = Robot.kSENSORS.getRefEncoderCnt();
     	
@@ -165,6 +166,7 @@ public class AC_StrafeEncdrByDist extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.kAUTON.setMasterTaskCmplt(true);
   	    Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
   	    Robot.kLIFT.setSpeed(0.0);
     }

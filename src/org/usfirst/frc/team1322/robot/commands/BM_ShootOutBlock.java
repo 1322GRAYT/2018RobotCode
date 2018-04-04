@@ -17,6 +17,7 @@ public class BM_ShootOutBlock extends TimedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kAUTON.setMasterTaskCmplt(false);
     	Robot.kSHOOTER.clawSpeedInOut(1);
     }
 
@@ -26,6 +27,7 @@ public class BM_ShootOutBlock extends TimedCommand {
 
     // Called once after timeout
     protected void end() {
+    	Robot.kAUTON.setMasterTaskCmplt(true);
     	Robot.kSHOOTER.clawSpeedInOut(0);
     }
 

@@ -62,6 +62,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     protected void initialize() {
     	double RotPwrTemp;
     	
+    	Robot.kAUTON.setMasterTaskCmplt(false);
+    	
     	StrfPwrCmndLim = 0.0;
     	
     	RotTmOut.reset();
@@ -162,9 +164,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
     // Called once after isFinished returns true
     protected void end() {
+  	    RotTmOut.stop();	
     	Robot.kDRIVE.disable();
   	    Robot.kLIFT.setSpeed(0.0);
-  	    RotTmOut.stop();	
+    	Robot.kAUTON.setMasterTaskCmplt(true);
     }
 
     // Called when another command which requires one or more of the same

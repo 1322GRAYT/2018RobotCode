@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1322.robot.commands;
 
+import org.usfirst.frc.team1322.robot.Robot;
+
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,7 +24,8 @@ public class AC_TimeDelay extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	timer.reset();
-    	timer.start();    	
+    	timer.start();
+    	Robot.kAUTON.setMasterTaskCmplt(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,6 +41,7 @@ public class AC_TimeDelay extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	timer.stop();
+    	Robot.kAUTON.setMasterTaskCmplt(false);
     }
 
     // Called when another command which requires one or more of the same

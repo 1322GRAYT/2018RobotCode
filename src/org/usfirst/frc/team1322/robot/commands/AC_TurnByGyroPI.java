@@ -49,6 +49,8 @@ public class AC_TurnByGyroPI extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kAUTON.setMasterTaskCmplt(false);
+    	
     	RotateTmOut.reset();
     	RotateTmOut.start();
     	Robot.kDRIVE.enable();
@@ -103,10 +105,11 @@ public class AC_TurnByGyroPI extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.kDRIVE.disable();
-  	    Robot.kLIFT.setSpeed(0.0);
     	RotateTmOut.stop();   
     	RotPIDEnbl = false;
+    	Robot.kAUTON.setMasterTaskCmplt(true);
+    	Robot.kDRIVE.disable();
+  	    Robot.kLIFT.setSpeed(0.0);
     }
 
     // Called when another command which requires one or more of the same
