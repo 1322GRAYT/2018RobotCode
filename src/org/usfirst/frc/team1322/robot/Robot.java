@@ -25,6 +25,7 @@ import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -48,6 +49,8 @@ public class Robot extends IterativeRobot {
 	public static final USERLIB kTBLLOOKUP = new USERLIB();
 	
 	public static OI m_oi;
+	
+	public Timer blockTimer = new Timer();
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -71,6 +74,7 @@ public class Robot extends IterativeRobot {
 		kPID.resetPIDRot();
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
 		CameraServer.getInstance().startAutomaticCapture().setResolution(640, 320);
+		blockTimer.reset();
 	}
 
 	/**
@@ -134,6 +138,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		kLIFT.disengageJammer();
+		blockTimer.reset();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -151,6 +156,15 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		kSENSORS.updateSensorData();
 		Scheduler.getInstance().run();
+		if(kSENSORS.getBlock()) {
+			blockTimer.start();
+			if(blockTimer.get() >= .3) {
+				kCLAW.closeClaw();
+			}
+		}else{
+			blockTimer.stop();
+			blockTimer.reset();
+		}
 	}
 
 	/**
