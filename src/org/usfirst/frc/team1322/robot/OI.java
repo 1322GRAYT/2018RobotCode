@@ -50,12 +50,8 @@ public class OI {
 	//Create Triggers
 	private DpadDown auxDpadDown;
 	private DpadUp  auxDpadUp;
-	private LeftStickDown auxLeftStickDown;
-	private LeftStickUp auxLeftStickUp;
-	private LeftStickLeft auxLeftStickLeft;
-	private LeftStickRight auxLeftStickRight;
-	private RTrigger auxRTrigger;
-	private LTrigger auxLTrigger;
+	public  RTrigger auxRTrigger;
+	public  LTrigger auxLTrigger;
 	private DrvRTrigger drvRTrigger;
 	private DrvLTrigger drvLTrigger;
 
@@ -68,16 +64,12 @@ public class OI {
 		auxY = 				new JoystickButton(AuxStick, 4); //Y
 		auxStart = 			new JoystickButton(AuxStick, 8); //Start
 		auxSelect = 		new JoystickButton(AuxStick, 7); //Select
-		auxDpadUp = 			new DpadUp();				 //Dpad Up
-		auxDpadDown = 			new DpadDown();				 //Dpad Down
-		auxLeftStickDown = 	new LeftStickDown();			 //Left Stick Down
-		auxLeftStickUp = 		new LeftStickUp();			 //Left Stick Up
-		auxLeftStickLeft = 	new LeftStickLeft();			 //Left Stick Right
-		auxLeftStickRight = 	new LeftStickRight();		 //Left Stick Left
-		auxRTrigger = 			new RTrigger();				 //Right Trigger
-		auxLTrigger = 			new LTrigger();				 //Left Trigger
-		drvRTrigger = 			new DrvRTrigger();			 //Driver Right Trigger
-		drvLTrigger = 			new DrvLTrigger();			 //Driver Left Trigger
+		auxDpadUp = 		new DpadUp();				     //Dpad Up
+		auxDpadDown = 		new DpadDown();				     //Dpad Down
+		auxRTrigger = 		new RTrigger();				     //Right Trigger
+		auxLTrigger = 		new LTrigger();				     //Left Trigger
+		drvRTrigger = 		new DrvRTrigger();			     //Driver Right Trigger
+		drvLTrigger = 		new DrvLTrigger();			     //Driver Left Trigger
 
 		
 		
