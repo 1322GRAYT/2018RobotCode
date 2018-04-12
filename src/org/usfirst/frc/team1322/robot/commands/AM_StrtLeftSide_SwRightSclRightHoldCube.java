@@ -36,8 +36,7 @@ public class AM_StrtLeftSide_SwRightSclRightHoldCube extends CommandGroup {
      	addParallel(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
     	addSequential(new BM_LiftHoldPstn()); 
     	addSequential(new AC_DriveEncdrByDist((float)12.0, (float)0.9, (float)1.0, (float)0.10, (float)90.0, true, true));
-	    addParallel(new BM_ClawTiltDown());
-    	addSequential(new BM_LiftHoldPstn()); 
+    	addSequential(new BM_ClawTiltDown());
 	    addSequential(new BM_LiftRaiseToHigh());
     	Robot.kAUTON.setMasterTaskCmplt(false);
     	addSequential(new BM_LiftHoldPstn()); 

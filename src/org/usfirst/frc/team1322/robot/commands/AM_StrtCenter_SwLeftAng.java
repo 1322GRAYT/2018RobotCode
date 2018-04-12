@@ -35,10 +35,8 @@ public class AM_StrtCenter_SwLeftAng extends CommandGroup {
     	addSequential(new AC_TurnByGyro(0.7, 0.0, true)); // Turn CW to 0 deg
     	addSequential(new BM_LiftRaiseToMid());
     	addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.5, true));
-	    addParallel(new BM_ClawTiltDown());
-    	addSequential(new BM_LiftHoldPstn());  
-	    addParallel(new BM_ClawOpen());
-    	addSequential(new BM_LiftHoldPstn());  
+    	addSequential(new BM_ClawTiltDown()); 
+    	addSequential(new BM_ClawOpen()); 
 		addParallel(new AC_TimeDelay((float)0.5));
     	addSequential(new BM_LiftHoldPstn());  
 	    addSequential(new AC_DriveByGyroTime(-0.5, 0.0, 2.0, false));  // Strafe to the Left

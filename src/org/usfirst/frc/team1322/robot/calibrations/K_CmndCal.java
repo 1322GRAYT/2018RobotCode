@@ -140,6 +140,30 @@ public class K_CmndCal extends Subsystem {
 	 * Lower to Low Position Command is executing. */
 	public static final float KCMD_r_LiftPwrLowerToLow = (float)0.95; // Norm Power	 
 	
+	
+
+	/**************************/
+	/*    Claw Control     */
+	/**************************/
+	
+	/** KCMD_t_ClawPrdClose: Amount of Time Duration for
+	  * the pneumatic command to Close the Claw. */
+	public static final float KCMD_t_ClawPrdClose = (float)0.060; // sec	 
+	
+	/** KCMD_t_ClawPrdOpen: Amount of Time Duration for
+	  * the pneumatic command to Open the Claw. */
+	public static final float KCMD_t_ClawPrdOpen = (float)0.060; // sec	 
+	
+	/** KCMD_t_ClawPrdTiltDwn: Amount of Time Duration for
+	  * the pneumatic command to Tilt Down the Claw. */
+	public static final float KCMD_t_ClawPrdTiltDwn = (float)0.060; // sec	 
+	
+	/** KCMD_t_ClawPrdTiltUp: Amount of Time Duration for
+	  * the pneumatic command to Tilt Up the Claw. */
+	public static final float KCMD_t_ClawPrdTiltUp = (float)0.060; // sec	 
+		
+	
+	
 	  
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
