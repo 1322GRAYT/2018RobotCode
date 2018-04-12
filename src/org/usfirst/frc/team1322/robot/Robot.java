@@ -27,6 +27,7 @@ import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -74,7 +75,9 @@ public class Robot extends IterativeRobot {
 		kSENSORS.setGlobalBaud();
 		kPID.resetPIDRot();
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
-		CameraServer.getInstance().startAutomaticCapture().setResolution(640, 320);
+		if (RobotBase.isReal()) {
+		  CameraServer.getInstance().startAutomaticCapture().setResolution(640, 320);
+		}
 	}
 
 	/**

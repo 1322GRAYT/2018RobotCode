@@ -20,6 +20,7 @@ public class AC_ResetEncoders extends TimedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kAUTON.setMasterTaskCmplt(false);
     	Robot.kDRIVE.resetEncoders();
     }
 
@@ -36,6 +37,7 @@ public class AC_ResetEncoders extends TimedCommand {
 
     // Called once after timeout
     protected void end() {
+    	Robot.kAUTON.setMasterTaskCmplt(true);
     }
 
     // Called when another command which requires one or more of the same

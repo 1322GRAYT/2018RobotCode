@@ -40,7 +40,7 @@ public class AutoSlct_RightSide_Validated extends Command {
     		Robot.kAUTON.setFieldDataTimedOut(true);
     	} else {
     		// Keep Testing until Valid Switch Data or Time Out
-    	}
+    	}    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

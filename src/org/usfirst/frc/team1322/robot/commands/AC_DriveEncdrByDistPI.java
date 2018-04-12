@@ -3,7 +3,6 @@ package org.usfirst.frc.team1322.robot.commands;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
-import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,7 +20,7 @@ public class AC_DriveEncdrByDistPI extends Command {
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
 	private boolean DrvPIDEnbl;
-    private boolean DrctnIsFwd, LftHldEnbl;
+    private boolean DrctnIsFwd;
 	
 	private double DrvHdngDsrd;
 	private double EncdrActCnt;
@@ -45,19 +44,16 @@ public class AC_DriveEncdrByDistPI extends Command {
       *  @param4: Desired Deceleration Power         (float: normalized power)
       *  @param5: Desired Drive Course Heading Angle (float: degrees)
       *  @param6: Is Desired Direction Forward?      (boolean)
-      *  @param7: Enable Lift Hold Function?         (boolean)
       *   */
     public AC_DriveEncdrByDistPI(float   DsrdDistFeet,
     		                     float   DsrdPriPwr,
     		                     float   DsrdDclFeet,
     		                     float   DsrdDclPwr,
     		                     float   DrvHdngDsrd,
-    		                     boolean DrctnIsFwd,
-    		                     boolean LftHldEnbl) {
+    		                     boolean DrctnIsFwd) {
         requires(Robot.kDRIVE);
-        requires(Robot.kLIFT);  
+        requires(Robot.kPID);  
         this.DrctnIsFwd = DrctnIsFwd;
-        this.LftHldEnbl = LftHldEnbl;
         this.DrvHdngDsrd = DrvHdngDsrd;
         this.DsrdDistFeet = DsrdDistFeet;
         this.DsrdPriPwr = DsrdPriPwr;
@@ -92,7 +88,6 @@ public class AC_DriveEncdrByDistPI extends Command {
     	double DclPwr;
         double HdngCorrCmnd;
         double DrvPwrCmnd;
-        double LftPwrCmnd;
     	
     	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();    	
         Robot.kPID.managePIDDrive();
@@ -121,20 +116,6 @@ public class AC_DriveEncdrByDistPI extends Command {
                                             K_DriveCal.KDRV_r_DrvPwrDeltIncLimMax);    	
     	
   	    Robot.kDRIVE.mechDrive(0.0, DrvPwrCmdLim, HdngCorrCmnd);
-
-  	  
-	    // Keep Lift in Elevated Position
-	    if ((this.LftHldEnbl == true) &&
-	    	(Robot.kLIFT.getMidSen() == true) &&
-		    (Robot.kLIFT.getHighSen() == true)) {
-	        // PwrCube not sensed by N/C Sensor
-	    	LftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
-	    } else {
-	    	// PwrCube is sensed by N/C Sensor
-	    	LftPwrCmnd = 0.0;	
-	    }
-	    
-	    Robot.kLIFT.setSpeed(LftPwrCmnd);
 	    
 	    
 	    // Update Smart Dashboard Data
@@ -156,7 +137,6 @@ public class AC_DriveEncdrByDistPI extends Command {
   	  Robot.kAUTON.setMasterTaskCmplt(true);
       Robot.kPID.putPIDDrvPstnTgt(DrvPIDEnbl, this.DrvHdngDsrd);    	
   	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
-	  Robot.kLIFT.setSpeed(0.0);  	  
     }
 
     // Called when another command which requires one or more of the same

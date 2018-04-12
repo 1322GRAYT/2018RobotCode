@@ -2,7 +2,6 @@ package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
-import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Postion Based on Gyro Angular Position Feedback using
  * a PI Control System. */
 public class AC_TurnByGyroPI extends Command {
-	boolean LftHldEnbl;
 	private Timer RotateTmOut = new Timer();
 	private boolean RotPIDEnbl;
 	private boolean RotClckWise;
@@ -32,25 +30,19 @@ public class AC_TurnByGyroPI extends Command {
      * a PI Control System.
      *  @param1: RotClckWise - Is Desired Rotation ClockWise? (boolean)	
      *  @param2: RotPstnDsrd - Desired Angular Rotation       (double: degrees +/-)
-     *           (+ = ClockWise, - = Counter-ClockWise)
-	 *  @param3: LftHldEnbl, Enable the Lift Hold Function (boolean)
-     *           
+     *           (+ = ClockWise, - = Counter-ClockWise)         
      *   */
     public AC_TurnByGyroPI(boolean RotClckWise,
-    		               double  RotPstnDsrd,
-    		               boolean LftHldEnbl) {
+    		               double  RotPstnDsrd) {
         requires(Robot.kDRIVE);
-        requires(Robot.kLIFT);        
+        requires(Robot.kPID);        
     	this.RotClckWise = RotClckWise;
-    	this.RotPstnDsrd = RotPstnDsrd;
-    	this.LftHldEnbl =  LftHldEnbl;
-        
+    	this.RotPstnDsrd = RotPstnDsrd;        
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.kAUTON.setMasterTaskCmplt(false);
-    	
     	RotateTmOut.reset();
     	RotateTmOut.start();
     	Robot.kDRIVE.enable();
@@ -64,27 +56,11 @@ public class AC_TurnByGyroPI extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double NormPwrCmnd;
-        double LftPwrCmnd;
     	
     	// RotateTmOut updates as free-running timer.
         Robot.kPID.managePIDRotate();
         NormPwrCmnd = Robot.kPID.getPIDRotCmnd();
-    	Robot.kDRIVE.mechDrive(0, 0, NormPwrCmnd);
-    	
-    			
-	    // Keep Lift in Elevated Position
-	    if ((this.LftHldEnbl == true) &&
-	        (Robot.kLIFT.getMidSen() == true) &&
-			(Robot.kLIFT.getHighSen() == true)) {
-	        // PwrCube not sensed by N/C Sensor
-	    	LftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
-	    } else {
-	    	// PwrCube is sensed by N/C Sensor
-	    	LftPwrCmnd = 0.0;	
-	    }
-	    
-	    Robot.kLIFT.setSpeed(LftPwrCmnd);  
-    	
+    	Robot.kDRIVE.mechDrive(0, 0, NormPwrCmnd);    	
 	    
   	    // Update Smart Dashboard Data
 	    if (K_CmndCal.KCMD_b_DebugEnbl)
@@ -109,7 +85,6 @@ public class AC_TurnByGyroPI extends Command {
     	RotPIDEnbl = false;
     	Robot.kAUTON.setMasterTaskCmplt(true);
     	Robot.kDRIVE.disable();
-  	    Robot.kLIFT.setSpeed(0.0);
     }
 
     // Called when another command which requires one or more of the same

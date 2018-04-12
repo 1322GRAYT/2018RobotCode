@@ -201,8 +201,7 @@ public class PID extends Subsystem {
    
     /** Method: calcErrSgnl - Calculates Position Error taking
       * into account a symmetrical error dead-band around the
-      * zero-error point.  Also gives an indication that
-      * the Error Value is within the Dead-Band region.
+      * zero-error point.
       * @param1: DirctnIsCW - Desired Rotation is ClockWise (boolean)
       * @param2: SetPoint - Controller Target Set Point Value (double)
       * @param3: ProcessVal - Controller Actual Feedback Process Value (double)
@@ -294,8 +293,7 @@ public class PID extends Subsystem {
       * the Controller Proportional Correction Term.
       * @param1: Controller Error Signal (double)
       * @param2: Controller Proportional Gain (double)
-      * @param3: Proportional Correction Minimum Limit (double)
-      * @param4: Proportional Correction Maximum Limit (double)
+      * @param3: Proportional Correction Maximum Limit (double)
       * @return: Proportional Correction Term (double)  */
      private double calcPropTerm(double ErrSignal,
     		                     float  PropGx,

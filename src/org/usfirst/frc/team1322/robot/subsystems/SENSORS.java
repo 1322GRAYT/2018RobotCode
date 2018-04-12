@@ -199,8 +199,8 @@ public class SENSORS extends Subsystem {
     
     /* UltraSonic Position Inputs */
 	USDistRear = calcDistUSRear((float)rearUS.getAverageVoltage());    // inches
-	USDistLeft = calcDistUSLeft((float)rearUS.getAverageVoltage());    // inches
-	USDistRight = calcDistUSRight((float)rearUS.getAverageVoltage());  // inches
+	USDistLeft = calcDistUSLeft((float)leftUS.getAverageVoltage());    // inches
+	USDistRight = calcDistUSRight((float)rightUS.getAverageVoltage());  // inches
 
     }
 	
