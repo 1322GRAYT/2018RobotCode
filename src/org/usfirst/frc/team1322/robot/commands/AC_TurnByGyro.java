@@ -40,6 +40,7 @@ public class AC_TurnByGyro extends Command {
 	 */
     public AC_TurnByGyro(double turnPwr, double turnAngle, boolean liftHldEnbl) {
         requires(Robot.kDRIVE);
+        requires(Robot.kLIFT);
         this.turnPwr = turnPwr;
         this.turnAngle = turnAngle;
         this.liftHldEnbl = liftHldEnbl;

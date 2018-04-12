@@ -20,7 +20,7 @@ public class AUTON extends Subsystem {
 	private static boolean FieldDataTimedOut;             // Has the Field Data Timed Out befoe being Captured?
 	private static boolean OurSwitchLeftSide;             // Is Our Side of Our Alliance Switch on the Left Side of the Field?
 	private static boolean OurScaleLeftSide;              // Is Our Side of the Scale on the Left Side of the Field?
-	private static boolean MasterTaskCmplt;              // Trigger to Slave Parallel Tasks that Primary Task is Complete.
+	private static boolean MasterTaskCmplt;               // Trigger to Slave Parallel Tasks that Primary Task is Complete.
     
 
 	public AUTON() {

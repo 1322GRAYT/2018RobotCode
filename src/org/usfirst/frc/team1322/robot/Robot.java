@@ -11,6 +11,8 @@ import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide_Validated;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide_Validated;
 import org.usfirst.frc.team1322.robot.commands.AutoSlct_Center_Validated;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide_RightSclHold;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide_LeftSclHold;
 import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
 import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
@@ -63,9 +65,11 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		m_chooser.addDefault("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
-		m_chooser.addObject("Start Robot L-Side", new AutoSlct_LeftSide_Validated());
-		m_chooser.addObject("Start Robot R-Side", new AutoSlct_RightSide_Validated());
-		m_chooser.addObject("Start Robot Center", new AutoSlct_Center_Validated());
+		m_chooser.addObject("Start L-Side", new AutoSlct_LeftSide_Validated());
+		m_chooser.addObject("Start R-Side", new AutoSlct_RightSide_Validated());
+		m_chooser.addObject("Start Center", new AutoSlct_Center_Validated());
+		m_chooser.addObject("Start L-Side: Opp Scale Delay", new AutoSlct_LeftSide_RightSclHold());
+		m_chooser.addObject("Start R-Side: Opp Scale Delay", new AutoSlct_RightSide_LeftSclHold());		
 		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1322());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();

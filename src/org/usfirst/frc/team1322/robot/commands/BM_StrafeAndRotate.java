@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  	
 	
     /**
-      *  Command Method: AC_DriveEncdrByDist - Autonomous Command to Strafe
+      *  Command Method: BM_StrafeAndRotate - Autonomous Command to Strafe
       *  to the side and rotate to a desired position simultaneously to move
       *  sideways in an arc about point.
       *  @param1: Mode is Autonomous (Not Tele-Op)?      (boolean)	

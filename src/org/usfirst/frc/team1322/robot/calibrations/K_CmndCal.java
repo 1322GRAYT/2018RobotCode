@@ -130,7 +130,7 @@ public class K_CmndCal extends Subsystem {
 
 	/** KCMD_r_LiftPwrRaiseToHigh: Lift Motor Power Commanded when the
 	 * Raise to High Position Command is executing. */
-	public static final float KCMD_r_LiftPwrRaiseToHigh = (float)0.6; // Norm Power	 
+	public static final float KCMD_r_LiftPwrRaiseToHigh = (float)0.8; // Norm Power	 
 	
 	/** KCMD_r_LiftPwrLowerToMid: Lift Motor Power Commanded when the
 	 * Lower to Mid Position Command is executing. */

@@ -25,6 +25,7 @@ public class AC_DriveByGyroTime extends Command {
 	
     public AC_DriveByGyroTime( double strafeSpeed, double forwardSpeed, double time, boolean liftHldEnbl) {
         requires(Robot.kDRIVE);
+        requires(Robot.kLIFT);
         this.forwardSpeed = forwardSpeed;
         this.strafeSpeed = strafeSpeed;
         this.time = time;
