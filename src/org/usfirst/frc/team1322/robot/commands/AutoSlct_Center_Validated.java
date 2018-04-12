@@ -55,11 +55,11 @@ public class AutoSlct_Center_Validated extends Command {
     	if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
     		(Robot.kAUTON.getOurSwitchLeftSide() == true)) {
     		// Our Alliance Switch is On Left Side
-    		autoCommandGroup = new AM_StrtCenter_SwLeft();    		    		
+    		autoCommandGroup = new AM_StrtCenter_SwLeftAng();    		    		
     	} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
         		   (Robot.kAUTON.getOurSwitchLeftSide() == false)) {
     		// Our Alliance Switch is On Right Side
-    		autoCommandGroup = new AM_StrtCenter_SwRight();
+    		autoCommandGroup = new AM_StrtCenter_SwRightAng();
     	} else {
     		/* Timed-Out or Interrupted before Valid Data Detected,
     		   Just drive straight across the line. */

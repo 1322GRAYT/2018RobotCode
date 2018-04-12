@@ -53,8 +53,7 @@ public class AC_StrafeEncdrByDist extends Command {
     		                    float   DsrdHdngAng,    		                   
     		                    boolean DrctnIsRght,
     		                    boolean LftHldEnbl) {
-        requires(Robot.kDRIVE);        
-        requires(Robot.kLIFT);        
+        requires(Robot.kDRIVE);               
         this.DrctnIsRght = DrctnIsRght;
         this.LftHldEnbl = LftHldEnbl;
         this.DsrdDistFeet = DsrdDistFeet;

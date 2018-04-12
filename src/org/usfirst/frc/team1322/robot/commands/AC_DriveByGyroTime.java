@@ -25,7 +25,6 @@ public class AC_DriveByGyroTime extends Command {
 	
     public AC_DriveByGyroTime( double strafeSpeed, double forwardSpeed, double time, boolean liftHldEnbl) {
         requires(Robot.kDRIVE);
-        requires(Robot.kLIFT);
         this.forwardSpeed = forwardSpeed;
         this.strafeSpeed = strafeSpeed;
         this.time = time;
@@ -34,6 +33,7 @@ public class AC_DriveByGyroTime extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kAUTON.setMasterTaskCmplt(false);
     	Robot.kDRIVE.mechDrive(strafeSpeed, forwardSpeed, 0);
     	timer.reset();
     	timer.start();
@@ -76,9 +76,10 @@ public class AC_DriveByGyroTime extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	timer.stop();
+    	Robot.kAUTON.setMasterTaskCmplt(true);
     	Robot.kDRIVE.disable();
   	    Robot.kLIFT.setSpeed(0.0); 
-    	timer.stop();
     }
 
     // Called when another command which requires one or more of the same

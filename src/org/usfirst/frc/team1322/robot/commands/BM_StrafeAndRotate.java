@@ -50,7 +50,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
                               float   RotDsrdAng,
                               boolean LftHldEnbl) {
         requires(Robot.kDRIVE);        
-        // requires(Robot.kLIFT);
         this.ModeIsAuton = ModeIsAuton;
         this.RotClckWise = RotClckWise;
         this.RotDsrdAng = RotDsrdAng;

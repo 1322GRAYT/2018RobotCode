@@ -21,8 +21,10 @@ public class AM_StrtCenter_SwLeftAng extends CommandGroup {
     public AM_StrtCenter_SwLeftAng() {
     	addSequential(new AC_ResetGyro());
     	addSequential(new BM_LiftRaiseToMid());
-		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
-    	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
+		addParallel(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
+    	addSequential(new BM_LiftHoldPstn());  
+		addParallel(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
+    	addSequential(new BM_LiftHoldPstn());  		
     	addParallel(new AC_DriveEncdrByDist((float)1.0, (float)0.3, (float)0.25, (float)0.10, (float)0.0, true, false));
     	addSequential(new BM_LiftHoldPstn());  
     	addParallel(new AC_TurnByGyro(-0.7, -38.6, false)); // Turn CCW to -38.6 deg
@@ -38,8 +40,10 @@ public class AM_StrtCenter_SwLeftAng extends CommandGroup {
     	addSequential(new BM_LiftRaiseToMid());
 	    addParallel(new AC_DriveByGyroTime(0.0, 0.5, 0.5, true));
     	addSequential(new BM_LiftHoldPstn());  
-	    addSequential(new BM_ClawTiltDown());
-	    addSequential(new BM_ClawOpen());
+	    addParallel(new BM_ClawTiltDown());
+    	addSequential(new BM_LiftHoldPstn());  
+	    addParallel(new BM_ClawOpen());
+    	addSequential(new BM_LiftHoldPstn());  
 		addParallel(new AC_TimeDelay((float)0.5));
     	addSequential(new BM_LiftHoldPstn());  
 	    addSequential(new AC_DriveByGyroTime(-0.5, 0.0, 2.0, false));  // Strafe to the Left

@@ -23,9 +23,9 @@ public class AC_TimeDelay extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kAUTON.setMasterTaskCmplt(false);
     	timer.reset();
     	timer.start();
-    	Robot.kAUTON.setMasterTaskCmplt(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,7 +41,7 @@ public class AC_TimeDelay extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	timer.stop();
-    	Robot.kAUTON.setMasterTaskCmplt(false);
+    	Robot.kAUTON.setMasterTaskCmplt(true);
     }
 
     // Called when another command which requires one or more of the same

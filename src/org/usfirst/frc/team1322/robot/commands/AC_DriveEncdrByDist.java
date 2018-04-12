@@ -60,8 +60,7 @@ public class AC_DriveEncdrByDist extends Command {
     		                   float   DsrdHdngAng,    		                   
     		                   boolean DrctnIsFwd,
     		                   boolean LftHldEnbl) {
-        requires(Robot.kDRIVE);        
-        requires(Robot.kLIFT);        
+        requires(Robot.kDRIVE);              
         this.DrctnIsFwd = DrctnIsFwd;
         this.LftHldEnbl = LftHldEnbl;
         this.DsrdDistFeet = DsrdDistFeet;
