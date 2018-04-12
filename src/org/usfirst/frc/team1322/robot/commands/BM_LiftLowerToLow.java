@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,7 +17,7 @@ public class BM_LiftLowerToLow extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.kLIFT.setSpeed(-1);
+    	Robot.kLIFT.setSpeed((double)-K_CmndCal.KCMD_r_LiftPwrLowerToLow);
     }
 
     // Called repeatedly when this Command is scheduled to run
