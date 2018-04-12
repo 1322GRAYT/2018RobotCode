@@ -49,6 +49,7 @@ public class AC_TurnByGyro extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kAUTON.setMasterTaskCmplt(false);    	
         TurnTmOut.reset();
         TurnTmOut.start();
         if (K_CmndCal.KCMD_b_RotRstGyroOnInit == true) {
@@ -156,9 +157,10 @@ public class AC_TurnByGyro extends Command {
     
     // Called once after isFinished returns true
     protected void end() {
+    	TurnTmOut.stop();
+    	Robot.kAUTON.setMasterTaskCmplt(true);
     	Robot.kDRIVE.disable();
-  	    Robot.kLIFT.setSpeed(0.0);
-    	TurnTmOut.stop();	
+  	    Robot.kLIFT.setSpeed(0.0);	
     }
 
     
