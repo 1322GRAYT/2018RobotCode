@@ -30,11 +30,10 @@ public class TM_VariableClaw extends Command {
     		checkBlock();
     	}
     }
-    
-    
+
     private void checkBlock() {
     	if(Robot.kSENSORS.getBlock()) {
-    		Robot.blockTimer.stop();
+    		Robot.blockTimer.start();
 			if(Robot.blockTimer.get() >= .3) {
 				Robot.kCLAW.closeClaw();
 			}
@@ -44,7 +43,6 @@ public class TM_VariableClaw extends Command {
 		}
     }    
 
-    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
