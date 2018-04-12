@@ -24,11 +24,27 @@ public class TM_VariableClaw extends Command {
     protected void execute() {
     	if((dzify(Robot.m_oi.AuxStick.getY(Hand.kLeft)) != 0)) {
     		Robot.kSHOOTER.clawSpeedInOut(dzify(Robot.m_oi.AuxStick.getY(Hand.kLeft)));
+    		checkBlock();
     	}else {
     		Robot.kSHOOTER.clawSpeedRotate(dzify(Robot.m_oi.AuxStick.getX(Hand.kLeft)));
+    		checkBlock();
     	}
     }
+    
+    
+    private void checkBlock() {
+    	if(Robot.kSENSORS.getBlock()) {
+    		Robot.blockTimer.stop();
+			if(Robot.blockTimer.get() >= .3) {
+				Robot.kCLAW.closeClaw();
+			}
+		}else{
+			Robot.blockTimer.stop();
+			Robot.blockTimer.reset();
+		}
+    }    
 
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;

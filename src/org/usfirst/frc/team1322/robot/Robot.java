@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	
 	public static OI m_oi;
 	
-	public Timer blockTimer = new Timer();	
+	public static Timer blockTimer = new Timer();	
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -157,15 +157,6 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		kSENSORS.updateSensorData();
 		Scheduler.getInstance().run();
-		if(kSENSORS.getBlock()) {
-			blockTimer.start();
-			if(blockTimer.get() >= .3) {
-				kCLAW.closeClaw();
-			}
-		}else{
-			blockTimer.stop();
-			blockTimer.reset();
-		}
 	}
 
 	/**
