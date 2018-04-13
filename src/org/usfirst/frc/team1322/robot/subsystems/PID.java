@@ -2,6 +2,7 @@ package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_PIDCal;
+import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,6 +26,7 @@ public class PID extends Subsystem {
     double  PstnDsrd;	       // (degrees)
     double  PstnErr;           // (degrees)
     double  PstnErrAccum;      // (degrees)
+    double  FdFwdCorr;         // (percent)
     double  PropCorr;          // (percent)
     double  IntglCorr;         // (percent)
     double  PIDCmndPct;        // (percent power)
@@ -113,6 +115,10 @@ public class PID extends Subsystem {
     	return PstnErrAccum;
     }
 
+    public double getPIDRotFdFwdTerm() {
+    	return FdFwdCorr;
+    }    
+    
     public double getPIDRotPropTerm() {
     	return PropCorr;
     }
@@ -144,11 +150,12 @@ public class PID extends Subsystem {
    	    		                K_PIDCal.KROT_Deg_PosErrDB);
    	    PstnErrWithInDB = dtrmnErrInDB(PstnErr, K_PIDCal.KROT_Deg_PosErrDB); 
    	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr, K_PIDCal.KROT_Deg_IntglErrDsblMin);
+   	    FdFwdCorr = calcFdFwdTerm(PstnErr);
    	    PropCorr = calcPropTerm(PstnErr, K_PIDCal.KROT_K_PropGx,
    	    		                K_PIDCal.KROT_Pct_PropCorrMax);
    	    IntglCorr = calcIntglTerm(PstnErrAccum, K_PIDCal.KROT_K_IntglGx,
    	    		                  K_PIDCal.KROT_Pct_IntglCorrMax);
-   	    PIDCmndPct = calcPIDTotCorr(DirtcnIsClckWise, PropCorr, IntglCorr);
+   	    PIDCmndPct = calcPIDTotCorr(DirtcnIsClckWise, FdFwdCorr, PropCorr, IntglCorr);
    	    PIDCmndNorm = PIDCmndPct/100;
    	    PIDRotCondCmplt = dtrmnTgtCondMet(PstnErrWithInDB, TgtCondTmr,
    	    		                          K_PIDCal.KROT_t_PstnTgtSyncMetThrsh);
@@ -176,11 +183,12 @@ public class PID extends Subsystem {
    	    		                K_PIDCal.KDRV_Deg_PosErrDB);
    	    PstnErrWithInDB = dtrmnErrInDB(PstnErr, K_PIDCal.KDRV_Deg_PosErrDB); 
    	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr, K_PIDCal.KDRV_Deg_IntglErrDsblMin);
+   	    FdFwdCorr = 0.0;
    	    PropCorr = calcPropTerm(PstnErr, K_PIDCal.KDRV_K_PropGx,
    	    		                K_PIDCal.KDRV_Pct_PropCorrMax);
    	    IntglCorr = calcIntglTerm(PstnErrAccum, K_PIDCal.KDRV_K_IntglGx,
    	    		                  K_PIDCal.KDRV_Pct_IntglCorrMax);
-   	    PIDCmndPct = calcPIDTotCorr(DirtcnIsClckWise, PropCorr, IntglCorr);
+   	    PIDCmndPct = calcPIDTotCorr(DirtcnIsClckWise, FdFwdCorr, PropCorr, IntglCorr);
    	    PIDCmndNorm = PIDCmndPct/100;
    	    PIDDrvOnTgtTm = dtrmnDrvOnCourse(PstnErrWithInDB, TgtCondTmr);
    	    if (PIDDrvOnTgtTm > PIDDrvOnTgtTmMax)
@@ -291,6 +299,31 @@ public class PID extends Subsystem {
    	     return ErrAccumTemp;  	  
      }
 
+     
+     /** Method: calcFdFwdTerm - Calculate the Feed-Forward
+      * Correction Term.
+      * @return: Feed-Forward Correction Term (double)  */
+     private double calcFdFwdTerm(double ErrSignal) {
+     	 float ErrAxis;   // scalar
+    	 double FF_Corr;  // percent power
+     	
+     	ErrAxis = Robot.kTBLLOOKUP.AxisPieceWiseLinear_int((float)ErrSignal,
+     			                                           K_PIDCal.KROT_Deg_FdFwdErrAxis,
+     			                                           (int)10);
+     	
+     	FF_Corr = Robot.kTBLLOOKUP.XY_Lookup_flt(K_PIDCal.KROT_Pct_FdFwdCorr,
+     			                                 ErrAxis,
+     		   	                                 (int)10);
+     	
+     	if (FF_Corr < 0.0) {
+     		FF_Corr = 0.0;
+     	} else if (FF_Corr > 100.0) {
+     		FF_Corr = 100.0;;
+     	}
+
+     	return FF_Corr;
+     }
+     
 	
     /** Method: calcPropTerm - Calculate and Limit
       * the Controller Proportional Correction Term.
@@ -341,15 +374,17 @@ public class PID extends Subsystem {
      /** Method: calcPIDTotCorr - Calculate Total Proportional
        * - Integral Controller Correction.
        * @param1: Desired Rotation is ClockWise (boolean)
-       * @param2: Proportional Correction Term - Percent Correction (double)
-       * @param3: Integral Correction Term - Percent Correction (double)
+       * @param2: Feed-Forward Correction Term - Percent Correction (double)
+       * @param3: Proportional Correction Term - Percent Correction (double)
+       * @param4: Integral Correction Term - Percent Correction (double)
        * @return: Total P-I Correction Term - Percent Correction (double)  */
      private double calcPIDTotCorr(boolean DirctnIsCW,
+    		                       double  FdFwdTerm,
     		                       double  PropTerm,
     		                       double  IntglTerm) {
      	double CmndPct; // %
      	
-     	CmndPct = PropTerm + IntglTerm;
+     	CmndPct = FdFwdTerm + PropTerm + IntglTerm;
  	    
  	    if (CmndPct > 100) {
  	    	CmndPct = 100;
@@ -428,6 +463,7 @@ public class PID extends Subsystem {
          PstnErr = 0.0;
          PstnErrWithInDB = false;
          PstnErrAccum = 0.0;
+         FdFwdCorr = 0.0;
    	     PropCorr = 0.0;
    	     IntglCorr = 0.0;
    	     PIDCmndPct =  0.0;

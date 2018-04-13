@@ -102,6 +102,41 @@ public class K_PIDCal {
   /* Drive Rotate PID Control Calibrations                         */
   /*****************************************************************/	    
   
+  /** KROT_Deg_FdFwdErrAxis: Angle Error Axis for the Robot
+    * Rotation Control FeedFoward Correction Term for PI
+    * Control (Degrees). */
+ public static final int KROT_Deg_FdFwdErrAxis[] = new int[] 
+     {
+	     (int)0,
+         (int)1,
+         (int)2,
+         (int)5,
+   	     (int)10,
+         (int)15,
+         (int)20,
+         (int)30,
+         (int)45,
+         (int)90
+	  };	  
+	  
+ 
+ /** KROT_Pct_FdFwdCorr: Target Percent Power Axis for the Target
+  * Power Launch Profile Shaping Tables. (Percent Power). */
+ public static final float KROT_Pct_FdFwdCorr[] = new float[] 
+     {
+	     (float)0.0,
+         (float)0.0,
+         (float)5.0,
+         (float)10.0,
+   	     (float)20.0,
+         (float)30.0,
+         (float)40.0,
+         (float)45.0,
+         (float)50.0,
+         (float)50.0
+	  };	  
+  
+  
   /** KROT_Deg_PosErrDB: Drive System Rotate Position Error DeadBand (degree). */
   public static final float KROT_Deg_PosErrDB = (float) 1.5;
 
@@ -111,22 +146,22 @@ public class K_PIDCal {
   public static final float KROT_Deg_IntglErrDsblMin = (float) 30.0;
   
   /** KROT_K_PropGx: Drive System Rotate PID Controls Proportional Gain. */
-  public static final float KROT_K_PropGx = (float) 1.0;
+  public static final float KROT_K_PropGx = (float) 3.0;
   
   /** KROT_K_IntglGx: Drive System Rotate PID Controls Integral Gain. */
-  public static final float KROT_K_IntglGx = (float) 0.50;
+  public static final float KROT_K_IntglGx = (float) 1.0;
  
   /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Proportional
    * Correction Max Limit. (percent) */
-  public static final float KROT_Pct_PropCorrMax = (float) 90.0;
+  public static final float KROT_Pct_PropCorrMax = (float) 45.0;
   
-  /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Intgral
+  /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Integral
    * Correction Max Limit. (percent) */
-  public static final float KROT_Pct_IntglCorrMax = (float) 50.0;
+  public static final float KROT_Pct_IntglCorrMax = (float) 40.0;
   
   /** KROT_t_PstnTgtSyncMetThrsh: Amount of time that the Position Error must
    * be held within the Error DeadBand in order for the Drive System Rotate
    * PID Controls to consider the Position Target conditions met. (seconds) */
-  public static final float KROT_t_PstnTgtSyncMetThrsh = (float) 0.250;
+  public static final float KROT_t_PstnTgtSyncMetThrsh = (float) 0.200;
    
 }

@@ -103,18 +103,22 @@ public class AC_TurnByGyroPI extends Command {
     	SmartDashboard.putNumber("Actual Rotate Position : ", Robot.kPID.getPIDRotPstnAct());
     	SmartDashboard.putNumber("Position Error: ", Robot.kPID.getPIDRotPstnErr());
     	SmartDashboard.putNumber("Position Error Accumulator : ", Robot.kPID.getPIDRotErrAccum());
+    	SmartDashboard.putNumber("Feed-Forward Term : ", Robot.kPID.getPIDRotFdFwdTerm());
     	SmartDashboard.putNumber("Proportional Term : ", Robot.kPID.getPIDRotPropTerm());
     	SmartDashboard.putNumber("Integral Term : ", Robot.kPID.getPIDRotIntglTerm());
     	SmartDashboard.putNumber("PID Percent Power : ", Robot.kPID.getPIDRotPIDCmndPct());
     	SmartDashboard.putNumber("PID Power Command : ", Robot.kPID.getPIDRotCmnd());
     	SmartDashboard.putBoolean("PID Target Condition Met : ", Robot.kPID.getPIDRotTgtCondMet());    	
     	SmartDashboard.putNumber("PID Time Out : ", RotateTmOut.get());
+
+    	
     	
     	System.out.println("Dsrd Rotate Clockwise : " + RotClckWise);
     	System.out.println("Desired Rotate Position : " + RotPstnDsrd);
     	System.out.println("Actual Rotate Position : " + Robot.kPID.getPIDRotPstnAct());
     	System.out.println("Position Error: " + Robot.kPID.getPIDRotPstnErr());
     	System.out.println("Position Error Accumulator : " + Robot.kPID.getPIDRotErrAccum());
+    	System.out.println("Feed-Forward Term : " + Robot.kPID.getPIDRotFdFwdTerm());
     	System.out.println("Proportional Term : " + Robot.kPID.getPIDRotPropTerm());
     	System.out.println("Integral Term : " + Robot.kPID.getPIDRotIntglTerm());
     	System.out.println("PID Percent Power : " + Robot.kPID.getPIDRotPIDCmndPct());
