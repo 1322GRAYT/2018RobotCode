@@ -143,7 +143,7 @@ public class PID extends Subsystem {
    	    PstnErr = calcErrSignal(DirtcnIsClckWise, PstnDsrd, PstnAct,
    	    		                K_PIDCal.KROT_Deg_PosErrDB);
    	    PstnErrWithInDB = dtrmnErrInDB(PstnErr, K_PIDCal.KROT_Deg_PosErrDB); 
-   	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr);
+   	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr, K_PIDCal.KROT_Deg_IntglErrDsblMin);
    	    PropCorr = calcPropTerm(PstnErr, K_PIDCal.KROT_K_PropGx,
    	    		                K_PIDCal.KROT_Pct_PropCorrMax);
    	    IntglCorr = calcIntglTerm(PstnErrAccum, K_PIDCal.KROT_K_IntglGx,
@@ -175,7 +175,7 @@ public class PID extends Subsystem {
    	    PstnErr = calcErrSignal(DirtcnIsClckWise, PstnDsrd, PstnAct,
    	    		                K_PIDCal.KDRV_Deg_PosErrDB);
    	    PstnErrWithInDB = dtrmnErrInDB(PstnErr, K_PIDCal.KDRV_Deg_PosErrDB); 
-   	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr);
+   	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr, K_PIDCal.KDRV_Deg_IntglErrDsblMin);
    	    PropCorr = calcPropTerm(PstnErr, K_PIDCal.KDRV_K_PropGx,
    	    		                K_PIDCal.KDRV_Pct_PropCorrMax);
    	    IntglCorr = calcIntglTerm(PstnErrAccum, K_PIDCal.KDRV_K_IntglGx,
@@ -262,31 +262,34 @@ public class PID extends Subsystem {
       * signal for use by the Integral Controller.
       * @param1: Controller Accumulated Error Signal (double)
       * @param2: Controller Error Signal (double)
+      * @param3: Min Error Signal Thresh Aboge which Error will not
+      *          be accumulated.
       * @return: Updated Controller Accumulated Error Signal (double)  */
      private double calcErrAccum(double ErrAccum,
-    		                     double ErrSignal) {
-    	double  ErrAccumTemp;
-    	boolean SignFlipRst = false;
+    		                     double ErrSignal,
+    		                     double ErrDsblThrshMin) {
+    	 double  ErrAccumTemp;
+    	 double  ErrSignalAbs;
+    	 boolean SignFlipRst = false;
+
+         ErrSignalAbs = Math.abs(ErrSignal);
+    	
+  	     if ((ErrAccum > 0) && (ErrSignal < 0)) {
+  	         SignFlipRst = true;
+  	     } else if ((ErrAccum < 0) && (ErrSignal > 0)) {
+  	         SignFlipRst = true;
+  	     }
         
-  	    if ((ErrAccum > 0) && (ErrSignal < 0))
-  	        {
-  	        SignFlipRst = true;
-  	        }
-  	    else if ((ErrAccum < 0) && (ErrSignal > 0))
-  	        {
-  	        SignFlipRst = true;
-  	        }
-        
-  	    if(SignFlipRst == true)
-  	        {
-  		    ErrAccumTemp = (double)0.0;  
-  	        }
-  	    else  // (SignFlipRst == false) 
-  	        {
-  		    ErrAccumTemp = ErrAccum + ErrSignal;  
-      	    }	    
-   	   return ErrAccumTemp;  	  
-       }
+  	     if(SignFlipRst == true) {
+  	         ErrAccumTemp = (double)0.0;  
+  	     } else if (ErrSignalAbs >= ErrDsblThrshMin) {
+  	    	 ErrAccumTemp = ErrAccum;
+  	     } else {
+  	         // (SignFlipRst == false) 
+  	         ErrAccumTemp = ErrAccum + ErrSignal;  
+         }	    
+   	     return ErrAccumTemp;  	  
+     }
 
 	
     /** Method: calcPropTerm - Calculate and Limit

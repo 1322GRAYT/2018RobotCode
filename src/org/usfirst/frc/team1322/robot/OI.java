@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	//Create Joysticks
 	public final static XboxController DriverStick = new XboxController(RobotMap.USB_Driver),
-			  						   AuxStick    = new XboxController(RobotMap.USB_AUX);
+			  				           AuxStick    = new XboxController(RobotMap.USB_AUX);
 	//Create Buttons
 	private Button
 					auxLeftBumper,
@@ -54,6 +54,7 @@ public class OI {
 	public  LTrigger auxLTrigger;
 	private DrvRTrigger drvRTrigger;
 	private DrvLTrigger drvLTrigger;
+	private BlockDtctTrig blockDtctTrigger;
 
 	
 	public OI(){		
@@ -70,7 +71,7 @@ public class OI {
 		auxLTrigger = 		new LTrigger();				     //Left Trigger
 		drvRTrigger = 		new DrvRTrigger();			     //Driver Right Trigger
 		drvLTrigger = 		new DrvLTrigger();			     //Driver Left Trigger
-
+		blockDtctTrigger =  new BlockDtctTrig();         // Block in Claw Detection Trigger
 		
 		
 		//Assign Actions
@@ -93,7 +94,7 @@ public class OI {
 		drvLTrigger.whileActive(new BM_StrafeAndRotate(false, false,    //Sideways Arc: Strafe Right, Rotate Left
                                                        (float)-90.0,
                                                        false));
-
+		blockDtctTrigger.toggleWhenActive(new BM_ClawClose());          //Detect Block and Close Claw in Tele-Op
 	}
 	
 	

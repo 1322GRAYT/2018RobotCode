@@ -64,12 +64,12 @@ public class K_CmndCal extends Subsystem {
 	/** KCMD_t_RotSafetyTmOut: Amount of Time that must elapse before
      * a rotate command will cancel out due to taking too long to reach
      * the target angle due to some system loss. */
-	public static final float KCMD_t_RotSafetyTmOut = (float)1.0; // sec 	 
+	public static final float KCMD_t_RotSafetyTmOut = (float)1.75; // sec 	 
 		
     /** KCMD_t_RotSafetyTmOutPI: Amount of Time that must elapse before
      * a P-I Controlled rotate command will cancel out due to taking too
      * long to reach the target angle due to some system loss. */
-	public static final float KCMD_t_RotSafetyTmOutPI = (float)1.5; // sec 
+	public static final float KCMD_t_RotSafetyTmOutPI = (float)5.0; // sec 
 
 	
 	/**************************/
@@ -83,7 +83,7 @@ public class K_CmndCal extends Subsystem {
 	/** KCMD_r_SideArcRotPwrRight: Rotate Motor Normalized Power (Abs Value) for
 	  * a Right Sideways Arc for a Strafe and Rotate Maneuver
 	  * (Strafe Left, Rotate Right). */
-	public static final float KCMD_r_SideArcRotPwrRight = (float)0.7; // percent
+	public static final float KCMD_r_SideArcRotPwrRight = (float)0.5; // percent
 
 	/** KCMD_r_SideArcRotPwrLeft: Rotate Motor Normalized Power (Abs Value) for
 	  * a Left Sideways Arc for a Strafe and Rotate Maneuver

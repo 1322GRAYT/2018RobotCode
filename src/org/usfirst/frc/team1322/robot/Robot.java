@@ -51,8 +51,6 @@ public class Robot extends IterativeRobot {
 	public static final USERLIB kTBLLOOKUP = new USERLIB();
 	
 	public static OI m_oi;
-	
-	public static Timer blockTimer = new Timer();	
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -78,7 +76,6 @@ public class Robot extends IterativeRobot {
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
 		if (RobotBase.isReal()) {
 		  CameraServer.getInstance().startAutomaticCapture().setResolution(640, 320);
-		blockTimer.reset();
 		}
 	}
 
@@ -143,7 +140,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		kLIFT.disengageJammer();
-		blockTimer.reset();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

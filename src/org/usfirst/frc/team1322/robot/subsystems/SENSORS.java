@@ -170,7 +170,7 @@ public class SENSORS extends Subsystem {
 	 * @return Have Block
 	 */
 	public boolean getBlock() {
-		return blockDetector.get();
+		return (!(blockDetector.get()));
 	}
 
 	public void initDefaultCommand() {

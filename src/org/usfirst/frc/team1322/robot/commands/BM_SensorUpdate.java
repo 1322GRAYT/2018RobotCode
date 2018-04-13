@@ -28,7 +28,7 @@ public class BM_SensorUpdate extends Command {
     	
     	//Set SmartDashboard values
     	//PDP Current
-    	/*SmartDashboard.putBoolean("Block in Claw: ", Robot.kSENSORS.getBlock());
+    	/*
     	SmartDashboard.putNumber("Lift2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift2));
     	SmartDashboard.putNumber("Lift1 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpLift1));
     	SmartDashboard.putNumber("rRDrive2 Current: ", Robot.kSENSORS.getPdpCurrent(RobotMap.pdpRRDrive2));
@@ -57,7 +57,10 @@ public class BM_SensorUpdate extends Command {
     	SmartDashboard.putNumberArray("Encoder RPM : ", Robot.kSENSORS.getEncodersRPM());
     	SmartDashboard.putNumberArray("Wheel RPM : ", Robot.kSENSORS.getWhlsRPM());
     	SmartDashboard.putNumberArray("Wheel Velocity : ", Robot.kSENSORS.getWhlsVel());
-
+    	//Block
+    	SmartDashboard.putBoolean("Block in Claw: ", Robot.kSENSORS.getBlock());
+    	    	
+    	
     	/*//Field Data
     	SmartDashboard.putString("FieldData : ", Robot.kAUTON.getFieldData());
         SmartDashboard.putBoolean("Our Switch Left? : ", Robot.kAUTON.getOurSwitchLeftSide());
@@ -78,7 +81,7 @@ public class BM_SensorUpdate extends Command {
 	    	
 	    	EncdrCnt = Robot.kSENSORS.getEncodersCnt(); 
 	    	System.out.print("Raw Encoder Counts Ref A : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlA_Slct]);
-	    	System.out.print("Raw Encoder Counts Ref B : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct]);
+	    	System.out.println("Raw Encoder Counts Ref B : " + EncdrCnt[K_SensorCal.KWSS_e_RefAutonDrvWhlB_Slct]);
 	    	
 	    	System.out.println("FieldData : " + Robot.kAUTON.getFieldData());
 	     	System.out.println("Our Switch Left? : " + Robot.kAUTON.getOurSwitchLeftSide());
@@ -86,6 +89,8 @@ public class BM_SensorUpdate extends Command {
 	    	System.out.println("Our Switch Captured? : " + Robot.kAUTON.getSwitchDataCaptured());
 	    	System.out.println("Our Scale Captured? : " + Robot.kAUTON.getScaleDataCaptured());
 	    	System.out.println("Our Switch Captured? : " + Robot.kAUTON.getFieldDataTimedOut());
+	    	//Block
+	    	System.out.println("Block in Claw? : " + Robot.kSENSORS.getBlock());
 	    }
     	
     }
