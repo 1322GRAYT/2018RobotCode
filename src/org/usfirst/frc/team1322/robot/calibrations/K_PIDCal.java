@@ -80,7 +80,7 @@ public class K_PIDCal {
   /** KDRV_Deg_IntglErrDsblMin: Drive System Course Heading Absolute Error
    * Threshold outside of which the Integral Correction will be disabled.
    * Do not start applying Integral Correction until within this band. (degree) */
-  public static final float KDRV_Deg_IntglErrDsblMin = (float) 30.0;
+  public static final float KDRV_Deg_IntglErrDsblMin = (float) 45.0;
   
   /** KDRV_K_PropGx: Drive System Course Heading PID Controls Proportional Gain. */
   public static final float KDRV_K_PropGx = (float) 1.0;
@@ -108,7 +108,7 @@ public class K_PIDCal {
   /** KROT_Deg_IntglErrDsblMin: Drive System Rotate Absolute Error Threshold
    * outside of which the Integral Correction will be disabled.  Do not start
    * applying Integral Correction until within this band. (degree) */
-  public static final float KROT_Deg_IntglErrDsblMin = (float) 15.0;
+  public static final float KROT_Deg_IntglErrDsblMin = (float) 30.0;
   
   /** KROT_K_PropGx: Drive System Rotate PID Controls Proportional Gain. */
   public static final float KROT_K_PropGx = (float) 1.0;

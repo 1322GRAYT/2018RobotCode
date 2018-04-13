@@ -267,7 +267,7 @@ public class PID extends Subsystem {
       * @return: Updated Controller Accumulated Error Signal (double)  */
      private double calcErrAccum(double ErrAccum,
     		                     double ErrSignal,
-    		                     double ErrDsblThrshMin) {
+    		                     float ErrDsblThrshMin) {
     	 double  ErrAccumTemp;
     	 double  ErrSignalAbs;
     	 boolean SignFlipRst = false;
@@ -282,7 +282,7 @@ public class PID extends Subsystem {
         
   	     if(SignFlipRst == true) {
   	         ErrAccumTemp = (double)0.0;  
-  	     } else if (ErrSignalAbs >= ErrDsblThrshMin) {
+  	     } else if (ErrSignalAbs >= (double)ErrDsblThrshMin) {
   	    	 ErrAccumTemp = ErrAccum;
   	     } else {
   	         // (SignFlipRst == false) 
