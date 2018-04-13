@@ -15,12 +15,12 @@ public class AUTON extends Subsystem {
 	// Variable Declarations
 	private static DriverStation.Alliance AllianceColor;  // Our Alliance Color	
 	private static String  FieldData;                     // String of Field Data
-	private static boolean SwitchDataCaptured;            // Has the Switch Data been Captured for this Autonomous Mode?
-	private static boolean ScaleDataCaptured;             // Has the Scale  Data been Captured for this Autonomous Mode?
-	private static boolean FieldDataTimedOut;             // Has the Field Data Timed Out befoe being Captured?
-	private static boolean OurSwitchLeftSide;             // Is Our Side of Our Alliance Switch on the Left Side of the Field?
-	private static boolean OurScaleLeftSide;              // Is Our Side of the Scale on the Left Side of the Field?
-	private static boolean MasterTaskCmplt;               // Trigger to Slave Parallel Tasks that Primary Task is Complete.
+	private static boolean SwitchDataCaptured = false;    // Has the Switch Data been Captured for this Autonomous Mode?
+	private static boolean ScaleDataCaptured  = false;    // Has the Scale  Data been Captured for this Autonomous Mode?
+	private static boolean FieldDataTimedOut  = false;    // Has the Field Data Timed Out befoe being Captured?
+	private static boolean OurSwitchLeftSide  = false;    // Is Our Side of Our Alliance Switch on the Left Side of the Field?
+	private static boolean OurScaleLeftSide   = false;    // Is Our Side of the Scale on the Left Side of the Field?
+	private static boolean MasterTaskCmplt    = false;    // Trigger to Slave Parallel Tasks that Primary Task is Complete.
     
 
 	public AUTON() {
