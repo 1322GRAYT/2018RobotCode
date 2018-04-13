@@ -1,12 +1,12 @@
 package org.usfirst.frc.team1322.robot.subsystems;
 
+import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.TC_LiftMotor;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -104,18 +104,47 @@ public class LIFT extends Subsystem {
     
     /**
      * Method: setSpeed - Set the Motor Speed of the Lift System Motor    
-     * Note: When the low/high sensors return true, they aren't activated
      * @param: speed What speed you want the lift to go
      */
     public void setSpeed(double speed) {
+    	boolean EnblMtr;
     	double upPower = dzify(speed);
-    	if((lowSen.get() && highSen.get()) || //If Low Sensor Isn't Triggered and High Sensor isn't Triggered
-    	   (!lowSen.get() && upPower > 0.31) || //If Low Sensor is triggered, but power is greater than 3
-    	   (!highSen.get() && upPower < -0.31)) //If High Sensor is triggered but power is less than -3
-    	  {
+
+    	if (Robot.kSENSORS.getLiftHighPstnDtctd() == true) {
+    	    // Lift High Position Detected;
+    		if (upPower < -0.31) {
+    			// Request Reverse Motor Direction
+    			EnblMtr = true;
+    			Robot.kSENSORS.putLiftHighPstnDtctd(false);
+    		} else {
+    			// Disable Lift
+    			EnblMtr = false;
+    		}
+    	} else if (Robot.kSENSORS.getLiftLowPstnDtctd() == true) {
+    	    // Lift Low Position Detected;	
+    		if (upPower > 0.31) {
+    			// Request Reverse Motor Direction
+    			EnblMtr = true;
+    			Robot.kSENSORS.putLiftLowPstnDtctd(false);
+    		} else {
+    			// Disable Lift
+    			EnblMtr = false; 
+    		}
+    	} else {
+    		// Neither Low nor High Pstn Dtctd, Good to Go
+    		EnblMtr = true;    		
+    	}
+    	
+    	
+    	if (EnblMtr == true) {
+    		  //Lift Motor Connections Are Reversed
 	    	  lift1.set(ControlMode.PercentOutput, -upPower);
 	    	  lift2.set(ControlMode.PercentOutput, -upPower);
-    	  }
+    	} else {
+	    	  lift1.set(ControlMode.PercentOutput, 0.0);
+	    	  lift2.set(ControlMode.PercentOutput, 0.0);    		
+    	}	
+
     }
    
     /**

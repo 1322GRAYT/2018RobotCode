@@ -110,6 +110,9 @@ public class Robot extends IterativeRobot {
 		kAUTON.resetFieldDataCapture();
 		kAUTON.updateAllianceColor();
 		kAUTON.updateFieldData();
+    	kSENSORS.putLiftHighPstnDtctd(false); 
+    	kSENSORS.putLiftLowPstnDtctd(false); 
+    	kSENSORS.putLiftMidPstnDtctd(false); 
 		kLIFT.disengageJammer();
 
 		m_autonomousCommand = m_chooser.getSelected();

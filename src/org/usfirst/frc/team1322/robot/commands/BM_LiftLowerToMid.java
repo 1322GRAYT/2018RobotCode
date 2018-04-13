@@ -23,20 +23,30 @@ public class BM_LiftLowerToMid extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if(!Robot.kLIFT.getLowSen()) {
-    		Robot.kLIFT.setSpeed(1);
+    protected void execute() {   	
+    	if(Robot.kSENSORS.getLiftLowPstnDtctd() == true) {
+        	Robot.kLIFT.setSpeed((double)K_CmndCal.KCMD_r_LiftPwrRaiseToMid);
+        	Robot.kSENSORS.putLiftLowPstnDtctd(false);
+    	} else {
+        	Robot.kLIFT.setSpeed((double)-K_CmndCal.KCMD_r_LiftPwrLowerToMid);    		
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.kLIFT.getMidSen();
+    	boolean finished = false;
+    	
+    	if (Robot.kSENSORS.getLiftMidPstnDtctd() == true) {
+    		finished = true;
+    	}
+    	
+        return (finished);
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.kLIFT.setSpeed(0);
+    	Robot.kSENSORS.putLiftMidPstnDtctd(false); 
     }
 
     // Called when another command which requires one or more of the same

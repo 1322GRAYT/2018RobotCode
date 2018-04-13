@@ -40,10 +40,17 @@ public class SENSORS extends Subsystem {
 	private double WhlRPM[] = new double[4];        // (rpm)
 	private double WhlVel[] = new double[4];        // (feet/sec)
 
+    //Ultra Sonic Sensor Vars
 	private float  USDistRear;
 	private float  USDistLeft;
 	private float  USDistRight;
-
+	
+    //Lift Position Vars
+	private boolean LiftHighPstnDtctd = false;
+	private boolean LiftLowPstnDtctd = false;
+	private boolean LiftMidPstnDtctd = false;
+	
+	
 	
     public void setGlobalBaud() {
       AnalogInput.setGlobalSampleRate(9600);
@@ -173,6 +180,62 @@ public class SENSORS extends Subsystem {
 		return (!(blockDetector.get()));
 	}
 
+	/**
+	 * Method - getLiftHighPstnDtctd: Gets the value of the 
+	 * lift HIGH position detection indication.
+	 * @return Lift High Position Detected Indication
+	 */
+	public boolean getLiftHighPstnDtctd() {
+		return (LiftHighPstnDtctd);
+	}
+
+	/**
+	 * Method - getLiftLowPstnDtctd: Gets the value of the 
+	 * lift LOW position detection indication.
+	 * @return Lift Low Position Detected Indication
+	 */
+	public boolean getLiftLowPstnDtctd() {
+		return (LiftLowPstnDtctd);
+	}
+	
+	/**
+	 * Method - getLiftMidPstnDtctd: Gets the value of the 
+	 * lift MID position detection indication.
+	 * @return Lift Mid Position Detected Indication
+	 */
+	public boolean getLiftMidPstnDtctd() {
+		return (LiftMidPstnDtctd);
+	}
+	
+		
+	/**
+	 * Method - putLiftHighPstnDtctd: Puts the value of the 
+	 * lift HIGH position detection indication.
+	 * @return Lift High Position Detected Indication
+	 */
+	public void putLiftHighPstnDtctd(boolean PstnDtctd) {
+		LiftHighPstnDtctd = PstnDtctd;
+	}
+
+	/**
+	 * Method - getLiftLowPstnDtctd: Puts the value of the 
+	 * lift LOW position detection indication.
+	 * @return Lift High Position Detected Indication
+	 */
+	public void putLiftLowPstnDtctd(boolean PstnDtctd) {
+		LiftLowPstnDtctd = PstnDtctd;
+	}
+	
+	/**
+	 * Method - getLiftMidPstnDtctd: Puts the value of the 
+	 * lift MID position detection indication.
+	 * @return Lift Mid Position Detected Indication
+	 */
+	public void putLiftMidPstnDtctd(boolean PstnDtctd) {
+		LiftMidPstnDtctd = PstnDtctd;
+	}
+	
+	
 	public void initDefaultCommand() {
 		setDefaultCommand(new BM_SensorUpdate());
     }

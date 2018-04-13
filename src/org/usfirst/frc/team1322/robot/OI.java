@@ -8,7 +8,6 @@
 
 package org.usfirst.frc.team1322.robot;
 
-import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.commands.BM_LiftShiftHiGr;
 import org.usfirst.frc.team1322.robot.commands.BM_LiftShiftLoGr;
@@ -23,6 +22,9 @@ import org.usfirst.frc.team1322.robot.commands.BM_StrafeAndRotate;
 import org.usfirst.frc.team1322.robot.commands.BM_ShootInBlock;
 import org.usfirst.frc.team1322.robot.commands.BM_ShootOutBlock;
 import org.usfirst.frc.team1322.robot.commands.TC_RunWheelsRotate;
+import org.usfirst.frc.team1322.robot.commands.BM_LiftDtctHighPstn;
+import org.usfirst.frc.team1322.robot.commands.BM_LiftDtctLowPstn;
+import org.usfirst.frc.team1322.robot.commands.BM_LiftDtctMidPstn;
 import org.usfirst.frc.team1322.robot.triggers.*;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -54,7 +56,10 @@ public class OI {
 	public  LTrigger auxLTrigger;
 	private DrvRTrigger drvRTrigger;
 	private DrvLTrigger drvLTrigger;
-	private BlockDtctTrig blockDtctTrigger;
+	private BlockDtctTrig blockDtctTrig;
+	private LiftHighTrig  liftHighTrig;
+	private LiftLowTrig   liftLowTrig;
+	private LiftMidTrig   liftMidTrig;
 
 	
 	public OI(){		
@@ -71,7 +76,10 @@ public class OI {
 		auxLTrigger = 		new LTrigger();				     //Left Trigger
 		drvRTrigger = 		new DrvRTrigger();			     //Driver Right Trigger
 		drvLTrigger = 		new DrvLTrigger();			     //Driver Left Trigger
-		blockDtctTrigger =  new BlockDtctTrig();         // Block in Claw Detection Trigger
+		blockDtctTrig =     new BlockDtctTrig();             // Block in Claw Detection Trigger
+		liftHighTrig =      new LiftHighTrig();              // Lift High Position Trigger
+		liftLowTrig =       new LiftLowTrig();               // Lift Low Position Trigger
+		liftMidTrig =       new LiftMidTrig();               // Lift Mid Position Trigger
 		
 		
 		//Assign Actions
@@ -94,7 +102,10 @@ public class OI {
 		drvLTrigger.whileActive(new BM_StrafeAndRotate(false, false,    //Sideways Arc: Strafe Right, Rotate Left
                                                        (float)-90.0,
                                                        false));
-		blockDtctTrigger.toggleWhenActive(new BM_ClawClose());          //Detect Block and Close Claw in Tele-Op
+		blockDtctTrig.toggleWhenActive(new BM_ClawClose());             //Detect Block and Close Claw in Tele-Op
+		liftHighTrig.toggleWhenActive(new BM_LiftDtctHighPstn());       //Detect Lift High Position
+		liftLowTrig.toggleWhenActive(new BM_LiftDtctLowPstn());         //Detect Lift Low Position
+		liftMidTrig.toggleWhenActive(new BM_LiftDtctMidPstn());         //Detect Lift Mid Position
 	}
 	
 	
