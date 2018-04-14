@@ -2,7 +2,6 @@ package org.usfirst.frc.team1322.robot.subsystems;
 
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_PIDCal;
-import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
