@@ -27,14 +27,15 @@ public class AM_StrtRightSide_SwLeftSclLeft extends CommandGroup {
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
      	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
     	addSequential(new AC_DriveEncdrByDist((float)15.6, (float)0.9, (float)1.0, (float)0.10, (float)-90.0, true, true));
+	    addSequential(new BM_ClawTiltDown());
+	    addSequential(new BM_LiftRaiseToHigh());
      	addSequential(new AC_TurnByGyro(0.9, 0.0, true));  // Turn CW to 0 deg       	
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
      	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
-	    addSequential(new BM_ClawTiltDown());
 	    addSequential(new BM_LiftRaiseToHigh());
 	    addSequential(new AC_DriveEncdrByDist((float)3.0, (float)0.5, (float)0.75, (float)0.10, (float)0.0, true, true));
 	    addSequential(new BM_ShootOutBlock(K_CmndCal.KCMD_t_ShootPrdOut));
-		addSequential(new AC_TimeDelay((float)0.5));
+		addSequential(new AC_TimeDelay((float)0.250));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	addSequential(new AC_DriveEncdrByDist((float)1.5, (float)0.5, (float)0.5, (float)0.10, (float)0.0, false, true));   	    	
     	System.out.println("StrtRightSide_SwLeftSclLeft");

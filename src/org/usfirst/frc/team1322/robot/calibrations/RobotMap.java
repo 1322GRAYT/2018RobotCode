@@ -94,7 +94,7 @@ public class RobotMap {
 	public static final double deadzone = 0.2;
 	public static final double lowDeadzone = 0.1;
 	public static final double autonDriveCorrectionSpeed = 0.2;
-	//How Many degrees of give we want to give before correction is reqired
+	//How Many degrees of give we want to give before correction is required
 	public static final double autonDriveLeeway = 3;
 	public static final double autonDriveAngleLeeway = 1;
 	

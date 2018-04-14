@@ -29,8 +29,10 @@ public class AM_StrtRightSide_SwRight extends CommandGroup {
 	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
 	    addSequential(new BM_ClawTiltDown());
 	    addSequential(new BM_ClawOpen());
-    	Robot.kAUTON.setMasterTaskCmplt(false);
+		addParallel(new AC_TimeDelay((float)0.250));
     	addSequential(new BM_LiftHoldPstn()); 
+    	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
+    	addSequential(new AC_DriveEncdrByDist((float)2.0, (float)0.5, (float)0.5, (float)0.10, (float)-90.0, false, true));
     	System.out.println("StrtRightSide_SwRight");
     }   
 
