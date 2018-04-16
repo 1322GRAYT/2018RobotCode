@@ -288,8 +288,8 @@ public class PID extends Subsystem {
   	     }
         
   	     if(SignFlipRst == true) {
-  	         ErrAccumTemp = (double)0.0;  
-  	     } else if (ErrSignalAbs >= (double)ErrDsblThrshMin) {
+  	         ErrAccumTemp = (double)0.0;
+	     } else if (ErrSignalAbs >= (double)ErrDsblThrshMin) {
   	    	 ErrAccumTemp = ErrAccum;
   	     } else {
   	         // (SignFlipRst == false) 

@@ -23,6 +23,12 @@ public class K_CmndCal extends Subsystem {
       * will assume a drive straight command.  */
 	 public static final float KCMD_t_FieldDataTmOut = (float)0.200; // sec	  
 	 
+	/** KCMD_b_CenterAnglePtrnEnbl: Enables the use of the Angle
+	 * Pattern Autonomous Pattern when the Robot Starts in the Center
+	 * instead of the pattern using right angle turns. */
+	 public static final boolean KCMD_b_CenterAnglePtrnEnbl = false;
+
+	 
 
 	    /**************************/
 		/*    Drive Motor Control    */
@@ -70,7 +76,8 @@ public class K_CmndCal extends Subsystem {
      * a P-I Controlled rotate command will cancel out due to taking too
      * long to reach the target angle due to some system loss. */
 	public static final float KCMD_t_RotSafetyTmOutPI = (float)5.0; // sec 
-
+	
+	
 	
 	/**************************/
 	/*  Sideways Arc Control  */

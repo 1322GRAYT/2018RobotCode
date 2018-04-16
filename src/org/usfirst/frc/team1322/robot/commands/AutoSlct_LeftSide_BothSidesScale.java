@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
-  * Class: AutoSlct_RightSide - Starting with the Robot in
- * the Far Right position, performs the Autonomous Mode
- * Selection based on the Field Data from the FMS Data.
+  * Class: AutoSlct_LeftSide_BothSidesScale - Starting with
+  * the Robot in the Far Left position, performs the Autonomous
+  * Mode Selection based on the Field Data from the FMS Data.
   */
-public class AutoSlct_RightSide_Validated extends Command {
+public class AutoSlct_LeftSide_BothSidesScale extends Command {
 	private Timer TmOutTmr = new Timer();
     private boolean AutoSlctCmplt;
 
 	CommandGroup autoCommandGroup;
 	
-	public AutoSlct_RightSide_Validated() {
+	public AutoSlct_LeftSide_BothSidesScale() {
     }
 
     // Called just before this Command runs the first time
@@ -33,17 +33,17 @@ public class AutoSlct_RightSide_Validated extends Command {
     	Robot.kAUTON.updateFieldData();
 
 /*    	
-    	if ((Robot.kAUTON.dtrmnOurSwitchPstn() == true) &&
+      	if ((Robot.kAUTON.dtrmnOurSwitchPstn() == true) &&
     		(Robot.kAUTON.dtrmnOurScalePstn() == true)) {
 */    		
-		if (Robot.kAUTON.dtrmnOurScalePstn() == true) {
-    	    AutoSlctCmplt = true;
+    	if (Robot.kAUTON.dtrmnOurScalePstn() == true) { 		
+    		AutoSlctCmplt = true;
     	} else if (TmOutTmr.get() >= K_CmndCal.KCMD_t_FieldDataTmOut) {
     		AutoSlctCmplt = true; 
     		Robot.kAUTON.setFieldDataTimedOut(true);
     	} else {
     		// Keep Testing until Valid Switch Data or Time Out
-    	}    	
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -54,43 +54,43 @@ public class AutoSlct_RightSide_Validated extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	TmOutTmr.stop();    	
-    	   	
+
 /*    	
     	if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-    		(Robot.kAUTON.getOurSwitchLeftSide() == false)) {
-    		/ / Our Alliance Switch is On Right Side
-    		autoCommandGroup = new AM_StrtRightSide_SwRight();    		    		
+    		(Robot.kAUTON.getOurSwitchLeftSide() == true)) {
+    		/ / Our Alliance Switch is On Left Side
+    		autoCommandGroup = new AM_StrtLeftSide_SwLeft();    		    		
     	} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-        		   (Robot.kAUTON.getOurSwitchLeftSide() == true) &&
-        		   (Robot.kAUTON.getOurScaleLeftSide() == false)) {
-    		/ / Our Alliance Switch is On Left Side, Scale Right Side
-    		autoCommandGroup = new AM_StrtRightSide_SwLeftSclRight();
+        		   (Robot.kAUTON.getOurSwitchLeftSide() == false) &&
+        		   (Robot.kAUTON.getOurScaleLeftSide() == true)) {
+    		/ / Our Alliance Switch is On Right Side, Scale Left Side
+    		autoCommandGroup = new AM_StrtLeftSide_SwRightSclLeft();
     	} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-     		       (Robot.kAUTON.getOurSwitchLeftSide() == true) &&
-     		       (Robot.kAUTON.getOurScaleLeftSide() == true)) {
- 		    / / Our Alliance Switch and Scale are both On Left Side
- 		    autoCommandGroup = new AM_StrtRightSide_SwLeftSclLeft();
+     		       (Robot.kAUTON.getOurSwitchLeftSide() == false) &&
+     		       (Robot.kAUTON.getOurScaleLeftSide() == false)) {
+ 		    / / Our Alliance Switch and Scale are both On Right Side
+ 		    autoCommandGroup = new AM_StrtLeftSide_SwRightSclRight();
     	} else {
     		** Timed-Out or Interrupted before Valid Data Detected,
     		   Just drive straight across the line. **
     		autoCommandGroup = new AM_DriveStraightCrossLine();    		    		
     	}
 */    	
-    	
+
 		if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-	        (Robot.kAUTON.getOurScaleLeftSide() == false)) {
-			// Our Alliance Switch is On Left Side, Scale Right Side
-			autoCommandGroup = new AM_StrtRightSide_SwLeftSclRight();
+	        (Robot.kAUTON.getOurScaleLeftSide() == true)) {
+			// Our Alliance Switch is On Right Side, Scale Left Side
+			autoCommandGroup = new AM_StrtLeftSide_SwRightSclLeft();
 		} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
-	 		       (Robot.kAUTON.getOurScaleLeftSide() == true)) {
-			// Our Alliance Switch and Scale are both On Left Side
-			autoCommandGroup = new AM_StrtRightSide_SwLeftSclLeft();
+	 		       (Robot.kAUTON.getOurScaleLeftSide() == false)) {
+			// Our Alliance Switch and Scale are both On Right Side
+			autoCommandGroup = new AM_StrtLeftSide_SwRightSclRight();
 		} else {
 			/* Timed-Out or Interrupted before Valid Data Detected,
 			   Just drive straight across the line. */
 			autoCommandGroup = new AM_DriveStraightCrossLine();    		    		
 		}
-
+    	
     	autoCommandGroup.start();	
     }
 

@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
-  * Class: AutoSlct_Center - Starting with the Robot in
- * the Center position, performs the Autonomous Mode
- * Selection based on the Field Data from the FMS Data.
+  * Class: AutoSlct_Center_BothSidesSwitch - Starting with
+  * the Robot in the Center position, performs the Autonomous
+  * Mode Selection based on the Field Data from the FMS Data.
   */
-public class AutoSlct_Center_Validated extends Command {
+public class AutoSlct_Center_BothSidesSwitch extends Command {
 	private Timer TmOutTmr = new Timer();
     private boolean AutoSlctCmplt;
 
 	CommandGroup autoCommandGroup;
 	
-	public AutoSlct_Center_Validated() {
+	public AutoSlct_Center_BothSidesSwitch() {
     }
 
     // Called just before this Command runs the first time
@@ -54,11 +54,19 @@ public class AutoSlct_Center_Validated extends Command {
     	if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
     		(Robot.kAUTON.getOurSwitchLeftSide() == true)) {
     		// Our Alliance Switch is On Left Side
-    		autoCommandGroup = new AM_StrtCenter_SwLeft();    		    		
+    		if (K_CmndCal.KCMD_b_CenterAnglePtrnEnbl == true) {
+    			autoCommandGroup = new AM_StrtCenter_SwLeftAng();    			
+    		} else {
+    			autoCommandGroup = new AM_StrtCenter_SwLeft();
+    		}
     	} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
         		   (Robot.kAUTON.getOurSwitchLeftSide() == false)) {
     		// Our Alliance Switch is On Right Side
-    		autoCommandGroup = new AM_StrtCenter_SwRight();
+    		if (K_CmndCal.KCMD_b_CenterAnglePtrnEnbl == true) {
+        		autoCommandGroup = new AM_StrtCenter_SwRightAng();
+    		} else {
+        		autoCommandGroup = new AM_StrtCenter_SwRight();    			
+    		}
     	} else {
     		/* Timed-Out or Interrupted before Valid Data Detected,
     		   Just drive straight across the line. */
