@@ -9,6 +9,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class K_CmndCal extends Subsystem {
 
 	
+
+    /****************************************/
+	/*   General Autonomous Configuration   */
+	/****************************************/	 	
+	
 	/** KCMD_b_DebugEnbl: If True the Debug Smart Dash Display Variables
 	 * Are Broadcast and Updated, if False they are turned off to maximize
 	 * thru-put for controls. */
@@ -23,12 +28,24 @@ public class K_CmndCal extends Subsystem {
       * will assume a drive straight command.  */
 	 public static final float KCMD_t_FieldDataTmOut = (float)0.200; // sec	  
 	 
-	/** KCMD_b_CenterAnglePtrnEnbl: Enables the use of the Angle
+	/** KCMD_b_AutoPtrnCntrAngEnbl: Enables the use of the Angle
 	 * Pattern Autonomous Pattern when the Robot Starts in the Center
 	 * instead of the pattern using right angle turns. */
-	 public static final boolean KCMD_b_CenterAnglePtrnEnbl = false;
+	 public static final boolean KCMD_b_AutoPtrnCntrAngEnbl = false;
 
 	 
+	/* Type for _e_AutoPtrnSideSlct */
+		public static final int SWITCH_AND_SCALES = 0;
+		public static final int NO_OPPOSITE_SCALE = 1;
+		public static final int NO_SWITCH_ONLY_SCALES = 2;	 
+	/** KCMD_e_AutoPtrnSideSlct: Selects the different Autonomous Patterns
+	 *  available when the Robot Starts on the Sides (Left/Right). 
+	 *  0 = Block in Switch or either Side Scale
+	 *  1 = Block in Switch or Same Side Scale, but NO Opposite Scale
+	 *  2 = NO Switch, but Block in either Side Scale */
+	 public static final int KCMD_e_AutoPtrnSideSlct = SWITCH_AND_SCALES;	 
+
+
 
 	    /**************************/
 		/*    Drive Motor Control    */

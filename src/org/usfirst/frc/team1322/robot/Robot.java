@@ -7,13 +7,12 @@
 
 package org.usfirst.frc.team1322.robot;
 
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.commands.AM_DriveStraightCrossLine;
-import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide_BothSidesScale;
-import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide_BothSidesScale;
-import org.usfirst.frc.team1322.robot.commands.AutoSlct_Center_BothSidesSwitch;
-import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide_RightSclHold;
-import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide_LeftSclHold;
-import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI_Swch1322;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_LeftSide;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_RightSide;
+import org.usfirst.frc.team1322.robot.commands.AutoSlct_Center;
+import org.usfirst.frc.team1322.robot.commands.AM_Test_RotPI;
 import org.usfirst.frc.team1322.robot.subsystems.AUTON;
 import org.usfirst.frc.team1322.robot.subsystems.CLAW;
 import org.usfirst.frc.team1322.robot.subsystems.SHOOTER;
@@ -63,12 +62,14 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		m_chooser.addDefault("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
-		m_chooser.addObject("Start L-Side", new AutoSlct_LeftSide_BothSidesScale());
-		m_chooser.addObject("Start R-Side", new AutoSlct_RightSide_BothSidesScale());
-		m_chooser.addObject("Start Center", new AutoSlct_Center_BothSidesSwitch());
-		m_chooser.addObject("Start L-Side: Opp Scale Delay", new AutoSlct_LeftSide_RightSclHold());
-		m_chooser.addObject("Start R-Side: Opp Scale Delay", new AutoSlct_RightSide_LeftSclHold());		
-		m_chooser.addObject("DO NOT RUN (TEST ONLY)", new AM_Test_RotPI_Swch1322());
+		m_chooser.addObject("Start Left", new AutoSlct_LeftSide(K_CmndCal.SWITCH_AND_SCALES));
+		m_chooser.addObject("Start Left: Opp Scale HOL", new AutoSlct_LeftSide(K_CmndCal.NO_OPPOSITE_SCALE));
+		m_chooser.addObject("Start Left: Opp Scale HOL", new AutoSlct_LeftSide(K_CmndCal.NO_SWITCH_ONLY_SCALES));
+		m_chooser.addObject("Start Center", new AutoSlct_Center());
+		m_chooser.addObject("Start Right", new AutoSlct_RightSide(K_CmndCal.SWITCH_AND_SCALES));
+		m_chooser.addObject("Start Right: Opp Scale Delay", new AutoSlct_RightSide(K_CmndCal.NO_OPPOSITE_SCALE));		
+		m_chooser.addObject("Start Right: Opp Scale Delay", new AutoSlct_RightSide(K_CmndCal.NO_SWITCH_ONLY_SCALES));		
+		m_chooser.addObject("DO NOT RUN (PI TEST ONLY)", new AM_Test_RotPI());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
