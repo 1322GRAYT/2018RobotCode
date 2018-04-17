@@ -44,16 +44,21 @@ public class PID extends Subsystem {
     	TgtCondTmr.reset();
     }
 
+
+    /** Method: putPIDRotSysEnbl - Interface to Set PID System
+      * Enbl for the Robot Rotate PID Controller. (boolean)
+      *  @param1: Drive Rotate PID Enable Select (boolean) */
+   public void putPIDRotSysEnbl(boolean PIDSysEnbl) {
+   	   PIDRotEnbl = PIDSysEnbl;
+   }  
+    
     /** Method: putPIDRotPstnTgt - Interface to Set the Gyro Target
       * Position Angle for the Robot Rotate PID Controller. (degrees)
       * (+ degrees ClockWise, - degrees Counter-Clockwise)
-      *  @param1: Drive Rotate PID Enable Select (boolean)	
-      *  @param2: Drive Rotate Enable Select (boolean)	
-      *  @param3: Drive System Desired Encoder Speed Target (rpm: double) */	
-    public void putPIDRotPstnTgt(boolean RotSysEnbl,
-    		                     boolean RotClckWise,
+      *  @param1: Drive Rotate Direction Select, ClkWise is TRUE  (boolean)	
+      *  @param2: Drive System Desired Encoder Speed Target (rpm: double) */	
+    public void putPIDRotPstnTgt(boolean RotClckWise,
     		                     double  RotPstnTgt) {
-    	PIDRotEnbl = RotSysEnbl;
     	DirtcnIsClckWise = RotClckWise;
     	PstnDsrd = RotPstnTgt;
     }  
@@ -80,16 +85,21 @@ public class PID extends Subsystem {
     }
 
     
+    /** Method: putPIDDrvSysEnbl - Interface to Set PID System
+     * Enbl for the Robot Drive Heading PID Controller. (boolean)
+     *  @param1: Drive Heading PID Enable Select (boolean) */
+    public void putPIDDrvSysEnbl(boolean PIDSysEnbl) {
+  	   PIDDrvEnbl = PIDSysEnbl;
+    }  
+    
+    
     /** Method: putPIDDrvPstnTgt - Interface to Set the Gyro Target
-     * Position Angle for the Robot Rotate PID Controller. (degrees)
+     * Position Angle for the Robot Drive Heading PID Controller. (degrees)
      * (+ degrees ClockWise, - degrees Counter-Clockwise)
-     *  @param1: Drive Course Heading PID Enable Select (boolean)	
-     *  @param2: Drive Course Heading Angle Target (degree: double) */	
-    public void putPIDDrvPstnTgt(boolean DrvSysEnbl,
-   		                         double  DrvPstnTgt) {
-    PIDDrvEnbl = DrvSysEnbl;
-   	DirtcnIsClckWise = true;
-   	PstnDsrd = DrvPstnTgt;
+     *  @param1: Drive Course Heading Angle Target (degree: double) */	
+    public void putPIDDrvPstnTgt(double  DrvPstnTgt) {
+   	    DirtcnIsClckWise = true;
+   	    PstnDsrd = DrvPstnTgt;
     }  
 
    
@@ -269,7 +279,7 @@ public class PID extends Subsystem {
       * signal for use by the Integral Controller.
       * @param1: Controller Accumulated Error Signal (double)
       * @param2: Controller Error Signal (double)
-      * @param3: Min Error Signal Thresh Aboge which Error will not
+      * @param3: Min Error Signal Thresh Above which Error will not
       *          be accumulated.
       * @return: Updated Controller Accumulated Error Signal (double)  */
      private double calcErrAccum(double ErrAccum,

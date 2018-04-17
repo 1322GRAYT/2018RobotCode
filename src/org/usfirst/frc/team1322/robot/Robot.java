@@ -73,6 +73,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
 		kSENSORS.setGlobalBaud();
+		kPID.putPIDRotSysEnbl(false);
+		kPID.putPIDDrvSysEnbl(false);
 		kPID.resetPIDRot();
 		System.out.println("Gyro Calibrated, Analog Baud Rate Set");
 		if (RobotBase.isReal()) {

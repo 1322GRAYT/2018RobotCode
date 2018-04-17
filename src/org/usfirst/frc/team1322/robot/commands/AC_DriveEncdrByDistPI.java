@@ -19,7 +19,6 @@ public class AC_DriveEncdrByDistPI extends Command {
 	
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
-	private boolean DrvPIDEnbl;
     private boolean DrctnIsFwd;
 	
 	private double DrvHdngDsrd;
@@ -76,10 +75,10 @@ public class AC_DriveEncdrByDistPI extends Command {
     	EncdrTgtDclCnts = EncdrTgtRefCnt - EncdrDsrdDclCnts;
 
     	Robot.kDRIVE.enable();    	
-    	Robot.kPID.resetPIDRot();
-    	DrvPIDEnbl = true;
     	DrvPwrCmdLim = 0.0;
-        Robot.kPID.putPIDDrvPstnTgt(DrvPIDEnbl, this.DrvHdngDsrd);
+    	Robot.kPID.resetPIDRot();
+        Robot.kPID.putPIDDrvPstnTgt(this.DrvHdngDsrd);
+    	Robot.kPID.putPIDDrvSysEnbl(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -133,9 +132,9 @@ public class AC_DriveEncdrByDistPI extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-      DrvPIDEnbl = false;
   	  Robot.kAUTON.setMasterTaskCmplt(true);
-      Robot.kPID.putPIDDrvPstnTgt(DrvPIDEnbl, this.DrvHdngDsrd);    	
+  	  Robot.kPID.putPIDDrvSysEnbl(false);
+  	  Robot.kPID.resetPIDRot();
   	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
     }
 

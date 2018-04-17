@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * a PI Control System. */
 public class AC_TurnByGyroPI extends Command {
 	private Timer RotateTmOut = new Timer();
-	private boolean RotPIDEnbl;
 	private boolean RotClckWise;
 	private double  RotPstnDsrd;
 	
@@ -47,10 +46,9 @@ public class AC_TurnByGyroPI extends Command {
     	RotateTmOut.start();
     	Robot.kDRIVE.enable();
     	Robot.kPID.resetPIDRot();
-    	RotPIDEnbl = true;
-        Robot.kPID.putPIDRotPstnTgt(RotPIDEnbl,
-        		                    this.RotClckWise,
+        Robot.kPID.putPIDRotPstnTgt(this.RotClckWise,
         		                    this.RotPstnDsrd);
+    	Robot.kPID.putPIDRotSysEnbl(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -82,7 +80,8 @@ public class AC_TurnByGyroPI extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	RotateTmOut.stop();   
-    	RotPIDEnbl = false;
+    	Robot.kPID.putPIDRotSysEnbl(false);
+    	Robot.kPID.resetPIDRot();
     	Robot.kAUTON.setMasterTaskCmplt(true);
     	Robot.kDRIVE.disable();
     }
