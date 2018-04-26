@@ -63,12 +63,12 @@ public class Robot extends IterativeRobot {
 		m_oi = new OI();
 		m_chooser.addDefault("Cross Line Only: Robot L/R-Side", new AM_DriveStraightCrossLine());
 		m_chooser.addObject("Start Left", new AutoSlct_LeftSide(K_CmndCal.SWITCH_AND_SCALES));
-		m_chooser.addObject("Start Left: Opp Scale HOL", new AutoSlct_LeftSide(K_CmndCal.NO_OPPOSITE_SCALE));
-		m_chooser.addObject("Start Left: Opp Scale HOL", new AutoSlct_LeftSide(K_CmndCal.NO_SWITCH_ONLY_SCALES));
+		m_chooser.addObject("Start Left: No Opposite Scale", new AutoSlct_LeftSide(K_CmndCal.NO_OPPOSITE_SCALE));
+		m_chooser.addObject("Start Left: Scales Only", new AutoSlct_LeftSide(K_CmndCal.NO_SWITCH_ONLY_SCALES));
 		m_chooser.addObject("Start Center", new AutoSlct_Center());
 		m_chooser.addObject("Start Right", new AutoSlct_RightSide(K_CmndCal.SWITCH_AND_SCALES));
-		m_chooser.addObject("Start Right: Opp Scale Delay", new AutoSlct_RightSide(K_CmndCal.NO_OPPOSITE_SCALE));		
-		m_chooser.addObject("Start Right: Opp Scale Delay", new AutoSlct_RightSide(K_CmndCal.NO_SWITCH_ONLY_SCALES));		
+		m_chooser.addObject("Start Right: No Opposite Scale", new AutoSlct_RightSide(K_CmndCal.NO_OPPOSITE_SCALE));		
+		m_chooser.addObject("Start Right: Scales Only", new AutoSlct_RightSide(K_CmndCal.NO_SWITCH_ONLY_SCALES));		
 		m_chooser.addObject("DO NOT RUN (PI TEST ONLY)", new AM_Test_RotPI());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		kSENSORS.calibrateGyro();
