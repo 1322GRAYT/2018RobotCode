@@ -96,6 +96,5 @@ public class RobotMap {
 	public static final double autonDriveCorrectionSpeed = 0.3;
 	//How Many degrees of give we want to give before correction is required
 	public static final double autonDriveLeeway = 1.5;
-	public static final double autonDriveAngleLeeway = 1;
 	
 }

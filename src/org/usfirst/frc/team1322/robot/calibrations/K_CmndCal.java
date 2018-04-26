@@ -94,6 +94,14 @@ public class K_CmndCal extends Subsystem {
      * long to reach the target angle due to some system loss. */
 	public static final float KCMD_t_RotSafetyTmOutPI = (float)5.0; // sec 
 	
+	/** KCMD_r_RotPwr90Deg: Commanded Normalized Rotation Power for
+	 * 90 Degree or (Near 90 Degree Turns. */
+	public static final double KCMD_r_RotPwr90Deg = 0.70; // sec 	 
+
+	/** KCMD_r_RotPwrAcute: Commanded Normalized Rotation Power for
+	 * Small Acute Angle Turns. */
+	public static final double KCMD_r_RotPwrAcute = 0.40; // sec 	 
+	
 	
 	
 	/**************************/
@@ -186,8 +194,15 @@ public class K_CmndCal extends Subsystem {
 	  * the pneumatic command to Tilt Up the Claw. */
 	public static final float KCMD_t_ClawPrdTiltUp = (float)0.060; // sec	 
 		
+	/** KCMD_r_ClawWhlPwrOut: Claw Wheel Motor Power Commanded when
+	 * Shooting the Power Cube Out. */
+	public static final float KCMD_r_ClawWhlPwrOut = (float)0.80; // Norm Power	 
 	
+	/** KCMD_r_ClawWhlPwrIn: Claw Wheel Motor Power Commanded when
+	 * Pulling the Power Cube In. */
+	public static final float KCMD_r_ClawWhlPwrIn = (float)0.95; // Norm Power	 
 	
+		
 	  
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

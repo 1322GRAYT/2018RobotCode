@@ -24,7 +24,7 @@ public class AM_StrtRightSide_SwRight extends CommandGroup {
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	addSequential(new AC_DriveEncdrByDist((float)12.0, (float)0.8, (float)1.0, (float)0.1, (float)0.0, true, true));
-    	addSequential(new AC_TurnByGyro(-0.7, -85.0, true)); // Turn CCW to -90 deg
+    	addSequential(new AC_TurnByGyro(-K_CmndCal.KCMD_r_RotPwr90Deg, -85.0, true)); // Turn CCW to -90 deg
     	addSequential(new BM_LiftRaiseToMid());
 	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
 	    addSequential(new BM_ClawTiltDown());

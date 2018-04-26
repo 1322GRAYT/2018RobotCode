@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
@@ -18,7 +19,7 @@ public class BM_ShootOutBlock extends TimedCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.kAUTON.setMasterTaskCmplt(false);
-    	Robot.kSHOOTER.clawSpeedInOut(0.75);
+    	Robot.kSHOOTER.clawSpeedInOut(K_CmndCal.KCMD_r_ClawWhlPwrOut);
     }
 
     // Called repeatedly when this Command is scheduled to run
