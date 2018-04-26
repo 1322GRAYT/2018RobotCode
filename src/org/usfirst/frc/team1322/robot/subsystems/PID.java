@@ -38,13 +38,24 @@ public class PID extends Subsystem {
     /* Public Interface Definitions        */
     /**********************************************/
     
-    /** Method: resetTgtCondTmr - Resets the Drive Speed
-     * Target Profile Timer at the beginning of a Drive Segments.  */ 
+    /** Method: resetTgtCondTmr - Resets the Drive Speed Target
+     * Profile Timer at the beginning of a Drive Segments.  */ 
     public void resetTgtCondTmr() {
     	TgtCondTmr.reset();
     }
 
+    /** Method: startTgtCondTmr - Starts the Drive Speed Target
+     * Profile Timer at the beginning of a Drive Segments.  */ 
+    public void startTgtCondTmr() {
+    	TgtCondTmr.start();
+    }
 
+    /** Method: stopTgtCondTmr - Stops the Drive Speed Target
+     * Profile Timer at the beginning of a Drive Segments.  */ 
+    public void stopTgtCondTmr() {
+    	TgtCondTmr.stop();
+    }    
+    
     /** Method: putPIDRotSysEnbl - Interface to Set PID System
       * Enbl for the Robot Rotate PID Controller. (boolean)
       *  @param1: Drive Rotate PID Enable Select (boolean) */

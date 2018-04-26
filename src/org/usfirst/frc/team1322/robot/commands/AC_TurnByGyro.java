@@ -100,13 +100,13 @@ public class AC_TurnByGyro extends Command {
 	    	if(RotFdbkAng >= RotAng90Pct) {
 	    		nearTrgtScalar = (float)0.25;
 	    	} else if (RotFdbkAng >= RotAng70Pct) {
-	    		nearTrgtScalar = (float)0.75;    		
+	    		nearTrgtScalar = (float)0.50;    		
 	    	}
     	} else {
 	    	if(RotFdbkAng <= RotAng90Pct) {
 	    		nearTrgtScalar = (float)0.25;
 	    	} else if (RotFdbkAng <= RotAng70Pct) {
-	    		nearTrgtScalar = (float)0.75;    		
+	    		nearTrgtScalar = (float)0.50;    		
 	    	}    		
     	}
     	

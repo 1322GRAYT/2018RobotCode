@@ -13,6 +13,7 @@ public class AM_StrtLeftSide_SwRightSclLeft extends CommandGroup {
 	
 	
 	/**
+	 * 
 	 * Command Group Method: AM_StrtLeftSide_SwRightSclLeft
      * Autonomous Control Group Pattern: Robot Starts Left-Side
      * and Robot puts PwrCube in the Left-Side Scale.
@@ -22,7 +23,7 @@ public class AM_StrtLeftSide_SwRightSclLeft extends CommandGroup {
     	addSequential(new BM_LiftRaiseToMid());
 		addSequential(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     	addSequential(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
-    	addSequential(new AC_DriveEncdrByDist((float)24.25, (float)0.9, (float)1.0, (float)0.10, (float)-1.77, true, true));
+    	addSequential(new AC_DriveEncdrByDist((float)24.25, (float)0.9, (float)1.0, (float)0.10, (float)-2.26, true, true));
 	    addSequential(new BM_ClawTiltDown());
 	    addSequential(new BM_LiftRaiseToHigh());
      	addSequential(new AC_TurnByGyro(0.8, 90, true)); // Turn CW to 90 deg       	

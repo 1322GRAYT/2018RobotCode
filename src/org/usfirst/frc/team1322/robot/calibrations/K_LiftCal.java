@@ -13,7 +13,7 @@ public class K_LiftCal extends Subsystem {
 	 * the Lift Motor to the Middle or High position once it drifts
 	 * down due to the weight of the Arm and PwrCube that may be present.
 	 * (double: normalized power). */
-	public static final double KLFT_r_LiftMtrHldPwr = 0.05; // Norm Pwr
+	public static final double KLFT_r_LiftMtrHldPwr = 0.10; // Norm Pwr
 	
 	
 	  
