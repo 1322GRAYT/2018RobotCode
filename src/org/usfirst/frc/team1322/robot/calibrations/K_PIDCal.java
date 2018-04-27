@@ -73,7 +73,34 @@ public class K_PIDCal {
   /*****************************************************************/
   /* Drive Course Heading Control PID Control Calibrations                */
   /*****************************************************************/	  
+
+	  
+   /** KDRV_Deg_FdFwdErrAxis: Angle Error Axis for the Robot
+     * Rotation Control FeedFoward Correction Term for PI
+     * Control (Degrees). */
+  public static final int KDRV_Deg_FdFwdErrAxis[] = new int[] 
+      {
+ 	     (int)0,
+         (int)1,
+         (int)3,
+         (int)5,
+         (int)10
+ 	 };	  
+ 	  
   
+  /** KDRV_Pct_FdFwdCorr: Target Percent Power Axis for the Target
+   * Power Launch Profile Shaping Tables. (Percent Power). */
+  public static final float KDRV_Pct_FdFwdCorr[] = new float[] 
+      {
+ 	     (float)10.0,
+         (float)10.0,
+         (float)15.0,
+         (float)20.0,
+         (float)30.0
+ 	  };	  
+   
+   
+	  
   /** KDRV_Deg_PosErrDB: Drive System Course Heading Position Error DeadBand (degree). */
   public static final float KDRV_Deg_PosErrDB = (float) 1.0;
 
@@ -83,18 +110,18 @@ public class K_PIDCal {
   public static final float KDRV_Deg_IntglErrDsblMin = (float) 45.0;
   
   /** KDRV_K_PropGx: Drive System Course Heading PID Controls Proportional Gain. */
-  public static final float KDRV_K_PropGx = (float) 1.0;
+  public static final float KDRV_K_PropGx = (float) 5.0;
   
   /** KDRV_K_IntglGx: Drive System Course Heading PID Controls Integral Gain. */
-  public static final float KDRV_K_IntglGx = (float) 0.25;
+  public static final float KDRV_K_IntglGx = (float) 0.2;
  
   /** KDRV_Pct_PropCorrMax: Drive Course Heading Rotate PID Controls Proportional
    * Correction Max Limit. (percent) */
-  public static final float KDRV_Pct_PropCorrMax = (float) 50.0;
+  public static final float KDRV_Pct_PropCorrMax = (float) 20.0;
   
   /** KDRV_Pct_PropCorrMax: Drive Course Heading Rotate PID Controls Intgral
    * Correction Max Limit. (percent) */
-  public static final float KDRV_Pct_IntglCorrMax = (float) 50.0;
+  public static final float KDRV_Pct_IntglCorrMax = (float) 20.0;
 
   
   
@@ -108,32 +135,28 @@ public class K_PIDCal {
  public static final int KROT_Deg_FdFwdErrAxis[] = new int[] 
      {
 	     (int)0,
-         (int)1,
-         (int)2,
          (int)5,
    	     (int)10,
-         (int)15,
          (int)20,
          (int)30,
          (int)45,
-         (int)90
-	  };	  
+         (int)90,
+         (int)180
+	 };	  
 	  
  
  /** KROT_Pct_FdFwdCorr: Target Percent Power Axis for the Target
   * Power Launch Profile Shaping Tables. (Percent Power). */
  public static final float KROT_Pct_FdFwdCorr[] = new float[] 
      {
-	     (float)0.0,
-         (float)0.0,
-         (float)5.0,
+	     (float)10.0,
          (float)10.0,
-   	     (float)20.0,
+         (float)10.0,
+         (float)20.0,
+         (float)25.0,
          (float)30.0,
-         (float)40.0,
-         (float)45.0,
-         (float)50.0,
-         (float)50.0
+         (float)30.0,
+         (float)30.0
 	  };	  
   
   
@@ -146,18 +169,18 @@ public class K_PIDCal {
   public static final float KROT_Deg_IntglErrDsblMin = (float) 30.0;
   
   /** KROT_K_PropGx: Drive System Rotate PID Controls Proportional Gain. */
-  public static final float KROT_K_PropGx = (float) 2.0;
+  public static final float KROT_K_PropGx = (float) 0.45;
   
   /** KROT_K_IntglGx: Drive System Rotate PID Controls Integral Gain. */
-  public static final float KROT_K_IntglGx = (float) 1.0;
+  public static final float KROT_K_IntglGx = (float) 0.05;
  
   /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Proportional
    * Correction Max Limit. (percent) */
-  public static final float KROT_Pct_PropCorrMax = (float) 45.0;
+  public static final float KROT_Pct_PropCorrMax = (float) 65.0;
   
   /** KROT_Pct_PropCorrMax: Drive System Rotate PID Controls Integral
    * Correction Max Limit. (percent) */
-  public static final float KROT_Pct_IntglCorrMax = (float) 40.0;
+  public static final float KROT_Pct_IntglCorrMax = (float) 25.0;
   
   /** KROT_t_PstnTgtSyncMetThrsh: Amount of time that the Position Error must
    * be held within the Error DeadBand in order for the Drive System Rotate

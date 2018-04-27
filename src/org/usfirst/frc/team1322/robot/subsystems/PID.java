@@ -170,7 +170,7 @@ public class PID extends Subsystem {
    	    		                K_PIDCal.KROT_Deg_PosErrDB);
    	    PstnErrWithInDB = dtrmnErrInDB(PstnErr, K_PIDCal.KROT_Deg_PosErrDB); 
    	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr, K_PIDCal.KROT_Deg_IntglErrDsblMin);
-   	    FdFwdCorr = calcFdFwdTerm(PstnErr);
+   	    FdFwdCorr = calcRotFdFwdTerm(PstnErr);
    	    PropCorr = calcPropTerm(PstnErr, K_PIDCal.KROT_K_PropGx,
    	    		                K_PIDCal.KROT_Pct_PropCorrMax);
    	    IntglCorr = calcIntglTerm(PstnErrAccum, K_PIDCal.KROT_K_IntglGx,
@@ -203,7 +203,7 @@ public class PID extends Subsystem {
    	    		                K_PIDCal.KDRV_Deg_PosErrDB);
    	    PstnErrWithInDB = dtrmnErrInDB(PstnErr, K_PIDCal.KDRV_Deg_PosErrDB); 
    	    PstnErrAccum = calcErrAccum(PstnErrAccum, PstnErr, K_PIDCal.KDRV_Deg_IntglErrDsblMin);
-   	    FdFwdCorr = 0.0;
+   	    FdFwdCorr = calcDrvFdFwdTerm(PstnErr);
    	    PropCorr = calcPropTerm(PstnErr, K_PIDCal.KDRV_K_PropGx,
    	    		                K_PIDCal.KDRV_Pct_PropCorrMax);
    	    IntglCorr = calcIntglTerm(PstnErrAccum, K_PIDCal.KDRV_K_IntglGx,
@@ -320,20 +320,30 @@ public class PID extends Subsystem {
      }
 
      
-     /** Method: calcFdFwdTerm - Calculate the Feed-Forward
-      * Correction Term.
-      * @return: Feed-Forward Correction Term (double)  */
-     private double calcFdFwdTerm(double ErrSignal) {
-     	 float ErrAxis;   // scalar
-    	 double FF_Corr;  // percent power
-     	
-     	ErrAxis = Robot.kTBLLOOKUP.AxisPieceWiseLinear_int((float)ErrSignal,
-     			                                           K_PIDCal.KROT_Deg_FdFwdErrAxis,
-     			                                           (int)10);
-     	
-     	FF_Corr = Robot.kTBLLOOKUP.XY_Lookup_flt(K_PIDCal.KROT_Pct_FdFwdCorr,
-     			                                 ErrAxis,
-     		   	                                 (int)10);
+     /** Method: calcRotFdFwdTerm - Calculate the Drive Rotate
+      * Feed-Forward Correction Term.
+      * @return: Rotate Feed-Forward Correction Term (double)  */
+     private double calcRotFdFwdTerm(double ErrSignal) {
+    	 double ErrSignalAbs; // degrees
+     	 float  ErrAxis;      // scalar
+    	 double FF_Corr;      // percent power     	    	 
+
+         ErrSignalAbs = Math.abs(ErrSignal);
+    	 
+    	if (ErrSignalAbs != 0.0)
+    	{
+	     	ErrAxis = Robot.kTBLLOOKUP.AxisPieceWiseLinear_int((float)ErrSignalAbs,
+	     			                                           K_PIDCal.KROT_Deg_FdFwdErrAxis,
+	     			                                           (int)8);
+	     	
+	     	FF_Corr = Robot.kTBLLOOKUP.XY_Lookup_flt(K_PIDCal.KROT_Pct_FdFwdCorr,
+	     			                                 ErrAxis,
+	     		   	                                 (int)8);
+    	}
+    	else/* ErrSignal is within DeadBand */
+    	{
+    		FF_Corr = 0.0; 	
+    	}
      	
      	if (FF_Corr < 0.0) {
      		FF_Corr = 0.0;
@@ -343,6 +353,43 @@ public class PID extends Subsystem {
 
      	return FF_Corr;
      }
+
+     
+     
+     /** Method: calcDrvFdFwdTerm - Calculate the Drive Rotate
+      * Feed-Forward Correction Term.
+      * @return: Rotate Feed-Forward Correction Term (double)  */
+     private double calcDrvFdFwdTerm(double ErrSignal) {
+    	 double ErrSignalAbs; // degrees
+     	 float  ErrAxis;      // scalar
+    	 double FF_Corr;      // percent power
+
+         ErrSignalAbs = Math.abs(ErrSignal);
+    	 
+      	if (ErrSignalAbs != 0.0)
+      	{
+   	     	ErrAxis = Robot.kTBLLOOKUP.AxisPieceWiseLinear_int((float)ErrSignalAbs,
+   	     			                                           K_PIDCal.KDRV_Deg_FdFwdErrAxis,
+   	     			                                           (int)5);
+   	     	
+   	     	FF_Corr = Robot.kTBLLOOKUP.XY_Lookup_flt(K_PIDCal.KDRV_Pct_FdFwdCorr,
+   	     			                                 ErrAxis,
+   	     		   	                                 (int)5);
+      	}
+      	else  /* ErrSignal is within DeadBand */
+      	{
+      		FF_Corr = 0.0; 	
+      	}
+       	
+       	if (FF_Corr < 0.0) {
+       		FF_Corr = 0.0;
+       	} else if (FF_Corr > 100.0) {
+       		FF_Corr = 100.0;;
+       	}
+   
+       	return FF_Corr;
+     }
+     
      
 	
     /** Method: calcPropTerm - Calculate and Limit
@@ -409,8 +456,8 @@ public class PID extends Subsystem {
  	    if (CmndPct > 100) {
  	    	CmndPct = 100;
  	    }
- 	    else if (CmndPct < 0) {
- 	    	CmndPct = 0;
+ 	    else if (CmndPct < -100) {
+ 	    	CmndPct = -100;
  	    }
  	    
  	    if (DirctnIsCW == false) {

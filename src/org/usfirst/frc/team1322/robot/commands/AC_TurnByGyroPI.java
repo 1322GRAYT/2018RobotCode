@@ -49,6 +49,7 @@ public class AC_TurnByGyroPI extends Command {
         Robot.kPID.putPIDRotPstnTgt(this.RotClckWise,
         		                    this.RotPstnDsrd);
     	Robot.kPID.putPIDRotSysEnbl(true);
+    	Robot.kPID.startTgtCondTmr();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -81,6 +82,7 @@ public class AC_TurnByGyroPI extends Command {
     protected void end() {
     	RotateTmOut.stop();   
     	Robot.kPID.putPIDRotSysEnbl(false);
+    	Robot.kPID.stopTgtCondTmr();
     	Robot.kPID.resetPIDRot();
     	Robot.kAUTON.setMasterTaskCmplt(true);
     	Robot.kDRIVE.disable();

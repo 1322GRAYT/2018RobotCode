@@ -79,6 +79,7 @@ public class AC_DriveEncdrByDistPI extends Command {
     	Robot.kPID.resetPIDRot();
         Robot.kPID.putPIDDrvPstnTgt(this.DrvHdngDsrd);
     	Robot.kPID.putPIDDrvSysEnbl(true);
+    	Robot.kPID.startTgtCondTmr();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -134,6 +135,7 @@ public class AC_DriveEncdrByDistPI extends Command {
     protected void end() {
   	  Robot.kAUTON.setMasterTaskCmplt(true);
   	  Robot.kPID.putPIDDrvSysEnbl(false);
+  	  Robot.kPID.stopTgtCondTmr();
   	  Robot.kPID.resetPIDRot();
   	  Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
     }
