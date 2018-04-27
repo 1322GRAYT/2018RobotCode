@@ -76,7 +76,7 @@ public class K_PIDCal {
 
 	  
    /** KDRV_Deg_FdFwdErrAxis: Angle Error Axis for the Robot
-     * Rotation Control FeedFoward Correction Term for PI
+     * Rotation Control FeedFoward Correction Term for PIF
      * Control (Degrees). */
   public static final int KDRV_Deg_FdFwdErrAxis[] = new int[] 
       {
@@ -88,8 +88,9 @@ public class K_PIDCal {
  	 };	  
  	  
   
-  /** KDRV_Pct_FdFwdCorr: Target Percent Power Axis for the Target
-   * Power Launch Profile Shaping Tables. (Percent Power). */
+  /** KDRV_Pct_FdFwdCorr: Target Percent Power Axis for the
+  * Drive Heading FeedForward Correction Term for PIF Control.
+  * (Percent Power). */
   public static final float KDRV_Pct_FdFwdCorr[] = new float[] 
       {
  	     (float)10.0,
@@ -130,7 +131,7 @@ public class K_PIDCal {
   /*****************************************************************/	    
   
   /** KROT_Deg_FdFwdErrAxis: Angle Error Axis for the Robot
-    * Rotation Control FeedFoward Correction Term for PI
+    * Rotation Control FeedFoward Correction Term for PIF
     * Control (Degrees). */
  public static final int KROT_Deg_FdFwdErrAxis[] = new int[] 
      {
@@ -145,8 +146,9 @@ public class K_PIDCal {
 	 };	  
 	  
  
- /** KROT_Pct_FdFwdCorr: Target Percent Power Axis for the Target
-  * Power Launch Profile Shaping Tables. (Percent Power). */
+ /** KROT_Pct_FdFwdCorr: Target Percent Power Axis for the
+  * Drive Rotate FeedForward Correction Term for PIF Control.
+  * (Percent Power). */
  public static final float KROT_Pct_FdFwdCorr[] = new float[] 
      {
 	     (float)10.0,

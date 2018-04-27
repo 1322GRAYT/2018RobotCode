@@ -3,7 +3,8 @@ package org.usfirst.frc.team1322.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc.team1322.robot.Robot;
-import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal; 
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal; 
 
 
 /**
@@ -38,9 +39,9 @@ public class AM_StrtCenter_SwLeft extends CommandGroup {
 	    addSequential(new BM_ClawTiltDown());
 	    addSequential(new BM_ClawOpen());
 		addParallel(new AC_TimeDelay((float)0.5));
-    	addSequential(new BM_LiftHoldPstn()); 
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
     	Robot.kAUTON.setMasterTaskCmplt(false);
-    	addSequential(new BM_LiftHoldPstn());
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));
     	System.out.println("StrtCenter_SwLeft");
     }
 

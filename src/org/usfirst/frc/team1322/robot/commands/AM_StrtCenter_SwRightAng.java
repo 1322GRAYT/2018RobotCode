@@ -3,7 +3,8 @@ package org.usfirst.frc.team1322.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc.team1322.robot.Robot;
-import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal; 
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
+import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal; 
 
 
 /**
@@ -23,15 +24,15 @@ public class AM_StrtCenter_SwRightAng extends CommandGroup {
     	addSequential(new AC_ResetGyro());
     	addSequential(new BM_LiftRaiseToMid());
 		addParallel(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
-    	addSequential(new BM_LiftHoldPstn());  
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
     	addParallel(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
-    	addSequential(new BM_LiftHoldPstn());  
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
     	addSequential(new AC_DriveEncdrByDist((float)1.0, (float)0.3, (float)0.25, (float)0.10, (float)0.0, true, true));
     	addSequential(new AC_TurnByGyro(K_CmndCal.KCMD_r_RotPwrAcute, 38.0, true)); // Turn CW to 38.6 deg
 		addParallel(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
-    	addSequential(new BM_LiftHoldPstn());  
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
     	addParallel(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
-    	addSequential(new BM_LiftHoldPstn());  
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
     	addSequential(new AC_DriveEncdrByDist((float)8.0, (float)0.8, (float)1.0, (float)0.10, (float)35.0, true, true));
 	    addSequential(new AC_TurnByGyro(-K_CmndCal.KCMD_r_RotPwrAcute, 0.0, true)); // Turn CCW to 0 deg
     	addSequential(new BM_LiftRaiseToMid());
@@ -39,9 +40,9 @@ public class AM_StrtCenter_SwRightAng extends CommandGroup {
 	    addSequential(new BM_ClawTiltDown()); 
 	    addSequential(new BM_ClawOpen()); 
 		addParallel(new AC_TimeDelay((float)0.5));
-    	addSequential(new BM_LiftHoldPstn());
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));
     	Robot.kAUTON.setMasterTaskCmplt(false);
-    	addSequential(new BM_LiftHoldPstn());        	
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));        	
     	System.out.println("StrtCenter_SwRightAng");
     }
 

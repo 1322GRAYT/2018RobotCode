@@ -80,11 +80,10 @@ public class AutoSlct_LeftSide extends Command {
 	    		   Just drive straight across the line. */
 	    		autoCommandGroup = new AM_DriveStraightCrossLine();    		    		
 	    	}
-    	} else {
-            // (this.PtrnSlct == K_CmndCal.NO_SWITCH_ONLY_SCALES)
+    	} else if (this.PtrnSlct == K_CmndCal.SCALES_ONLY) {
 			if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
 		        (Robot.kAUTON.getOurScaleLeftSide() == true)) {
-				// Our Alliance Switch is On Right Side, Scale Left Side
+				// Do No Do Switches is On Right Side, Scale Left Side
 				autoCommandGroup = new AM_StrtLeftSide_SwRightSclLeft();
 			} else if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
 		 		       (Robot.kAUTON.getOurScaleLeftSide() == false)) {
@@ -95,6 +94,18 @@ public class AutoSlct_LeftSide extends Command {
 				   Just drive straight across the line. */
 				autoCommandGroup = new AM_DriveStraightCrossLine();    		    		
 			}
+    	} else {
+    		// (this.PtrnSlct == K_CmndCal.SCALES_ONLY)
+			if ((Robot.kAUTON.getFieldDataTimedOut() == false) &&
+		        (Robot.kAUTON.getOurSwitchLeftSide() == true)) {
+				// Our Alliance Switch is On Left Side
+				autoCommandGroup = new AM_StrtLeftSide_SwLeft();
+			} else {
+				/* Our Alliance Switch is On Right Side, Timed-Out,
+				 * or Interrupted before Valid Data Detected,
+				 * Just drive straight across the line. */
+				autoCommandGroup = new AM_DriveStraightCrossLine();    		    		
+			}			
     	}
     	
     	autoCommandGroup.start();	

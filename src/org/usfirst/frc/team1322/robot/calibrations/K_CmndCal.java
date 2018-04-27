@@ -37,7 +37,8 @@ public class K_CmndCal extends Subsystem {
 	/* Type for _e_AutoPtrnSideSlct */
 		public static final int SWITCH_AND_SCALES = 0;
 		public static final int NO_OPPOSITE_SCALE = 1;
-		public static final int NO_SWITCH_ONLY_SCALES = 2;	 
+		public static final int SCALES_ONLY = 2;	 
+		public static final int SWITCHES_ONLY = 3;	 
 	/** KCMD_e_AutoPtrnSideSlct: Selects the different Autonomous Patterns
 	 *  available when the Robot Starts on the Sides (Left/Right). 
 	 *  0 = Block in Switch or either Side Scale

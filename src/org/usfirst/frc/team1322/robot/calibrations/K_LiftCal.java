@@ -15,7 +15,17 @@ public class K_LiftCal extends Subsystem {
 	 * (double: normalized power). */
 	public static final double KLFT_r_LiftMtrHldPwr = 0.05; // Norm Pwr
 	
+	/** KLFT_r_LiftMtrHldMind: Normalized Power Command to Hold/Return
+	 * the Lift Motor to the Middle Position once it drifts down due to
+	 * the weight of the Arm and PwrCube that may be present.
+	 * (double: normalized power). */
+	public static final double KLFT_r_LiftMtrHldPwrMid = 0.075; // Norm Pwr
 	
+	/** KLFT_r_LiftMtrHldPwrHigh: Normalized Power Command to Hold/Return
+	 * the Lift Motor to the High position once it drifts down due to the
+	 * weight of the Arm and PwrCube that may be present.
+	 * (double: normalized power). */
+	public static final double KLFT_r_LiftMtrHldPwrHigh = 0.125; // Norm Pwr
 	  
 	  
     public void initDefaultCommand() {

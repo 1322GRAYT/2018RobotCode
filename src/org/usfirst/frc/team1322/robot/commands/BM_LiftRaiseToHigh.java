@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class BM_LiftRaiseToHigh extends Command {
 
+	private boolean finished = false;
+	
     public BM_LiftRaiseToHigh() {
         requires(Robot.kLIFT);
     }
@@ -22,16 +24,21 @@ public class BM_LiftRaiseToHigh extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.kLIFT.setSpeed((double)K_CmndCal.KCMD_r_LiftPwrRaiseToHigh);
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	boolean finished = false;
+    	//Robot.kLIFT.setSpeed((double)K_CmndCal.KCMD_r_LiftPwrRaiseToHigh);
     	
     	if (Robot.kSENSORS.getLiftHighPstnDtctd() == true) {
     		finished = true;
     	}
+    	
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+    	/*boolean finished = false;
+    	
+    	if (Robot.kSENSORS.getLiftHighPstnDtctd() == true) {
+    		finished = true;
+    	}*/
     	
         return (finished);
     }

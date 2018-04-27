@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class BM_LiftHoldPstn extends Command {
     private double LiftPwrCmnd;
-	
+	private double HoldPwrLvl;
 	
 	/**
 	 * Command Method: BM_LiftHoldPstn
@@ -33,8 +33,10 @@ public class BM_LiftHoldPstn extends Command {
 	 * or the lift could overshoot the position switch and
 	 * continue running up.
 	 */
-    public BM_LiftHoldPstn() {
-        requires(Robot.kLIFT);
+    public BM_LiftHoldPstn(double HoldPwrLvl) {    
+    	this.HoldPwrLvl = HoldPwrLvl;
+    	
+        requires(Robot.kLIFT);        
     }
 
     
@@ -51,8 +53,8 @@ public class BM_LiftHoldPstn extends Command {
 	    if ((Robot.kLIFT.getMidSen() == true) &&
 			(Robot.kLIFT.getHighSen() == true)) {
 	        // PwrCube not sensed by N/C Sensor
-	    	LiftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
-	    } else {
+	    	LiftPwrCmnd = HoldPwrLvl;
+	    	} else {
 	    	// PwrCube is sensed by N/C Sensor
 	    	LiftPwrCmnd = 0.0;	
 	    }
