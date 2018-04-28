@@ -27,17 +27,17 @@ public class AM_StrtCenter_SwLeftAng extends CommandGroup {
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
 		addParallel(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  		
-    	addParallel(new AC_DriveEncdrByDist((float)1.0, (float)0.3, (float)0.25, (float)0.10, (float)0.0, true));
+    	addParallel(new AC_DriveEncdrByDistPI((float)1.0, (float)0.3, (float)0.25, (float)0.10, (float)0.0, true));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
-    	addParallel(new AC_TurnByGyro(-K_CmndCal.KCMD_r_RotPwrAcute, -35.0)); // Turn CCW to -38.6 deg
+    	addParallel(new AC_TurnByGyroPI(false, -35.0)); // Turn CCW to -38.6 deg
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
     	addParallel(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
     	addParallel(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));    	
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
-    	addParallel(new AC_DriveEncdrByDist((float)8.0, (float)0.8, (float)1.0, (float)0.10, (float)-35.0, true));
+    	addParallel(new AC_DriveEncdrByDistPI((float)8.0, (float)0.8, (float)1.0, (float)0.10, (float)-35.0, true));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
-    	addParallel(new AC_TurnByGyro(K_CmndCal.KCMD_r_RotPwrAcute, 0.0)); // Turn CW to 0 deg
+    	addParallel(new AC_TurnByGyroPI(true, 0.0)); // Turn CW to 0 deg
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));  
     	addSequential(new BM_LiftRaiseToMid());
     	addParallel(new AC_DriveByGyroTime(0.0, 0.5, 0.5));
