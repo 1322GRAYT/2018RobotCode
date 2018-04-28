@@ -22,7 +22,7 @@ public class AC_DriveEncdrByDist extends Command {
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
     private float   DsrdHdngAng;
-	private boolean DrctnIsFwd, LftHldEnbl;
+	private boolean DrctnIsFwd;
 	
 	private double EncdrActCnt;
 	private double EncdrActCntPrev;	
@@ -51,19 +51,16 @@ public class AC_DriveEncdrByDist extends Command {
       *  @param3: Desired Deceleration Distance (float: feet)
       *  @param4: Desired Deceleration Power    (float: normalized power)
       *  @param5: Is Desired Direction Forward? (boolean)
-      *  @param6: Enable Lift Hold Function?    (boolean)
       *   */
     public AC_DriveEncdrByDist(float   DsrdDistFeet,
     		                   float   DsrdPriPwr,
     		                   float   DsrdDclFeet,
     		                   float   DsrdDclPwr,
     		                   float   DsrdHdngAng,    		                   
-    		                   boolean DrctnIsFwd,
-    		                   boolean LftHldEnbl) {
+    		                   boolean DrctnIsFwd) {
         requires(Robot.kDRIVE);
         requires(Robot.kLIFT);
         this.DrctnIsFwd = DrctnIsFwd;
-        this.LftHldEnbl = LftHldEnbl;
         this.DsrdDistFeet = DsrdDistFeet;
         this.DsrdPriPwr = DsrdPriPwr;
         this.DsrdDclFeet = DsrdDclFeet;
@@ -98,7 +95,6 @@ public class AC_DriveEncdrByDist extends Command {
     	double DclPwr;
         double DrvPwrCmndSgnd;
         double CorrPwrCmndSgnd;
-        double LftPwrCmndSgnd;
         double MinDeltCntThrsh;
         
     	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();
@@ -145,8 +141,7 @@ public class AC_DriveEncdrByDist extends Command {
     	else // (EncdrActCnt >= EncdrTgtDclCnts)
     	  {
     	  DrvPwrCmndSgnd = DclPwr;
-    	  }   	 	
-	
+    	  }   	 		
     	
     	DrvPwrCmdLim = USERLIB.RateLimOnInc(DrvPwrCmndSgnd,
     			                            DrvPwrCmdLim,
@@ -166,22 +161,7 @@ public class AC_DriveEncdrByDist extends Command {
   	    }
 
     	EncdrActCntPrev = EncdrActCnt;
-    	
-    	
-  	    // Keep Lift in Elevated Position
-  	    if ((this.LftHldEnbl == true) &&
-  	    	(Robot.kLIFT.getMidSen() == true) &&
-  		    (Robot.kLIFT.getHighSen() == true)) {
-  	        // PwrCube not sensed by N/C Sensor
-  	    	LftPwrCmndSgnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
-  	    } else {
-  	    	// PwrCube is sensed by N/C Sensor
-  	    	LftPwrCmndSgnd = 0.0;	
-  	    }
-  	    
-  	    Robot.kLIFT.setSpeed(LftPwrCmndSgnd);
-  	    
-  	    
+    	  	    
   	    // Update Smart Dashboard Data
 	    if (K_CmndCal.KCMD_b_DebugEnbl)
   	        updateSmartDashData();    	

@@ -71,7 +71,7 @@ public class AM_StrtLeftSide_Swch_PICntrl extends CommandGroup {
     	    addSequential(new BM_ClawTiltDown());
     	    addSequential(new BM_ClawOpen());
     	} else {
-        	addSequential(new AC_DriveEncdrByDist((float)13.0, (float)0.9, (float)1.0, (float)0.10, (float)0.0, true, true));    		
+        	addSequential(new AC_DriveEncdrByDistPI((float)13.0, (float)0.9, (float)1.0, (float)0.10, (float)0.0, true));    		
     	}
     }
 
