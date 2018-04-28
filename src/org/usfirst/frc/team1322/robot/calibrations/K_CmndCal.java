@@ -75,8 +75,19 @@ public class K_CmndCal extends Subsystem {
      * traction, give up). */
 	public static final float KCMD_t_DrvSafetyTmOut = (float)1.0; // sec 
 	 
-	 
 
+	
+    /** KCMD_Deg_DrvOL_CrtnDB: Degrees of Heading Error DeadBand
+     * for the Open-Loop Drive Heading Correction Drive By Gyro
+     * Autonomous Command. */
+	public static final float KCMD_Deg_DrvOpenLpCrtnDB = (float)1.5; // Deg 
+
+    /** KCMD_r_DrvOpenLpCrtnPwr: Normalized Rotation Correction Power
+     * for the Open-Loop Drive Heading Correction Drive By Gyro
+     * Autonomous Command. */
+	public static final float KCMD_r_DrvOpenLpCrtnPwr = (float)0.3; // sec 
+	
+	
     /**************************/
 	/*    Rotation Control    */
 	/**************************/	 

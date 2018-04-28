@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
+import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,8 +16,8 @@ public class AC_DriveByGyro extends Command {
 	private double startGyroPos;
 	private double stopDistance;
 	private double usID;
-	private final double correctionSpeed = RobotMap.autonDriveCorrectionSpeed;
-	private final double leeway = RobotMap.autonDriveLeeway;
+	private final double correctionSpeed = (double)K_CmndCal.KCMD_r_DrvOpenLpCrtnPwr;
+	private final double leeway = (double)K_CmndCal.KCMD_Deg_DrvOpenLpCrtnDB;
 	
 	
     public AC_DriveByGyro(double forwardSpeed, double strafeSpeed, double stopDistance, double usID) {

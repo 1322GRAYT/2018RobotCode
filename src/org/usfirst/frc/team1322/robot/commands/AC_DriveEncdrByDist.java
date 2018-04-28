@@ -36,8 +36,8 @@ public class AC_DriveEncdrByDist extends Command {
 	private double DrvFdbkHdngAng;
 	private double DrvHdngAngErrRaw;
 	private double DrvHdngAngErr;
- 	private final double CorrPwrCmnd = RobotMap.autonDriveCorrectionSpeed;
- 	private final double CorrDeadBand = RobotMap.autonDriveLeeway;	
+ 	private final double CorrPwrCmnd = (double)K_CmndCal.KCMD_r_DrvOpenLpCrtnPwr;
+ 	private final double CorrDeadBand = (double)K_CmndCal.KCMD_Deg_DrvOpenLpCrtnDB;	
  	
  	
 	
