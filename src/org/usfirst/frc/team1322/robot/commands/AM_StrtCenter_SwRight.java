@@ -38,7 +38,8 @@ public class AM_StrtCenter_SwRight extends CommandGroup {
     	addParallel(new AC_DriveEncdrByDist((float)3.5, (float)0.8, (float)0.5, (float)0.50, (float)0.0, true));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
     	addSequential(new BM_LiftRaiseToMid());
-	    addSequential(new AC_DriveByGyroTime(0.0, 0.5, 0.75, true));
+	    addParallel(new AC_DriveByGyroTime(0.0, 0.5, 0.75));
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
 	    addSequential(new BM_ClawTiltDown());
 	    addSequential(new BM_ClawOpen());
 		addParallel(new AC_TimeDelay((float)1.0));

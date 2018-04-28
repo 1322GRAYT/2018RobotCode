@@ -4,7 +4,6 @@ import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
-import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -59,7 +58,6 @@ public class AC_DriveEncdrByDist extends Command {
     		                   float   DsrdHdngAng,    		                   
     		                   boolean DrctnIsFwd) {
         requires(Robot.kDRIVE);
-        requires(Robot.kLIFT);
         this.DrctnIsFwd = DrctnIsFwd;
         this.DsrdDistFeet = DsrdDistFeet;
         this.DsrdPriPwr = DsrdPriPwr;
@@ -188,7 +186,6 @@ public class AC_DriveEncdrByDist extends Command {
     	TmOutTmr.stop();
     	Robot.kAUTON.setMasterTaskCmplt(true);
   	    Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
-  	    Robot.kLIFT.setSpeed(0.0);
     }
 
     // Called when another command which requires one or more of the same
