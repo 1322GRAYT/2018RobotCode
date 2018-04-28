@@ -3,7 +3,6 @@ package org.usfirst.frc.team1322.robot.commands;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
-import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -16,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Positive Power is ClockWise, Negative is Counter-ClockWise.
  */
 public class AC_TurnByGyro extends Command {
-	boolean liftHldEnbl;
 	private Timer TurnTmOut = new Timer();
 	private double turnPwr;
 	private double turnPwrCmnd;	
@@ -28,7 +26,6 @@ public class AC_TurnByGyro extends Command {
 	private double RotAngInitDelt;
     private double RotAng70Pct;	
     private double RotAng90Pct;
-    private double LiftPwrCmnd;
 	
 	
 	/**
@@ -36,14 +33,11 @@ public class AC_TurnByGyro extends Command {
 	 * Turn to a specific Angle at a specific Normalized Power.
 	 * @param1: turnPwr, Normalized Power To Turn  + = ClckWise, - = CntrClckWise
 	 * @param2: turnAngle, Desired Turn Target Angle (boolean)
-	 * @param3: liftHldEnbl, Enable the Lift Hold Function (boolean)
 	 */
-    public AC_TurnByGyro(double turnPwr, double turnAngle, boolean liftHldEnbl) {
+    public AC_TurnByGyro(double turnPwr, double turnAngle) {
         requires(Robot.kDRIVE);
-        requires(Robot.kLIFT);
         this.turnPwr = turnPwr;
         this.turnAngle = turnAngle;
-        this.liftHldEnbl = liftHldEnbl;
     }
 
     
@@ -118,18 +112,6 @@ public class AC_TurnByGyro extends Command {
     	
 		Robot.kDRIVE.mechDrive(0, 0, turnPwrCmndLim);
 		
-	    // Keep Lift in Elevated Position
-	    if ((this.liftHldEnbl == true) &&
-	    	(Robot.kLIFT.getMidSen() == true) &&
-			(Robot.kLIFT.getHighSen() == true)) {
-	        // PwrCube not sensed by N/C Sensor
-	    	LiftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
-	    } else {
-	    	// PwrCube is sensed by N/C Sensor
-	    	LiftPwrCmnd = 0.0;	
-	    }
-	    
-	    Robot.kLIFT.setSpeed(LiftPwrCmnd);
 	    
   	    // Update Smart Dashboard Data
 	    if (K_CmndCal.KCMD_b_DebugEnbl)
@@ -160,7 +142,6 @@ public class AC_TurnByGyro extends Command {
     	TurnTmOut.stop();
     	Robot.kAUTON.setMasterTaskCmplt(true);
     	Robot.kDRIVE.disable();
-  	    Robot.kLIFT.setSpeed(0.0);	
     }
 
     
@@ -182,8 +163,6 @@ public class AC_TurnByGyro extends Command {
     	SmartDashboard.putNumber("Rotate 90 Percent Angle : ", RotAng90Pct);
     	SmartDashboard.putNumber("Rotate Power Cmnd : ", turnPwr);
     	SmartDashboard.putNumber("Rotate Power Cmnd Adjusted : ", turnPwrCmnd);
-    	SmartDashboard.putBoolean("Lift Hold Enable during Side Arc? : ", liftHldEnbl);
-    	SmartDashboard.putNumber("Lift Hold Power Cmnd : ", LiftPwrCmnd);    	
     	
     	System.out.println("Rotate Timeout Timer : " + TurnTmOut.get());
     	System.out.println("Rotate Desired Angle : " + RotDsrdAng);
@@ -194,8 +173,6 @@ public class AC_TurnByGyro extends Command {
     	System.out.println("Rotate 90 Percent Angle : " + RotAng90Pct);
     	System.out.println("Rotate Power Cmnd : " + turnPwr);
     	System.out.println("Rotate Power Cmnd Adjusted : " + turnPwrCmnd);
-    	System.out.println("Lift Hold Enable during Side Arc? : " + liftHldEnbl);
-    	System.out.println("Lift Hold Power Cmnd : " + LiftPwrCmnd);     	
     }
     
 }

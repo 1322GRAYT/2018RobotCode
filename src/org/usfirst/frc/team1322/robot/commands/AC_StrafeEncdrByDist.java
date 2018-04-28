@@ -3,7 +3,6 @@ package org.usfirst.frc.team1322.robot.commands;
 import org.usfirst.frc.team1322.robot.Robot;
 import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
-import org.usfirst.frc.team1322.robot.calibrations.K_LiftCal;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +17,7 @@ public class AC_StrafeEncdrByDist extends Command {
 	// Autonomous Pattern Vars
     private float   DsrdDistFeet, DsrdPriPwr, DsrdDclFeet, DsrdDclPwr;
     private float   DsrdHdngAng;
-	private boolean DrctnIsRght, LftHldEnbl;
+	private boolean DrctnIsRght;
 	
 	private double EncdrActCnt;
 	private double EncdrInitRefCnt;
@@ -44,18 +43,15 @@ public class AC_StrafeEncdrByDist extends Command {
       *  @param3: Desired Deceleration Distance (float: feet)
       *  @param4: Desired Deceleration Power    (float: normalized power)
       *  @param5: Is Desired Strafe To Right?   (boolean)
-      *  @param6: Enable Lift Hold Function?    (boolean)
       *   */
     public AC_StrafeEncdrByDist(float   DsrdDistFeet,
     		                    float   DsrdPriPwr,
     		                    float   DsrdDclFeet,
     		                    float   DsrdDclPwr,
     		                    float   DsrdHdngAng,    		                   
-    		                    boolean DrctnIsRght,
-    		                    boolean LftHldEnbl) {
+    		                    boolean DrctnIsRght) {
         requires(Robot.kDRIVE);               
         this.DrctnIsRght = DrctnIsRght;
-        this.LftHldEnbl = LftHldEnbl;
         this.DsrdDistFeet = DsrdDistFeet;
         this.DsrdPriPwr = DsrdPriPwr;
         this.DsrdDclFeet = DsrdDclFeet;
@@ -85,7 +81,6 @@ public class AC_StrafeEncdrByDist extends Command {
     	double DclPwr;
         double StrfPwrCmndSgnd;
         double CorrPwrCmndSgnd;
-        double LftPwrCmndSgnd;
         
     	EncdrActCnt = Robot.kSENSORS.getRefEncoderCnt();
     	DrvFdbkHdngAng = Robot.kSENSORS.getGyroAngle(); 	    	
@@ -111,11 +106,11 @@ public class AC_StrafeEncdrByDist extends Command {
     	
     	// Calculate Robot Drive Power
     	if (DrctnIsRght == false) {
-    		// Straffing Left
+    		// Strafing Left
     		PriPwr = (double)-(DsrdPriPwr);
     	    DclPwr = (double)-(DsrdDclPwr);
     	    if (CorrPwrCmndSgnd != 0.0) {
-    	    	// When Straffing Left, Heading Correction Needs to be Reversed
+    	    	// When Strafing Left, Heading Correction Needs to be Reversed
     	    	CorrPwrCmndSgnd = -(CorrPwrCmndSgnd);   
     	    }
     	} else {
@@ -135,21 +130,7 @@ public class AC_StrafeEncdrByDist extends Command {
 	
   	    Robot.kDRIVE.mechDrive(StrfPwrCmndSgnd, 0.0, CorrPwrCmndSgnd);
 
-  	    
-  	    // Keep Lift in Elevated Position
-  	    if ((this.LftHldEnbl == true) &&
-  	    	(Robot.kLIFT.getMidSen() == true) &&
-  			(Robot.kLIFT.getHighSen() == true)) {
-  	        // PwrCube not sensed by N/C Sensor
-  	    	LftPwrCmndSgnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
-  	    } else {
-  	    	// PwrCube is sensed by N/C Sensor
-  	    	LftPwrCmndSgnd = 0.0;	
-  	    }
-  	    
-  	    Robot.kLIFT.setSpeed(LftPwrCmndSgnd);
-  	    
-  	    
+
   	    // Update Smart Dashboard Data
 	    if (K_CmndCal.KCMD_b_DebugEnbl)
   	        updateSmartDashData();    	
@@ -167,7 +148,6 @@ public class AC_StrafeEncdrByDist extends Command {
     protected void end() {
     	Robot.kAUTON.setMasterTaskCmplt(true);
   	    Robot.kDRIVE.mechDrive(0.0, 0.0, 0.0);
-  	    Robot.kLIFT.setSpeed(0.0);
     }
 
     // Called when another command which requires one or more of the same
@@ -203,9 +183,7 @@ public class AC_StrafeEncdrByDist extends Command {
     	System.out.println("Drive Heading Angle Desired : " + DrvDsrdHdngAng);
     	System.out.println("Drive Heading Angle FeedBack : " + DrvFdbkHdngAng);
     	System.out.println("Drive Heading Angle Error Raw : " + DrvHdngAngErrRaw);
-    	System.out.println("Drive Heading Angle Error : " + DrvHdngAngErr);
-    	
+    	System.out.println("Drive Heading Angle Error : " + DrvHdngAngErr);    	
     }
-    
     
 }

@@ -97,11 +97,9 @@ public class OI {
 		auxStart.whenPressed(new BM_JammerEngage());			        //Engage Lift Jammer
 		auxSelect.whenPressed(new BM_JammerDisengage());		        //Disengage Lift Jammer
 		drvRTrigger.whileActive(new BM_StrafeAndRotate(false, true,     //Sideways Arc: Strafe Left, Rotate Right
-				                                       (float)90.0,
-				                                       false));
+				                                       (float)90.0));
 		drvLTrigger.whileActive(new BM_StrafeAndRotate(false, false,    //Sideways Arc: Strafe Right, Rotate Left
-                                                       (float)-90.0,
-                                                       false));
+                                                       (float)-90.0));
 		blockDtctTrig.toggleWhenActive(new BM_ClawClose());             //Detect Block and Close Claw in Tele-Op
 		liftHighTrig.toggleWhenActive(new BM_LiftDtctHighPstn());       //Detect Lift High Position
 		liftLowTrig.toggleWhenActive(new BM_LiftDtctLowPstn());         //Detect Lift Low Position

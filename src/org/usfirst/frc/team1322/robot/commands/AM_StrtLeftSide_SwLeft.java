@@ -28,8 +28,9 @@ public class AM_StrtLeftSide_SwLeft extends CommandGroup {
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));
 		addParallel(new AC_DriveEncdrByDist((float)12.0, (float)0.8, (float)1.5, (float)0.1, (float)0.0, true));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));
-		addSequential(new AC_TurnByGyro(K_CmndCal.KCMD_r_RotPwr90Deg, 85.0, true));  // Turn CW to 90 deg
-    	addSequential(new BM_LiftRaiseToMid());
+    	addParallel(new AC_TurnByGyro(K_CmndCal.KCMD_r_RotPwr90Deg, 85.0));  // Turn CW to 90 deg
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));
+		addSequential(new BM_LiftRaiseToMid());
 	    addParallel(new AC_DriveByGyroTime(0.0, 0.5, 0.75));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid));
 	    addSequential(new BM_ClawTiltDown());

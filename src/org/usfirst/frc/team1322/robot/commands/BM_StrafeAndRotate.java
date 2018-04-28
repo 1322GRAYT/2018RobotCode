@@ -31,10 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	    private double  RotPwrCmndAdj;
 	    private double  StrfPwrCmnd;
 	    private double  StrfPwrCmndLim;
-	    private double  DrvPwrCmnd;
-	    private boolean LftHldEnbl;
-        private double  LftPwrCmnd;
- 	
+	    private double  DrvPwrCmnd; 	
 	
     /**
       *  Command Method: BM_StrafeAndRotate - Autonomous Command to Strafe
@@ -43,17 +40,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
       *  @param1: Mode is Autonomous (Not Tele-Op)?      (boolean)	
       *  @param2: Desired Rotation ClockWise?            (boolean)	
       *  @param3: Desired Rotation Position Angle        (float: degrees)	
-      *  @param4: Enable Lift Hold Function?             (boolean)
-      *   */
+      */
     public BM_StrafeAndRotate(boolean ModeIsAuton,
     		                  boolean RotClckWise,
-                              float   RotDsrdAng,
-                              boolean LftHldEnbl) {
+                              float   RotDsrdAng) {
         requires(Robot.kDRIVE);        
         this.ModeIsAuton = ModeIsAuton;
         this.RotClckWise = RotClckWise;
         this.RotDsrdAng = RotDsrdAng;
-        this.LftHldEnbl =  LftHldEnbl;
     }
 
 
@@ -120,23 +114,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	RotPwrCmndAdj = (double)nearTrgtScalar * RotPwrCmnd;
     	
 		Robot.kDRIVE.mechDrive(StrfPwrCmndLim, DrvPwrCmnd, RotPwrCmndAdj);
-		
-		
-		// Determine Lift Power
-	    // Keep Lift in Elevated Position
-	    if ((ModeIsAuton == false) &&
-	    	(LftHldEnbl == true) &&
-	    	(Robot.kLIFT.getMidSen() == true) &&
-	    	(Robot.kLIFT.getHighSen() == true)) {
-	        // PwrCube not sensed by N/C Sensors
-	    	LftPwrCmnd = (double)K_LiftCal.KLFT_r_LiftMtrHldPwr;	
-	    } else {
-	    	// PwrCube is sensed by N/C Sensor
-	    	LftPwrCmnd = 0.0;	
-	    }
-	    
-	    Robot.kLIFT.setSpeed(LftPwrCmnd);  
-  	    
+	  	    
 	    
   	    // Update Smart Dashboard Data
 	    if (K_CmndCal.KCMD_b_DebugEnbl)
@@ -165,7 +143,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     protected void end() {
   	    RotTmOut.stop();	
     	Robot.kDRIVE.disable();
-  	    Robot.kLIFT.setSpeed(0.0);
     	Robot.kAUTON.setMasterTaskCmplt(true);
     }
 
@@ -189,8 +166,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	SmartDashboard.putNumber("Rotate Power Cmnd Adjusted : ", RotPwrCmndAdj);
     	SmartDashboard.putNumber("Strafe Power Cmnd : ", StrfPwrCmnd);
     	SmartDashboard.putNumber("Strafe Power Cmnd : ", DrvPwrCmnd);
-    	SmartDashboard.putBoolean("Lift Hold Enable during Side Arc? : ", LftHldEnbl);
-    	SmartDashboard.putNumber("Lift Hold Power Cmnd : ", LftPwrCmnd);    	
     	
     	System.out.println("Rotate ClockWise? : " + RotClckWise);
     	System.out.println("Rotate Timeout Timer : " + RotTmOut.get());
@@ -203,8 +178,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     	System.out.println("Rotate Power Cmnd Adjusted : " + RotPwrCmndAdj);
     	System.out.println("Strafe Power Cmnd : " + StrfPwrCmnd);
     	System.out.println("Strafe Power Cmnd : " + DrvPwrCmnd);
-    	System.out.println("Lift Hold Enable during Side Arc? : " + LftHldEnbl);
-    	System.out.println("Lift Hold Power Cmnd : " + LftPwrCmnd); 
     	
     }
     

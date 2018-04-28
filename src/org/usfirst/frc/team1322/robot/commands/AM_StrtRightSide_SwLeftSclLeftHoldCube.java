@@ -32,8 +32,9 @@ public class AM_StrtRightSide_SwLeftSclLeftHoldCube extends CommandGroup {
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
     	addParallel(new AC_DriveEncdrByDist((float)17.0, (float)0.9, (float)1.0, (float)0.10, (float)0.0, true));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
-     	addSequential(new AC_TurnByGyro(-K_CmndCal.KCMD_r_RotPwr90Deg, -85, true));  // Turn CCW to -90 deg       	
-		addParallel(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
+     	addParallel(new AC_TurnByGyro(-K_CmndCal.KCMD_r_RotPwr90Deg, -85));  // Turn CCW to -90 deg       	
+    	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
+     	addParallel(new AC_TimeDelay(K_CmndCal.KCMD_t_PostMoveDly));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
      	addParallel(new AC_ResetEncoders(K_CmndCal.KCMD_t_EncdrRstDly));
     	addSequential(new BM_LiftHoldPstn(K_LiftCal.KLFT_r_LiftMtrHldPwrMid)); 
