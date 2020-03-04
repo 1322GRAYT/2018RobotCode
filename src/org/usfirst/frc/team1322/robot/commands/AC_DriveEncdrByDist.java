@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1322.robot.commands;
 
 import org.usfirst.frc.team1322.robot.Robot;
-import org.usfirst.frc.team1322.robot.calibrations.RobotMap;
 import org.usfirst.frc.team1322.robot.calibrations.K_CmndCal;
 import org.usfirst.frc.team1322.robot.calibrations.K_DriveCal;
 import org.usfirst.frc.team1322.robot.subsystems.USERLIB;
@@ -49,7 +48,8 @@ public class AC_DriveEncdrByDist extends Command {
       *  @param2: Desired Drive Power           (float: normalized power)	
       *  @param3: Desired Deceleration Distance (float: feet)
       *  @param4: Desired Deceleration Power    (float: normalized power)
-      *  @param5: Is Desired Direction Forward? (boolean)
+      *  @param5: Desired Heading Angle         (float: signed degrees)
+      *  @param6: Is Desired Direction Forward? (boolean)
       *   */
     public AC_DriveEncdrByDist(float   DsrdDistFeet,
     		                   float   DsrdPriPwr,

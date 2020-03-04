@@ -362,12 +362,13 @@ public class USERLIB extends Subsystem {
     /** Method: RateLimOnInc - This function will rate limit an increase
       *  delta command based on a maximum limit threshold in delta
       *  units per loop.
-      * @param1: Interpolation Input Value (float)
-      * @param2: Lower Reference value to Interpolate Between (float)
-      * @param3: Upper Reference value to Interpolate Between (float)
-	  * @return: Fractional Interpolated Output Value (float) */	
+      * @param1: ValRaw      (double: Input Value Raw)
+      * @param2: ValLimPrev  (double: Input Value Limited Prev Loop Value)
+      * @param3: DeltLimMax  (float:  Maximum Delta Limit Loop to Loop Allowed)
+	  * @return: ValLimNew   (double: Input Value Limited Updated Value)
+	  * */	
 	 public static double RateLimOnInc(double ValRaw,
-			                           double ValLim,
+			                           double ValLimPrev,
 			                           float  DeltLimMax) {
 	     double DeltUpd;
 	     double ValTemp;
@@ -377,14 +378,14 @@ public class USERLIB extends Subsystem {
 	     	     
 
 	     // Determine if PosIncLim, NegIncLim, or No Limiting
-	     if (ValLim >= 0) {
+	     if (ValLimPrev >= 0) {
 	    	 // ValLim is Positive
 	    	 if (ValRaw < 0.0) {
 	    		 // Sign Flip to Negative
-	    		 ValLim = 0.0;
+	    		 ValLimPrev = 0.0;
 	    		 LimNegInc = true;
 	    		 LimPosInc = false;
-	    	 } else if (ValRaw > ValLim) {
+	    	 } else if (ValRaw > ValLimPrev) {
 	    		 LimPosInc = true;
 	    		 LimNegInc = false;
 	         } else {
@@ -397,10 +398,10 @@ public class USERLIB extends Subsystem {
 	    	 //  ValLim is Negative
 	    	 if (ValRaw > 0.0) {
 	    		 // Sign Flip to Positive
-	    		 ValLim = 0.0;
+	    		 ValLimPrev = 0.0;
 	    		 LimPosInc = true;	    		 
 	    		 LimNegInc = false;
-	    	 } else if (ValRaw < ValLim) {
+	    	 } else if (ValRaw < ValLimPrev) {
 	    		 LimNegInc = true;	    		 
 	    		 LimPosInc = false;
 	    	 } else {
@@ -413,16 +414,16 @@ public class USERLIB extends Subsystem {
 
 	     
 	     // Apply Delta Limit
-	     DeltUpd = Math.abs(ValRaw) - Math.abs(ValLim);
+	     DeltUpd = Math.abs(ValRaw) - Math.abs(ValLimPrev);
 	     if (DeltUpd > DeltLimMax) {
 		     DeltUpd = DeltLimMax;
 	     }
 	     
 	     // Add Delta to Last Loop Value
          if (LimPosInc == true) {
-    	     ValTemp = ValLim + DeltUpd;        
+    	     ValTemp = ValLimPrev + DeltUpd;        
          } else if (LimNegInc == true) {
-    	     ValTemp = ValLim - DeltUpd;              	 
+    	     ValTemp = ValLimPrev - DeltUpd;              	 
 	     } else {
 	    	 // No Limiting;
 	    	 ValTemp = ValRaw;
